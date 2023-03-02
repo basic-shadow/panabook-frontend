@@ -11,6 +11,26 @@ const apiInstance = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
+apiInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (
+      (error?.response?.status === 401 || error?.response?.status === 403) &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+      const urlFromError = originalRequest?.url || "";
+
+      localStorage.removeItem(localStorageKeys.userToken);
+
+      return apiInstance(originalRequest);
+    }
+    return Promise.reject(error.response);
+  }
+);
+
 export const API = {
   get: <T>(url: string, params?: object, config?: AxiosRequestConfig) =>
     apiInstance.get<T>(url, {
