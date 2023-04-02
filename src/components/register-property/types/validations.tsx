@@ -1,47 +1,47 @@
 import * as yup from "yup";
 
 export const generalInfoSchema = yup.object().shape({
-  property_name: yup.string().required("Обязательное поле"),
-  stars_rating: yup.number().required("Обязательное поле"),
-  contact_name: yup.string().required("Обязательное поле"),
-  contact_phone1: yup.string().required("Обязательное поле"),
-  contact_phone2: yup.string().notRequired(),
-  property_address: yup.string().required("Обязательное поле"),
-  property_city: yup.number().required("Обязательное поле"),
-  property_post_code: yup.string().required("Обязательное поле"),
+  propertyName: yup.string().required("Обязательное поле"),
+  starsRating: yup.number().required("Обязательное поле"),
+  contactName: yup.string().required("Обязательное поле"),
+  contactPhone1: yup.string().required("Обязательное поле"),
+  contactPhone2: yup.string().notRequired(),
+  propertyAddress: yup.string().required("Обязательное поле"),
+  propertyCity: yup.number().required("Обязательное поле"),
+  propertyPostCode: yup.string().required("Обязательное поле"),
 });
 
 export const roomsInfoSchema = yup.object().shape({
-  room_type: yup.number().required("Обязательное поле"),
-  room_name: yup.number().required("Обязательное поле"),
-  allowed_smoking: yup.number().required("Обязательное поле"),
-  similar_rooms_quantity: yup.number().required("Обязательное поле"),
-  max_guest_size: yup.number().required("Обязательное поле"),
-  room_surface: yup.number().required("Обязательное поле"),
-  non_resident_price: yup.number().required("Обязательное поле"),
-  room_beds: yup.array().of(
+  roomType: yup.number().required("Обязательное поле"),
+  roomName: yup.number().required("Обязательное поле"),
+  allowedSmoking: yup.number().required("Обязательное поле"),
+  similarRoomsQuantity: yup.number().required("Обязательное поле"),
+  maxGuestSize: yup.number().required("Обязательное поле"),
+  roomSurface: yup.number().required("Обязательное поле"),
+  nonResidentPrice: yup.number().required("Обязательное поле"),
+  roomBeds: yup.array().of(
     yup.object().shape({
-      bed_type: yup.number().required("Обязательное поле"),
+      bedType: yup.number().required("Обязательное поле"),
       quantity: yup.number().required("Обязательное поле"),
     })
   ),
 });
 
 export const servicesInfoSchema = yup.object().shape({
-  property_languages: yup
+  propertyLanguages: yup
     .array()
     .of(yup.object().shape({ value: yup.number() }))
     .required("Обязательное поле"),
-  property_services: yup.array().of(yup.number()).required("Обязательное поле"),
+  propertyServices: yup.array().of(yup.number()).required("Обязательное поле"),
 });
 
 export const facilitiesInfoSchema = yup.object().shape({
-  extra_beds: yup.boolean().required("Обязательное поле"),
-  extra_beds_type: yup
+  extraBeds: yup.boolean().required("Обязательное поле"),
+  extraBedsType: yup
     .array()
     .of(
       yup.object().shape({
-        bed_type: yup.number().required("Обязательное поле"),
+        bedType: yup.number().required("Обязательное поле"),
         quantity: yup.number().required("Обязательное поле"),
       })
     )

@@ -37,7 +37,7 @@ export default memo(function GeneralInfoForm({
     if (isValid) {
       useRegisterPropertyStore.setState((state) => ({
         ...getValues(),
-        contact_phone1: "+" + getValues().contact_phone1.replace(/[^\d]/g, ""),
+        contactPhone1: "+" + getValues().contactPhone1.replace(/[^\d]/g, ""),
       }));
       onNextStep();
     }
@@ -51,18 +51,18 @@ export default memo(function GeneralInfoForm({
           {/* PROPERTY NAME INPUT */}
           <div className="mb-6 flex flex-col">
             <label
-              htmlFor="property_name"
+              htmlFor="propertyName"
               className="mb-2 inline-flex text-lg font-semibold text-gray-800"
             >
               Название вашего объекта размещения
             </label>
             <input
-              {...register("property_name")}
+              {...register("propertyName")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
             />
-            {errors.property_name && (
+            {errors.propertyName && (
               <p className="mt-2 text-start text-sm text-red-500">
-                {errors.property_name.message}
+                {errors.propertyName.message}
               </p>
             )}
 
@@ -74,30 +74,30 @@ export default memo(function GeneralInfoForm({
           {/* PROPERTY STARS INPUT */}
           <div className="mb-4 flex flex-col">
             <label
-              htmlFor="stars_rating"
+              htmlFor="starsRating"
               className="mb-2 inline-flex text-gray-800"
             >
               Количество звезд
             </label>
             <AppDropdown
-              name="stars_rating"
+              name="starsRating"
               selectedValue={{
-                label: watch().stars_rating,
-                value: watch().stars_rating,
+                label: watch().starsRating,
+                value: watch().starsRating,
               }}
               options={Array.from({ length: 5 }, (_, i) => ({
                 label: (i + 1).toString(),
                 value: i + 1,
               }))}
               onSelect={(val) => {
-                setValue("stars_rating", val as number, {
+                setValue("starsRating", val as number, {
                   shouldValidate: true,
                 });
               }}
             />
-            {errors.stars_rating && (
+            {errors.starsRating && (
               <p className="mt-2 text-start text-sm text-red-500">
-                {errors.stars_rating.message}
+                {errors.starsRating.message}
               </p>
             )}
           </div>
@@ -113,19 +113,19 @@ export default memo(function GeneralInfoForm({
               Контактные данные объекта размещения
             </h2>
             <label
-              htmlFor="contact_name"
+              htmlFor="contactName"
               className="mb-2 inline-flex text-sm text-gray-800"
             >
               Контактное лицо
             </label>
             <input
-              {...register("contact_name")}
+              {...register("contactName")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
             />
 
-            {errors.contact_name && (
+            {errors.contactName && (
               <p className="mt-2 text-start text-sm text-red-500">
-                {errors.contact_name.message}
+                {errors.contactName.message}
               </p>
             )}
           </div>
@@ -133,20 +133,20 @@ export default memo(function GeneralInfoForm({
           <div className="mb-6 flex gap-4">
             <div className="flex flex-1 flex-col">
               <label
-                htmlFor="contact_phone1"
+                htmlFor="contactPhone1"
                 className="mb-2 inline-flex text-sm text-gray-800"
               >
                 Номер телефона
               </label>
               <InputMask
                 mask="+7(999)999-99-99"
-                {...register("contact_phone1")}
+                {...register("contactPhone1")}
                 className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
               />
 
-              {errors.contact_phone1 && (
+              {errors.contactPhone1 && (
                 <p className="mt-2 text-start text-sm text-red-500">
-                  {errors.contact_phone1.message}
+                  {errors.contactPhone1.message}
                 </p>
               )}
 
@@ -157,14 +157,14 @@ export default memo(function GeneralInfoForm({
             </div>
             <div className="flex flex-1 flex-col">
               <label
-                htmlFor="contact_phone2"
+                htmlFor="contactPhone2"
                 className="mb-2 inline-flex text-sm text-gray-800"
               >
                 Номер телефона
               </label>
               <InputMask
                 mask="+7(999)999-99-99"
-                {...register("contact_phone2")}
+                {...register("contactPhone2")}
                 className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
               />
             </div>
@@ -181,69 +181,69 @@ export default memo(function GeneralInfoForm({
               Адрес объекта размещения
             </h2>
             <label
-              htmlFor="property_address"
+              htmlFor="propertyAddress"
               className="mb-2 inline-flex text-sm text-gray-800"
             >
               Адрес
             </label>
             <input
-              {...register("property_address")}
+              {...register("propertyAddress")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
             />
 
-            {errors.property_address && (
+            {errors.propertyAddress && (
               <p className="mt-2 text-start text-sm text-red-500">
-                {errors.property_address.message}
+                {errors.propertyAddress.message}
               </p>
             )}
           </div>
           {/* ADDRESS CITY INPUT */}
           <div className="mb-4 flex flex-col">
             <label
-              htmlFor="property_city"
+              htmlFor="propertyCity"
               className="mb-2 inline-flex text-gray-800"
             >
               Город
             </label>
             <AppDropdown
-              name="property_city"
+              name="propertyCity"
               selectedValue={{
                 label:
-                  watch().property_city >= 0
-                    ? KAZAKHSTAN_CITIES[watch().property_city]!.label
+                  watch().propertyCity >= 0
+                    ? KAZAKHSTAN_CITIES[watch().propertyCity]!.label
                     : "",
-                value: watch().property_city,
+                value: watch().propertyCity,
               }}
               options={KAZAKHSTAN_CITIES}
               onSelect={(val) => {
-                setValue("property_city", val as number, {
+                setValue("propertyCity", val as number, {
                   shouldValidate: true,
                 });
               }}
             />
 
-            {errors.property_city && (
+            {errors.propertyCity && (
               <p className="mt-2 text-start text-sm text-red-500">
-                {errors.property_city.message}
+                {errors.propertyCity.message}
               </p>
             )}
           </div>
           {/* ADDRESS ZIP CODE INPUT */}
           <div className="mb-6 flex flex-col">
             <label
-              htmlFor="property_post_code"
+              htmlFor="propertyPostCode"
               className="mb-2 inline-flex text-sm text-gray-800"
             >
               Почтовый индекс
             </label>
             <input
-              {...register("property_post_code")}
+              {...register("propertyPostCode")}
               className="w-60 rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
             />
 
-            {errors.property_post_code && (
+            {errors.propertyPostCode && (
               <p className="mt-2 text-start text-sm text-red-500">
-                {errors.property_post_code.message}
+                {errors.propertyPostCode.message}
               </p>
             )}
           </div>

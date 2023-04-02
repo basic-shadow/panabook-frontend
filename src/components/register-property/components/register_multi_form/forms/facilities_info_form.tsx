@@ -13,7 +13,7 @@ export default function RoomFacilityForm({
 }) {
   // MULTIFORM STATE
   const propertyRooms = useRegisterPropertyStore(
-    (state) => state.property_rooms
+    (state) => state.propertyRooms
   );
 
   const onSaveData = (
@@ -27,14 +27,14 @@ export default function RoomFacilityForm({
     newRooms[index] = newRoom;
 
     useRegisterPropertyStore.setState({
-      property_rooms: newRooms,
+      propertyRooms: newRooms,
     });
   };
 
   function onSubmit() {
     if (
       propertyRooms.some(
-        (room) => room.extra_beds && room.extra_beds_type?.length === 0
+        (room) => room.extraBeds && room.extraBedsType?.length === 0
       )
     )
       return;

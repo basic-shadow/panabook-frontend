@@ -16,10 +16,10 @@ export default function PropertyCategoryForm({
   nextStep: () => void;
 }) {
   // FORM DATA
-  const propertyCategory = useRegisterPropertyStore().property_category;
+  const propertyCategory = useRegisterPropertyStore().propertyCategory;
 
   const onSelect = (index: number) =>
-    useRegisterPropertyStore.setState({ property_category: index });
+    useRegisterPropertyStore.setState({ propertyCategory: index });
 
   return (
     <div className="max-w-7xl bg-white py-6 px-6">

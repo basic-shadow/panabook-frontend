@@ -68,7 +68,7 @@ export default function PhotosForm({
   function onSubmit() {
     if (imageList.length > 0) {
       useRegisterPropertyStore.setState((_) => ({
-        proprety_photos: imageList.map((val) => val.id),
+        propertyPhotos: imageList.map((val) => val.id),
       }));
       onNextStep();
     }

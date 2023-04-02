@@ -86,7 +86,6 @@ export default function PoliciesInfoForm({
   const { mutateAsync, isLoading } = useUploadObject(onSuccess);
 
   const items = useRegisterPropertyStore();
-  console.log("items  =", items);
   const [registerDate, setRegisterDate] = useState<string[]>(
     normalizeTimeSlots(items)
   );
@@ -121,11 +120,11 @@ export default function PoliciesInfoForm({
       !registerDate.find((val) => val === undefined || val === "")
     ) {
       useRegisterPropertyStore.setState((_) => ({
-        check_in_time: {
+        checkInTime: {
           from: registerDate[0]!,
           to: registerDate[1]!,
         },
-        check_out_time: {
+        checkOutTime: {
           from: registerDate[2]!,
           to: registerDate[3]!,
         },

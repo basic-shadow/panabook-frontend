@@ -5,14 +5,14 @@ export default function useArrayHook<T>(
   options: T[] = []
 ) {
   //   const bedTypesList = useMemo(() => {
-  //     return BED_TYPES.map((bedType) => ({
+  //     return bedTypeS.map((bedType) => ({
   //       label: bedType.label,
   //       value: bedType.value,
-  //       disabled: !!getValues().room_beds.find(
-  //         (prevBeds) => prevBeds.bed_type === bedType.value
+  //       disabled: !!getValues().roomBeds.find(
+  //         (prevBeds) => prevBeds.bedType === bedType.value
   //       ),
   //     }));
-  //   }, [getValues().room_beds]);
+  //   }, [getValues().roomBeds]);
   //   const add = (value) => {
   //     setArray([...array, value]);
   //   };

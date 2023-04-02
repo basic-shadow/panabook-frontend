@@ -1,8 +1,7 @@
-import { servicesInfoSchema } from "@/components/register-property/types/validations";
 import { useRegisterPropertyStore } from "@/components/register-property/store/store";
 import AppDropdown from "@/shared/UI/AppDropdown/AppDropdown";
 import Checkbox from "@/shared/UI/Checkbox/Checkbox";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { IoAddCircleOutline } from "react-icons/io5";
 import RegisterPropertyButtons from "../buttons_box";
@@ -16,13 +15,13 @@ export default function ServicesInfoForm({
   onNextStep: () => void;
 }) {
   // MULTIFORM STATE
-  const { property_languages, property_services } = useRegisterPropertyStore(
+  const { propertyLanguages, propertyServices } = useRegisterPropertyStore(
     (state) => state
   );
 
   const [selectedLangs, setSelectedLangs] =
-    useState<number[]>(property_languages);
-  const [services, setServices] = useState<number[]>(property_services);
+    useState<number[]>(propertyLanguages);
+  const [services, setServices] = useState<number[]>(propertyServices);
 
   const onAddNewLang = () => {
     // FIND NEW LANG ID FROM LANGUAGES WHICH DOES NOT EXIST IN SELECTED LANGS
@@ -48,8 +47,8 @@ export default function ServicesInfoForm({
     e.preventDefault();
     if (selectedLangs.length > 0 && services.length > 0) {
       useRegisterPropertyStore.setState({
-        property_languages: selectedLangs,
-        property_services: services,
+        propertyLanguages: selectedLangs,
+        propertyServices: services,
       });
       onNextStep();
     }

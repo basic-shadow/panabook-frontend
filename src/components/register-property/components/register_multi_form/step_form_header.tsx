@@ -20,22 +20,22 @@ export default function StepFormHeader({
       return true;
     } else if (step === 2) {
       return (
-        formState.property_city !== -1 &&
-        formState.property_address !== "" &&
-        formState.property_post_code !== "" &&
-        formState.contact_phone1 !== "" &&
-        formState.property_name !== "" &&
-        formState.contact_name !== "" &&
-        formState.stars_rating !== 0
+        formState.propertyCity !== -1 &&
+        formState.propertyAddress !== "" &&
+        formState.propertyPostCode !== "" &&
+        formState.contactPhone1 !== "" &&
+        formState.propertyName !== "" &&
+        formState.contactName !== "" &&
+        formState.starsRating !== 0
       );
     } else if (step === 3) {
-      return formState.property_rooms.length > 0;
+      return formState.propertyRooms.length > 0;
     } else if (step === 4) {
-      return formState.property_languages.length > 0;
+      return formState.propertyLanguages.length > 0;
     } else if (step === 5) {
-      return formState.property_rooms.length > 0;
+      return formState.propertyRooms.length > 0;
     } else if (step === 6) {
-      return formState.proprety_photos.length > 0;
+      return formState.propertyPhotos.length > 0;
     }
 
     return false;
