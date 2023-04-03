@@ -3,7 +3,7 @@ FROM node:16-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --production
 
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
@@ -30,6 +30,6 @@ COPY --from=builder /app/package.json ./package.json
 # COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-EXPOSE 3002
+EXPOSE 3001
 
 CMD ["yarn", "start"]
