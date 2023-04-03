@@ -1,6 +1,6 @@
 # Install dependencies only when needed
 FROM node:16-alpine AS deps
-RUN apk add --no-cache libc6-compat
+# RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --production
@@ -21,6 +21,7 @@ FROM node:16-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+ENV NEXT_PUBLIC_API_BASE_URL http://panabook.kz
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
