@@ -1,6 +1,17 @@
-import { QueryClient } from "react-query";
+import { type QueryObserverOptions, QueryClient } from "react-query";
 
-const defaultQueryConfig = { staleTime: 60000 };
+const defaultQueryConfig: QueryObserverOptions = {
+  staleTime: 60000,
+  retryOnMount: false,
+  retry(failureCount, error) {
+    if (failureCount > 2) {
+      return false;
+    }
+    return true;
+  },
+  refetchOnMount: false,
+  refetchOnWindowFocus: false,
+};
 
 export const queryClient = new QueryClient({
   defaultOptions: { queries: defaultQueryConfig },
