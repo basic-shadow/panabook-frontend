@@ -1,13 +1,13 @@
 version: "3.7"
 
 services:
-  panabook-frontend:
+  app:
     container_name: panabook-frontend
     build:
       context: .
-      dockerfile: .docker/Dockerfile
+      dockerfile: Dockerfile
     dns:
       - 4.4.4.4
       - 8.8.8.8
     ports:
-      - "3001:80"
+      - "3001:3001"
