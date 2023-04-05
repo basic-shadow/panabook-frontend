@@ -1,16 +1,14 @@
-import { type IRoomBed } from "@/components/register-property/types/register_property_types";
-
 export type RegisterPropertyRequest = {
-  city: number;
   name: string;
   stars: number;
-  hotelCategory: number;
+  city: number;
   address: string;
   postCode: string;
-  rooms: PropertyRoom[];
+  rooms: Array<PropertyRoom>;
   languageSpoken: number[];
-  hotelServices: number[];
-  imagesIds: number[];
+  services: number[];
+  category: number;
+  imageIds: number[];
   checkInFrom: string;
   checkInTo: string;
   checkOutFrom: string;
@@ -18,13 +16,21 @@ export type RegisterPropertyRequest = {
 };
 
 type PropertyRoom = {
-  type: number;
-  name: number;
-  beds: IRoomBed[];
-  extraBeds: IRoomBed[];
+  roomType: number;
+  roomName: number;
+  surfaceArea: number;
   maxGuests: number;
+  nonResidentPricePerNight: number;
   residentPricePerNight: number;
-  allowedSmoking: boolean;
   similarRoomsNumber: number;
-  facilities: number[];
+  allowedSmoking?: boolean;
+  facility?: number[];
+  beds: {
+    type: number;
+    quantity: number;
+  }[];
+  extraBeds?: {
+    type: number;
+    quantity: number;
+  }[];
 };

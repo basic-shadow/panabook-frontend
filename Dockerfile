@@ -9,6 +9,5 @@ COPY . .
 RUN yarn build
 
 ENV NODE_ENV production
-ENV NEXT_PUBLIC_API_BASE_URL http://panabook.kz
 
 CMD ["yarn", "start"]
