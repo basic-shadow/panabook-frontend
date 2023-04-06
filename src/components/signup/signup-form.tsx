@@ -8,6 +8,7 @@ import { GrLogin } from "react-icons/gr";
 import { useSignupHook } from "./services/useSignupHooks";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 import { type Signup } from "@/server/user/signup.types";
+import ErrorBox from "@/widgets/ErrorBox";
 
 export default function SignupForm() {
   const {
@@ -16,7 +17,7 @@ export default function SignupForm() {
     formState: { errors },
   } = useForm<Signup>();
 
-  const { onSignup, isLoading } = useSignupHook();
+  const { onSignup, isLoading, error } = useSignupHook();
 
   return (
     <div className="absolute z-10 flex min-h-full min-w-full items-center justify-center">
@@ -83,6 +84,9 @@ export default function SignupForm() {
                 placeholder="Пароль"
               />
             </div>
+
+            {/* ERROR MESSAGE */}
+            {error && <ErrorBox data={error.data} />}
           </div>
 
           <div>

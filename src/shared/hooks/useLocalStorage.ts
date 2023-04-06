@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function useLocalStorageHook<T>(
-  key: string,
-  initialValue: T | (() => T)
-) {
+export function useLocalStorageHook<T>(key: string, initialValue: T) {
+  const isMounted = useRef(false);
   const [value, setValue] = useState<T | null>(null);
 
   useEffect(() => {
-    if (value === null) return;
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
+    try {
+      const item = localStorage.getItem(key);
+      if (item) {
+        setValue(JSON.parse(item));
+      }
+    } catch (e) {
+      setValue(initialValue);
+    }
+    return () => {
+      isMounted.current = false;
+    };
+  }, [key]);
 
   useEffect(() => {
-    setValue(() => {
-      const jsonValue = localStorage.getItem(key);
-      if (jsonValue === null) {
-        if (typeof initialValue === "function") {
-          return (initialValue as () => T)();
-        } else {
-          return initialValue;
-        }
-      } else {
-        return JSON.parse(jsonValue);
-      }
-    });
-  }, []);
+    if (isMounted.current) {
+      localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      isMounted.current = true;
+    }
+  }, [key, value]);
 
-  return [value, setValue] as [T, typeof setValue];
+  return [value, setValue, isMounted.current] as [T, typeof setValue, boolean];
 }

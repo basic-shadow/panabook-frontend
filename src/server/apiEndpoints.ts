@@ -5,6 +5,6 @@ export const authEndpoints = {
 };
 
 export const propertyEndpoints = {
-  registerProperty: "/api/objects/create",
-  uploadPhotos: "/api/s3/upload-image",
+  registerProperty: "/api/property",
+  uploadPhotos: "/api/image",
 };

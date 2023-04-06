@@ -119,7 +119,7 @@ export default function PhotosForm({
               <div key={"image" + index} className="relative">
                 <Image
                   className="object-cover"
-                  src={image.url}
+                  src={process.env.NEXT_PHOTO_BASE_URL + image.url}
                   alt={"object"}
                   width={320}
                   height={320}

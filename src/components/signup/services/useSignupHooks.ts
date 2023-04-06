@@ -7,7 +7,7 @@ import { type Signup } from "@/server/user/signup.types";
 
 export const useSignupHook = () => {
   const router = useRouter();
-  const { mutateAsync, isLoading } = useSignup(onSuccess);
+  const { mutateAsync, isLoading, error } = useSignup(onSuccess);
 
   function onSuccess() {
     router.push(routeEndpoints.registerProperty);
@@ -19,5 +19,5 @@ export const useSignupHook = () => {
     } catch (error) {}
   };
 
-  return { onSignup, isLoading };
+  return { onSignup, isLoading, error };
 };

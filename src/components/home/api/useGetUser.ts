@@ -6,10 +6,7 @@ import { useQuery } from "react-query";
 export function useGetUser() {
   const { data, isLoading, error } = useQuery<UserInfo, Error>(
     queryKeys.getUser,
-    getUserInfo,
-    {
-      retryOnMount: false,
-    }
+    getUserInfo
   );
 
   return { user: data, isLoading, error };

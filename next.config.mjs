@@ -11,6 +11,9 @@ const config = {
   images: {
     domains: ["kazbooking-images.object.pscloud.io"],
   },
+  env: {
+    NEXT_PHOTO_BASE_URL: "https://kazbooking-images.object.pscloud.io/",
+  },
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you
    * must comment the below `i18n` config out.

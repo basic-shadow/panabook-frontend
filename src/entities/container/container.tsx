@@ -12,23 +12,23 @@ import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 function LoadingUI({ children }: { children?: React.ReactNode }) {
   const { user, isLoading } = useGetUser();
   const [routerLoading, setRouterLoading] = useState(false);
-  const [userToken] = useLocalStorageHook<{ accessToken: string }>(
-    localStorageKeys.userToken,
-    {
-      accessToken: "",
-    }
-  );
+  const [userToken, _, isMounted] = useLocalStorageHook<{
+    accessToken: string;
+  }>(localStorageKeys.userToken, {
+    accessToken: "",
+  });
   // ROUTER
   const router = useRouter();
   const location = useLocation();
 
   useEffect(() => {
     if (
-      userToken?.accessToken === "" &&
+      isMounted &&
+      userToken === null &&
       location.asPath !== routeEndpoints.signup
     ) {
       router.push(routeEndpoints.login);
-    } else if (user?.numberOfObjects === 0) {
+    } else if (user?.numberOfObjects == 0) {
       router.push(routeEndpoints.registerProperty);
     } else if (
       user !== undefined &&

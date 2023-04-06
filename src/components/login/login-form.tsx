@@ -6,11 +6,12 @@ import { localStorageKeys } from "@/shared/localStorageKeys";
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineLock } from "react-icons/ai";
 import { GrLogin } from "react-icons/gr";
 import { useLogin } from "./api/useLogin";
+import ErrorBox from "@/widgets/ErrorBox";
 
 export default function LoginForm() {
   // ROUTER
@@ -19,10 +20,14 @@ export default function LoginForm() {
     accessToken: "",
   });
 
-  const onSuccessLogin = (data: string) => {
-    setToken({ accessToken: data });
+  const onSuccessLogin = useCallback((data: string) => {
+    // setToken({ accessToken: data });
+    localStorage.setItem(
+      localStorageKeys.userToken,
+      JSON.stringify({ accessToken: data })
+    );
     router.push(routeEndpoints.registerProperty);
-  };
+  }, []);
 
   // FORM
   const {
@@ -69,7 +74,14 @@ export default function LoginForm() {
           </div>
         )}
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="mt-8 space-y-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            handleSubmit(onSubmit)(e);
+          }}
+        >
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="flex flex-col gap-4 -space-y-px rounded-md shadow-sm">
             <div>
@@ -109,6 +121,9 @@ export default function LoginForm() {
                 </p>
               )}
             </div>
+
+            {/* ERROR MESSAGE */}
+            {error && <ErrorBox data={error.data} />}
           </div>
 
           <div className="flex items-center justify-between">

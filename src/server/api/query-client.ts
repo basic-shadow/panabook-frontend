@@ -4,7 +4,7 @@ const defaultQueryConfig: QueryObserverOptions = {
   staleTime: 60000,
   retryOnMount: false,
   retry(failureCount, error) {
-    if (failureCount > 2) {
+    if (failureCount > 1) {
       return false;
     }
     return true;

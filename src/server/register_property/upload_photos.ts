@@ -8,7 +8,7 @@ export async function uploadPhotos(
 ): Promise<UploadPhotoResponse> {
   try {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("image", file);
 
     const { data } = await API.post<UploadPhotoResponse>(
       propertyEndpoints.uploadPhotos,
