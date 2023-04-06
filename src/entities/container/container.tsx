@@ -28,7 +28,7 @@ function LoadingUI({ children }: { children?: React.ReactNode }) {
       location.asPath !== routeEndpoints.signup
     ) {
       router.push(routeEndpoints.login);
-    } else if (user?.numberOfObjects == 0) {
+    } else if (user?.numberofobjects == 0) {
       router.push(routeEndpoints.registerProperty);
     } else if (
       user !== undefined &&
@@ -37,7 +37,7 @@ function LoadingUI({ children }: { children?: React.ReactNode }) {
     ) {
       router.push(routeEndpoints.home);
     }
-  }, [userToken?.accessToken, user, location.asPath]);
+  }, [userToken?.accessToken, user, location.asPath, isMounted]);
 
   useEffect(() => {
     const handleStart = (url: string) =>

@@ -8,9 +8,9 @@ interface IAccordion {
 
 function FaqComponent() {
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex h-screen items-center justify-center">
       <div className="bg-white">
-        <div className="container flex flex-col justify-center px-4 py-8 mx-auto md:p-8">
+        <div className="container mx-auto flex flex-col justify-center px-4 py-8 md:p-8">
           <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
           <p className="mt-4 mb-8 text-gray-600">
             React Interview Questions And Answers
@@ -18,7 +18,7 @@ function FaqComponent() {
           <div className="space-y-4">
             <details className="w-full rounded-lg ring-1 ring-purple-600">
               <summary className="px-4 py-6">What is React?</summary>
-              <p className="px-4 py-6 pt-0 ml-4 -mt-4 text-gray-600">
+              <p className="ml-4 -mt-4 px-4 py-6 pt-0 text-gray-600">
                 React is a front-end JavaScript library developed by Facebook in
                 2011.
               </p>
@@ -27,7 +27,7 @@ function FaqComponent() {
               <summary className="px-4 py-6">
                 What is Props and how to use it give some example?
               </summary>
-              <p className="px-4 py-6 pt-0 ml-4 -mt-4 text-gray-600">
+              <p className="ml-4 -mt-4 px-4 py-6 pt-0 text-gray-600">
                 Props is the shorthand for Properties in React.
               </p>
             </details>
@@ -35,7 +35,7 @@ function FaqComponent() {
               <summary className="px-4 py-6">
                 How to install tailwind css in react js ?
               </summary>
-              <p className="px-4 py-6 pt-0 ml-4 -mt-4 text-gray-600">
+              <p className="ml-4 -mt-4 px-4 py-6 pt-0 text-gray-600">
                 What are synthetic events in React?
               </p>
             </details>
@@ -48,7 +48,6 @@ function FaqComponent() {
 
 export default function Accordion({ headers, content, roomName }: IAccordion) {
   const [activeIndex, setActiveIndex] = useState(-1);
-  console.log("roomName =", roomName);
 
   return (
     <div data-accordion="collapse">
@@ -63,7 +62,7 @@ export default function Accordion({ headers, content, roomName }: IAccordion) {
             <button
               type="button"
               className={
-                "flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" +
+                "flex w-full items-center justify-between border border-gray-200 p-5 text-left font-medium text-gray-500 hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:focus:ring-gray-800" +
                 (index === headers.length - 1 && headers.length > 0
                   ? "border-b"
                   : "border-b-0") +
@@ -77,7 +76,7 @@ export default function Accordion({ headers, content, roomName }: IAccordion) {
               <svg
                 data-accordion-icon
                 className={
-                  "w-6 h-6 shrink-0 " +
+                  "h-6 w-6 shrink-0 " +
                   (activeIndex === index ? "rotate-180" : "")
                 }
                 fill="currentColor"

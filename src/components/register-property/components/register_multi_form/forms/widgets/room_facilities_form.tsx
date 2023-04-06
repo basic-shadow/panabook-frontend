@@ -77,7 +77,7 @@ export default function RoomFacilitiesForm({
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
         <div className="mb-4 w-full border-b">
           <h2 className="pb-2 text-xl font-semibold text-gray-800">
-            {ROOM_NAMES[room.roomName]!.label}
+            {ROOM_NAMES[room.roomName - 1]!.label}
           </h2>
         </div>
         <div className="flex flex-col gap-6 border-b pb-4">
@@ -116,7 +116,7 @@ export default function RoomFacilitiesForm({
               <div className="flex items-center gap-4" key={field.id + index}>
                 <AppDropdown
                   selectedValue={{
-                    label: BED_TYPES[field.bedType]!.label,
+                    label: BED_TYPES[field.bedType - 1]!.label,
                     value: field.bedType,
                   }}
                   options={BED_TYPES}

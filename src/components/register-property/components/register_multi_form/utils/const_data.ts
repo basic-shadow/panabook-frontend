@@ -1630,19 +1630,19 @@ export const BED_NUMBERS = [
 export const LANGUAGES = [
   {
     label: "Казахский",
-    value: 0,
-  },
-  {
-    label: "Английский",
     value: 1,
   },
   {
-    label: "Русский",
+    label: "Английский",
     value: 2,
   },
   {
-    label: "Немецкий",
+    label: "Русский",
     value: 3,
+  },
+  {
+    label: "Немецкий",
+    value: 4,
   },
 ];
 

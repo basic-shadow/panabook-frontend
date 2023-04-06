@@ -50,18 +50,18 @@ export default memo(function RoomsInfoFrom({
   } = useForm<IPropertyRoomWithFacilities>({
     resolver: yupResolver(roomsInfoSchema),
     defaultValues: {
-      roomName: 0,
-      roomType: 0,
+      roomName: 1,
+      roomType: 1,
       allowedSmoking: 0,
-      roomBeds: [{ bedType: 0, quantity: 1 }],
+      roomBeds: [{ bedType: 1, quantity: 1 }],
     },
   });
 
   const getRoomNames = useMemo(() => {
     return ROOM_NAMES.slice(
-      ROOM_TYPES[getValues().roomType]!.namespaceOffset,
-      ROOM_TYPES[getValues().roomType]!.namespaceLength +
-        ROOM_TYPES[getValues().roomType]!.namespaceOffset
+      ROOM_TYPES[getValues().roomType - 1]!.namespaceOffset,
+      ROOM_TYPES[getValues().roomType - 1]!.namespaceLength +
+        ROOM_TYPES[getValues().roomType - 1]!.namespaceOffset
     );
   }, [getValues().roomType]);
 
@@ -181,7 +181,7 @@ export default memo(function RoomsInfoFrom({
                   <AppDropdown
                     name="roomType"
                     selectedValue={{
-                      label: ROOM_TYPES[watch().roomType]!.label,
+                      label: ROOM_TYPES[watch().roomType - 1]!.label,
                       value: watch().roomType,
                     }}
                     options={ROOM_TYPES}
@@ -192,7 +192,7 @@ export default memo(function RoomsInfoFrom({
                       setValue(
                         "roomName",
                         ROOM_NAMES[
-                          ROOM_TYPES[val as number]!.namespaceOffset + 1
+                          ROOM_TYPES[(val as number) - 1]!.namespaceOffset + 1
                         ]!.value - 1,
                         { shouldValidate: true }
                       );
@@ -210,7 +210,7 @@ export default memo(function RoomsInfoFrom({
                   <AppDropdown
                     name="roomName"
                     selectedValue={{
-                      label: ROOM_NAMES[watch().roomName]!.label,
+                      label: ROOM_NAMES[watch().roomName - 1]!.label,
                       value: watch().roomName,
                     }}
                     options={getRoomNames}

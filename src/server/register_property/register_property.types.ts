@@ -1,4 +1,8 @@
 export type RegisterPropertyRequest = {
+  contactName: string;
+  contactPhone1: string;
+  contactPhone2?: string;
+
   name: string;
   stars: number;
   city: number;

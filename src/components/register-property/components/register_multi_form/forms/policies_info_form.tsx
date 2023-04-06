@@ -80,7 +80,7 @@ export default function PoliciesInfoForm({
   // ROUTER
   const router = useRouter();
 
-  const onSuccess = () => router.push(routeEndpoints.registerProperty);
+  const onSuccess = () => router.push(routeEndpoints.home);
 
   // SUBMIT HOOK
   const { mutateAsync, isLoading } = useUploadObject(onSuccess);
@@ -119,7 +119,7 @@ export default function PoliciesInfoForm({
       registerDate.length === 4 &&
       !registerDate.find((val) => val === undefined || val === "")
     ) {
-      useRegisterPropertyStore.setState((_) => ({
+      const policyInfo = {
         checkInTime: {
           from: registerDate[0]!,
           to: registerDate[1]!,
@@ -128,9 +128,10 @@ export default function PoliciesInfoForm({
           from: registerDate[2]!,
           to: registerDate[3]!,
         },
-      }));
+      };
+      useRegisterPropertyStore.setState((_) => policyInfo);
 
-      await mutateAsync(items);
+      await mutateAsync({ ...items, ...policyInfo });
     }
   }
 
