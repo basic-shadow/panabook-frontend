@@ -9,6 +9,9 @@ import { routeEndpoints } from "@/shared/routeEndpoint";
 import { useGetUser } from "@/components/home/api/useGetUser";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 
+import "react-toastify/dist/ReactToastify.css";
+import AppToaster from "@/shared/UI/AppToaster/AppToaster";
+
 function LoadingUI({ children }: { children?: React.ReactNode }) {
   const { user, isLoading } = useGetUser();
   const [routerLoading, setRouterLoading] = useState(false);
@@ -95,6 +98,9 @@ export default function Container({
       {user ? <Header /> : null}
       {/* @ts-ignore */}
       <LoadingUI>{children}</LoadingUI>
+
+      {/* TOASTER */}
+      <AppToaster />
     </>
   );
 }

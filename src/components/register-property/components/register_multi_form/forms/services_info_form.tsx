@@ -76,7 +76,7 @@ export default function ServicesInfoForm({
                 <AppDropdown
                   name="languages"
                   selectedValue={{
-                    label: LANGUAGES[lang]!.label,
+                    label: LANGUAGES[lang - 1]!.label,
                     value: lang,
                   }}
                   options={langList}

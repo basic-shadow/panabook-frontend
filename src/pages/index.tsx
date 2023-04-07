@@ -1,7 +1,10 @@
 import { useGetUser } from "@/components/home/api/useGetUser";
 import Container from "@/entities/container/container";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
+import { routeEndpoints } from "@/shared/routeEndpoint";
 import { type NextPage } from "next";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const writeToUs = () => {
   // WHATSAPP LINK
@@ -13,6 +16,13 @@ const writeToUs = () => {
 
 const Home: NextPage = () => {
   const { isLoading, user } = useGetUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user !== undefined && !isLoading) {
+      router.push(routeEndpoints.login);
+    }
+  }, [user, isLoading]);
 
   return (
     <Container>

@@ -296,7 +296,7 @@ export default memo(function RoomsInfoFrom({
                     >
                       <AppDropdown
                         selectedValue={{
-                          label: BED_TYPES[bed.bedType]!.label,
+                          label: BED_TYPES[bed.bedType - 1]!.label,
                           value: bed.bedType,
                         }}
                         options={bedTypesList}

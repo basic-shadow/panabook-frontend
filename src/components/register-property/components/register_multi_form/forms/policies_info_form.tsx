@@ -3,12 +3,13 @@ import { useRegisterPropertyStore } from "@/components/register-property/store/s
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import { AppDropdown } from "@/shared/UI";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RegisterPropertyButtons from "../buttons_box";
 import {
   normalizeTimeSlots,
   normalizeTimeSlotsDropdown,
 } from "../utils/normalize_models";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
 const array = ["12:00", "14:00", "15:00", ""];
 
@@ -77,13 +78,15 @@ export default function PoliciesInfoForm({
   onGoBack: () => void;
   onNextStep: () => void;
 }) {
+  // NOTIFICATIONS
+  const { notifySuccess, notifyError } = useNotifications();
   // ROUTER
   const router = useRouter();
 
   const onSuccess = () => router.push(routeEndpoints.home);
 
   // SUBMIT HOOK
-  const { mutateAsync, isLoading } = useUploadObject(onSuccess);
+  const { mutateAsync, isLoading, error } = useUploadObject(onSuccess);
 
   const items = useRegisterPropertyStore();
   const [registerDate, setRegisterDate] = useState<string[]>(
@@ -112,6 +115,12 @@ export default function PoliciesInfoForm({
       return newRegisterDate;
     });
   };
+
+  useEffect(() => {
+    if (error) {
+      notifyError(error.message ?? "Ошибка при отправке данных");
+    }
+  }, [error]);
 
   async function onSubmit() {
     if (
