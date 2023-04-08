@@ -4,4 +4,5 @@ export const queryKeys = {
   registerProperty: "registerProperty",
   uploadPhoto: "uploadPhoto",
   getUser: "getUser",
+  getObjects: "getObjects",
 };

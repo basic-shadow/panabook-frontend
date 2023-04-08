@@ -11,9 +11,17 @@ import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 
 import "react-toastify/dist/ReactToastify.css";
 import AppToaster from "@/shared/UI/AppToaster/AppToaster";
+import { type UserInfo } from "@/server/user/user_info.types";
 
-function LoadingUI({ children }: { children?: React.ReactNode }) {
-  const { user, isLoading } = useGetUser();
+function LoadingUI({
+  children,
+  user,
+  isLoading,
+}: {
+  children?: React.ReactNode;
+  user: UserInfo | undefined;
+  isLoading: boolean;
+}) {
   const [routerLoading, setRouterLoading] = useState(false);
   const [userToken, _, isMounted] = useLocalStorageHook<{
     accessToken: string;
@@ -38,7 +46,7 @@ function LoadingUI({ children }: { children?: React.ReactNode }) {
       (location.asPath === routeEndpoints.login ||
         location.asPath === routeEndpoints.signup)
     ) {
-      router.push(routeEndpoints.home);
+      router.push(routeEndpoints.success);
     }
   }, [userToken?.accessToken, user, location.asPath, isMounted]);
 
@@ -85,7 +93,7 @@ export default function Container({
   favicon?: string;
   children?: React.ReactNode;
 }) {
-  const { user } = useGetUser();
+  const { user, isLoading } = useGetUser();
 
   return (
     <>
@@ -97,7 +105,9 @@ export default function Container({
       </Head>
       {user ? <Header /> : null}
       {/* @ts-ignore */}
-      <LoadingUI>{children}</LoadingUI>
+      <LoadingUI user={user} isLoading={isLoading}>
+        {children}
+      </LoadingUI>
 
       {/* TOASTER */}
       <AppToaster />

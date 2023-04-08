@@ -3,4 +3,5 @@ export const routeEndpoints = {
   signup: "/signup",
   login: "/login",
   registerProperty: "/register-property",
+  success: "/success",
 };

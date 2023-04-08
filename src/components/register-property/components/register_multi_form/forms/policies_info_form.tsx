@@ -83,7 +83,7 @@ export default function PoliciesInfoForm({
   // ROUTER
   const router = useRouter();
 
-  const onSuccess = () => router.push(routeEndpoints.home);
+  const onSuccess = () => router.push(routeEndpoints.success);
 
   // SUBMIT HOOK
   const { mutateAsync, isLoading, error } = useUploadObject(onSuccess);

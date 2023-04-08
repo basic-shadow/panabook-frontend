@@ -1,6 +1,5 @@
 import { type FC, memo } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import "./ToasterStyles.scss";
 
 interface AppToasterProps {
   label?: string;
@@ -36,10 +35,10 @@ export const ToasterBox: FC<AppToasterProps> = ({ label, content }) => {
   if (Array.isArray(content)) {
     return (
       <div>
-        {label && <h3 className="toaster-label">{label}</h3>}
+        {label && <h3 style={{ fontSize: "14px" }}>{label}</h3>}
         {content &&
           content.map((item, index) => (
-            <p key={item + index} className="toaster-content">
+            <p key={item + index} style={{ fontSize: "14px" }}>
               {item}
             </p>
           ))}
@@ -49,8 +48,8 @@ export const ToasterBox: FC<AppToasterProps> = ({ label, content }) => {
 
   return (
     <div>
-      {label && <h3 className="toaster-label">{label}</h3>}
-      {content && <p className="toaster-content">{content}</p>}
+      {label && <h3 style={{ fontSize: "14px" }}>{label}</h3>}
+      {content && <p style={{ fontSize: "14px" }}>{content}</p>}
     </div>
   );
 };
