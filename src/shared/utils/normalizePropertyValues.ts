@@ -1,0 +1,94 @@
+import {
+  BED_TYPES,
+  FACILITIES_CATEGORIES,
+  KAZAKHSTAN_CITIES,
+  LANGUAGES,
+  PROPERTY_SERVICES,
+  ROOM_NAMES,
+  ROOM_TYPES,
+} from "@/components/register-property/components/register_multi_form/utils/const_data";
+import { PROPERTY_CATEGORIES } from "@/components/register-property/utils/const_data";
+import {
+  type PropertyRoom,
+  type ObjectsInfo,
+} from "@/server/user/objects.types";
+import { type ObjectsParsedInfo } from "@/types/objects.types";
+
+const ALL_FACILITIES: { label: string; value: number }[] =
+  FACILITIES_CATEGORIES.reduce(
+    (acc: { label: string; value: number }[], category) => [
+      ...acc,
+      ...category.value,
+    ],
+    []
+  );
+
+const normalizeStringToArrayNumber = (value: string): number[] => {
+  if (normalizeStringToArrayNumber.length <= 2) return [];
+
+  return value
+    .substring(1, value.length - 1)
+    .split(",")
+    .map((v) => +v);
+};
+
+export const normalizePropertyValues = (
+  propertyValues: ObjectsInfo
+): ObjectsParsedInfo => {
+  // @ts-ignore
+  return Object.entries(propertyValues).reduce((acc, [key, value]) => {
+    if (key === "city") {
+      return {
+        ...acc,
+        [key]: KAZAKHSTAN_CITIES.find((city) => city.value == value)?.label,
+      };
+    } else if (key === "category") {
+      return {
+        ...acc,
+        [key]: PROPERTY_CATEGORIES.find((category) => category.value == +value)
+          ?.label,
+      };
+    } else if (key === "languageSpoken") {
+      return {
+        ...acc,
+        [key]: normalizeStringToArrayNumber(value as string).map(
+          (val) => LANGUAGES.find((language) => language.value == val)?.label
+        ),
+      };
+    } else if (key === "services") {
+      return {
+        ...acc,
+        [key]: normalizeStringToArrayNumber(value as string).map(
+          (service) => PROPERTY_SERVICES.find((f) => f.value == service)?.label
+        ),
+      };
+    } else if (key === "rooms") {
+      return {
+        ...acc,
+        [key]: (value as PropertyRoom[]).map((room) => ({
+          ...room,
+          facility: normalizeStringToArrayNumber(room.facility as string).map(
+            (facility) => ({
+              label: ALL_FACILITIES.find((f) => f.value === facility)?.label,
+            })
+          ),
+          beds: room.beds.map((bed) => ({
+            ...bed,
+            type: BED_TYPES.find((f) => f.value == +bed.type)?.label,
+          })),
+          extraBeds: room.extraBeds?.map((bed) => ({
+            ...bed,
+            type: BED_TYPES.find((f) => f.value == +bed.type)?.label,
+          })),
+          roomName: ROOM_NAMES.find((f) => f.value == +room.roomName)?.label,
+          roomType: ROOM_TYPES.find((f) => f.value == +room.roomType)?.label,
+        })),
+      };
+    }
+
+    return {
+      ...acc,
+      [key]: value,
+    };
+  }, {});
+};

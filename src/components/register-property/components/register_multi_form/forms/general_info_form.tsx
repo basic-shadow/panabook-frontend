@@ -35,9 +35,16 @@ export default memo(function GeneralInfoForm({
 
   function onSubmit() {
     if (isValid) {
+      const contactPhone2 = getValues().contactPhone2;
       useRegisterPropertyStore.setState((state) => ({
         ...getValues(),
         contactPhone1: "+" + getValues().contactPhone1.replace(/[^\d]/g, ""),
+        contactPhone2:
+          contactPhone2 !== undefined
+            ? contactPhone2[contactPhone2.length - 1] !== "_"
+              ? "+" + contactPhone2.replace(/[^\d]/g, "")
+              : ""
+            : "",
       }));
       onNextStep();
     }

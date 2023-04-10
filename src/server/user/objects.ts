@@ -4,9 +4,9 @@ import { type ObjectsInfo } from "./objects.types";
 
 export async function getObjectsApi(options?: {
   signal?: AbortSignal;
-}): Promise<ObjectsInfo> {
+}): Promise<ObjectsInfo[]> {
   try {
-    const { data } = await API.get<ObjectsInfo>(authEndpoints.getObjects, {
+    const { data } = await API.get<ObjectsInfo[]>(authEndpoints.getObjects, {
       signal: options?.signal,
     });
 

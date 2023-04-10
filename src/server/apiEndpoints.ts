@@ -2,7 +2,7 @@ export const authEndpoints = {
   signup: "/api/auth/register",
   login: "/api/auth/login",
   getUser: "/api/user/me",
-  getObjects: "/api/user/objects",
+  getObjects: "/api/property",
 };
 
 export const propertyEndpoints = {

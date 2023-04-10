@@ -1,96 +1,23 @@
-import Header from "@/components/navbar/Header";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Head from "next/head";
-import { useLocalStorageHook } from "@/shared/hooks/useLocalStorage";
-import { localStorageKeys } from "@/shared/localStorageKeys";
-import { useRouter } from "next/navigation";
-import { useRouter as useLocation } from "next/router";
-import { routeEndpoints } from "@/shared/routeEndpoint";
 import { useGetUser } from "@/components/home/api/useGetUser";
-import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 
 import "react-toastify/dist/ReactToastify.css";
 import AppToaster from "@/shared/UI/AppToaster/AppToaster";
-import { type UserInfo } from "@/server/user/user_info.types";
-
-function LoadingUI({
-  children,
-  user,
-  isLoading,
-}: {
-  children?: React.ReactNode;
-  user: UserInfo | undefined;
-  isLoading: boolean;
-}) {
-  const [routerLoading, setRouterLoading] = useState(false);
-  const [userToken, _, isMounted] = useLocalStorageHook<{
-    accessToken: string;
-  }>(localStorageKeys.userToken, {
-    accessToken: "",
-  });
-  // ROUTER
-  const router = useRouter();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (
-      isMounted &&
-      userToken === null &&
-      location.asPath !== routeEndpoints.signup
-    ) {
-      router.push(routeEndpoints.login);
-    } else if (user?.numberofobjects == 0) {
-      router.push(routeEndpoints.registerProperty);
-    } else if (
-      user !== undefined &&
-      (location.asPath === routeEndpoints.login ||
-        location.asPath === routeEndpoints.signup)
-    ) {
-      router.push(routeEndpoints.success);
-    }
-  }, [userToken?.accessToken, user, location.asPath, isMounted]);
-
-  useEffect(() => {
-    const handleStart = (url: string) =>
-      url !== location.asPath && setRouterLoading(true);
-    const handleComplete = (url: string) => {
-      url === location.asPath &&
-        setTimeout(() => {
-          setRouterLoading(false);
-        }, 1000);
-    };
-
-    location.events.on("routeChangeStart", handleStart);
-    location.events.on("routeChangeComplete", handleComplete);
-    location.events.on("routeChangeError", handleComplete);
-
-    return () => {
-      location.events.off("routeChangeStart", handleStart);
-      location.events.off("routeChangeComplete", handleComplete);
-      location.events.off("routeChangeError", handleComplete);
-    };
-  });
-
-  const isLoadingState = isLoading || routerLoading;
-
-  return isLoadingState ? (
-    <div className="fixed top-0 left-0 right-0 bottom-0 z-10 flex items-center justify-center bg-gray-200">
-      <SpinnerLoader color={"text-indigo-500"} />
-    </div>
-  ) : (
-    children
-  );
-}
+import AuthLoadingLayer from "@/shared/AuthLoadingLayer/AuthLoadingLayer";
+import RegisterHeader from "@/components/navbar/RegisterHeader";
 
 export default function Container({
   title = "Panabook",
   description = "Panabook - Онлайн бронирование отелей, туров и авиабилетов",
   favicon = "/favicon.ico",
+  removeHeader = false,
   children,
 }: {
   title?: string;
   description?: string;
   favicon?: string;
+  removeHeader?: boolean;
   children?: React.ReactNode;
 }) {
   const { user, isLoading } = useGetUser();
@@ -103,11 +30,11 @@ export default function Container({
         <meta name="description" content={description} />
         <link rel="icon" href={favicon} />
       </Head>
-      {user ? <Header /> : null}
+      {user && !removeHeader ? <RegisterHeader /> : null}
       {/* @ts-ignore */}
-      <LoadingUI user={user} isLoading={isLoading}>
+      <AuthLoadingLayer user={user} isLoading={isLoading}>
         {children}
-      </LoadingUI>
+      </AuthLoadingLayer>
 
       {/* TOASTER */}
       <AppToaster />

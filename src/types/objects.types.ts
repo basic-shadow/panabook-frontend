@@ -1,16 +1,16 @@
-export type ObjectsInfo = {
+export type ObjectsParsedInfo = {
   contactName: string;
   contactPhone1: string;
   contactPhone2?: string;
 
   name: string;
   stars: number;
-  city: number;
+  city: string;
   address: string;
   postCode: string;
-  rooms: Array<PropertyRoom>;
-  languageSpoken: string;
-  services: string;
+  rooms: Array<ObjectsParsedRooms>;
+  languageSpoken: string[];
+  services: string[];
   category: string;
   imageIds: string[];
   checkInFrom: string;
@@ -19,7 +19,7 @@ export type ObjectsInfo = {
   checkOutTo: string;
 };
 
-export type PropertyRoom = {
+type ObjectsParsedRooms = {
   roomType: string;
   roomName: string;
   surfaceArea: number;
@@ -28,13 +28,13 @@ export type PropertyRoom = {
   residentPricePerNight: number;
   similarRoomsNumber: number;
   allowedSmoking?: boolean;
-  facility: string;
+  facility: string[];
   beds: {
     type: string;
     quantity: number;
   }[];
   extraBeds?: {
-    type: number;
+    type: string;
     quantity: number;
   }[];
 };
