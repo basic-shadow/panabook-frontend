@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user !== undefined && !isLoading) {
+    if (user === undefined && isLoading === false) {
       router.push(routeEndpoints.login);
     }
   }, [user, isLoading]);

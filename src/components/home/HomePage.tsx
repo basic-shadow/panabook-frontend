@@ -10,9 +10,12 @@ import MainDashboard from "@/entities/mainDashboard/mainDashboard";
 import { type ObjectsInfo } from "@/server/user/objects.types";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 import Image from "next/image";
-import { PROPERTY_CATEGORIES } from "../register-property/utils/const_data";
-import { type ObjectsParsedInfo } from "@/types/objects.types";
+import {
+  type ObjectsParsedRooms,
+  type ObjectsParsedInfo,
+} from "@/types/objects.types";
 import { normalizePropertyValues } from "@/shared/utils/normalizePropertyValues";
+import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 
 type ObjectsTableData = {
   name: string;
@@ -23,9 +26,11 @@ type ObjectsTableData = {
 
 export default function HomePage({
   objects,
+  fetchNextPage,
   objectsLoading,
 }: {
   objects?: ObjectsInfo[];
+  fetchNextPage: () => void;
   objectsLoading: boolean;
 }) {
   const [selectedObject, setSelectedObject] =
@@ -83,6 +88,9 @@ export default function HomePage({
     [objects]
   );
 
+  // custom hooks
+  const observerElem = useInfiniteScroll(fetchNextPage);
+
   const imageBoxes = useCallback((imageUrl: string[]) => {
     return (
       <div className="flex flex-col items-center">
@@ -101,12 +109,43 @@ export default function HomePage({
     );
   }, []);
 
+  const displayObjectInfo = useCallback((value: any) => {
+    if (typeof value === "string" || typeof value === "number") {
+      return <p>{value}</p>;
+    } else if (Array.isArray(value)) {
+      return (
+        <div>
+          {value.map((value, i) => (
+            <div key={i}>{valueBoxes("key", value)}</div>
+          ))}
+        </div>
+      );
+    } else if (typeof value === "object") {
+      return (
+        <div>
+          {Object.entries(value).map(([key, value]) => (
+            <div
+              key={key}
+              className={
+                "flex justify-between" +
+                (key === "extraBeds" ? " mb-2 border-b-2 pb-2" : "")
+              }
+            >
+              <p className="mr-2">{key}:</p>
+              {valueBoxes(key, value)}
+            </div>
+          ))}
+        </div>
+      );
+    }
+  }, []);
+
   const valueBoxes = useCallback((key: string, value: any) => {
     switch (key) {
       case "imageUrls":
         return imageBoxes(value);
       default:
-        return <p>{value}</p>;
+        return displayObjectInfo(value);
     }
   }, []);
 
@@ -180,6 +219,13 @@ export default function HomePage({
             )}
           </tbody>
         </table>
+        <div
+          className="ml-2"
+          style={{ height: 1, display: "flex", justifyContent: "center" }}
+          ref={observerElem}
+        >
+          {objectsLoading && <SpinnerLoader />}
+        </div>
       </div>
 
       {/* MODAL */}
@@ -187,6 +233,7 @@ export default function HomePage({
         open={selectedObject !== null}
         onClose={closeModal}
         title={selectedObject !== null ? selectedObject.name : ""}
+        className="h-screen overflow-y-auto"
       >
         {selectedObject !== null && (
           <div className="flex w-[800px] flex-col border py-4 px-6">
@@ -196,8 +243,8 @@ export default function HomePage({
                   key={key + value}
                   className="flex items-center justify-between border-b py-2"
                 >
-                  <p className="">{key}:</p>
-                  {valueBoxes(key, value)}
+                  <p className="w-min">{key}:</p>
+                  <div>{valueBoxes(key, value)}</div>
                 </div>
               );
             })}

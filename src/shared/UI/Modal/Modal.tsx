@@ -5,16 +5,20 @@ export default function Modal({
   onClose,
   title = "Title",
   children,
+  className = "",
 }: {
   open: boolean;
   title?: string;
   onClose: () => void;
   children: React.ReactNode;
+  className?: string;
 }) {
   return open ? (
     <>
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none"
+        className={
+          "fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none"
+        }
         onClick={onClose}
       >
         <div
@@ -24,7 +28,12 @@ export default function Modal({
           }}
         >
           {/*content*/}
-          <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
+          <div
+            className={
+              "relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none " +
+              className
+            }
+          >
             {/*header*/}
             <div className="flex items-start justify-between rounded-t border-b border-solid border-slate-200 p-5">
               <h3 className="text-3xl font-semibold">{title}</h3>

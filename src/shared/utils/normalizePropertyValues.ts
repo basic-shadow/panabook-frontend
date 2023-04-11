@@ -24,12 +24,14 @@ const ALL_FACILITIES: { label: string; value: number }[] =
   );
 
 const normalizeStringToArrayNumber = (value: string): number[] => {
-  if (normalizeStringToArrayNumber.length <= 2) return [];
-
-  return value
-    .substring(1, value.length - 1)
-    .split(",")
-    .map((v) => +v);
+  if (typeof value === "string") {
+    return value
+      .substring(1, value.length - 1)
+      .split(",")
+      .map((v) => +v);
+  } else {
+    return (value as string[]).map((v) => +v);
+  }
 };
 
 export const normalizePropertyValues = (
@@ -40,37 +42,37 @@ export const normalizePropertyValues = (
     if (key === "city") {
       return {
         ...acc,
-        [key]: KAZAKHSTAN_CITIES.find((city) => city.value == value)?.label,
+        city: KAZAKHSTAN_CITIES.find((city) => city.value == value)?.label,
       };
     } else if (key === "category") {
       return {
         ...acc,
-        [key]: PROPERTY_CATEGORIES.find((category) => category.value == +value)
-          ?.label,
+        category: PROPERTY_CATEGORIES.find(
+          (category) => category.value == +value
+        )?.label,
       };
     } else if (key === "languageSpoken") {
       return {
         ...acc,
-        [key]: normalizeStringToArrayNumber(value as string).map(
+        languageSpoken: normalizeStringToArrayNumber(value as string).map(
           (val) => LANGUAGES.find((language) => language.value == val)?.label
         ),
       };
     } else if (key === "services") {
       return {
         ...acc,
-        [key]: normalizeStringToArrayNumber(value as string).map(
-          (service) => PROPERTY_SERVICES.find((f) => f.value == service)?.label
+        services: normalizeStringToArrayNumber(value as string).map(
+          (service) => PROPERTY_SERVICES.find((f) => f.value == +service)?.label
         ),
       };
     } else if (key === "rooms") {
       return {
         ...acc,
-        [key]: (value as PropertyRoom[]).map((room) => ({
+        rooms: (value as PropertyRoom[]).map((room) => ({
           ...room,
           facility: normalizeStringToArrayNumber(room.facility as string).map(
-            (facility) => ({
-              label: ALL_FACILITIES.find((f) => f.value === facility)?.label,
-            })
+            (facility) =>
+              ALL_FACILITIES.find((f) => f.value === facility)?.label
           ),
           beds: room.beds.map((bed) => ({
             ...bed,

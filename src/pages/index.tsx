@@ -4,21 +4,35 @@ import Container from "@/entities/container/container";
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import { type NextPage } from "next";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
+const limit = 10;
 const Home: NextPage = () => {
-  const { isLoading: objectsLoading, objects, error } = useGetObjects();
+  const [page, setPage] = useState(1);
+  const {
+    isLoading: objectsLoading,
+    objects,
+    error,
+  } = useGetObjects({ page, limit });
   const router = useRouter();
 
+  const fetchNextPage = useCallback(() => {
+    setPage((prevPage) => prevPage + 1);
+  }, []);
+
   useEffect(() => {
-    if (error) {
+    if (error !== null && objectsLoading === false) {
       router.push(routeEndpoints.login);
     }
   }, [error]);
 
   return (
     <Container removeHeader>
-      <HomePage objects={objects} objectsLoading={objectsLoading} />
+      <HomePage
+        objects={objects}
+        objectsLoading={objectsLoading}
+        fetchNextPage={fetchNextPage}
+      />
     </Container>
   );
 };

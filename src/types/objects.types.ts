@@ -19,7 +19,7 @@ export type ObjectsParsedInfo = {
   checkOutTo: string;
 };
 
-type ObjectsParsedRooms = {
+export type ObjectsParsedRooms = {
   roomType: string;
   roomName: string;
   surfaceArea: number;
