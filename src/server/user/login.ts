@@ -17,6 +17,6 @@ export async function login(
 
     return data;
   } catch (error: any) {
-    return error;
+    throw error;
   }
 }

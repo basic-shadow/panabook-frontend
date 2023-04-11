@@ -5,6 +5,7 @@ import { localStorageKeys } from "../localStorageKeys";
 import { useRouter } from "next/navigation";
 import SpinnerLoader from "../UI/SpinnerLoader/SpinnerLoader";
 import { useRouter as useLocation } from "next/router";
+import { routeEndpoints } from "../routeEndpoint";
 
 export default function AuthLoadingLayer({
   children,
@@ -25,23 +26,23 @@ export default function AuthLoadingLayer({
   const router = useRouter();
   const location = useLocation();
 
-  // useEffect(() => {
-  //   if (
-  //     isMounted &&
-  //     userToken === null &&
-  //     location.asPath !== routeEndpoints.signup
-  //   ) {
-  //     router.push(routeEndpoints.login);
-  //   } else if (user?.numberofobjects == 0) {
-  //     router.push(routeEndpoints.registerProperty);
-  //   } else if (
-  //     user !== undefined &&
-  //     (location.asPath === routeEndpoints.login ||
-  //       location.asPath === routeEndpoints.signup)
-  //   ) {
-  //     router.push(routeEndpoints.success);
-  //   }
-  // }, [userToken?.accessToken, user, location.asPath, isMounted]);
+  useEffect(() => {
+    if (
+      isMounted &&
+      userToken === null &&
+      location.asPath !== routeEndpoints.signup
+    ) {
+      router.push(routeEndpoints.login);
+    } else if (user?.numberofobjects == 0) {
+      router.push(routeEndpoints.registerProperty);
+    } else if (
+      user !== undefined &&
+      (location.asPath === routeEndpoints.login ||
+        location.asPath === routeEndpoints.signup)
+    ) {
+      router.push(routeEndpoints.success);
+    }
+  }, [userToken?.accessToken, user, location.asPath, isMounted]);
 
   useEffect(() => {
     const handleStart = (url: string) =>
