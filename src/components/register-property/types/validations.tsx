@@ -19,17 +19,24 @@ export const roomsInfoSchema = yup.object().shape({
   roomType: yup.number().required("Обязательное поле"),
   roomName: yup.number().required("Обязательное поле"),
   allowedSmoking: yup.number().required("Обязательное поле"),
-  similarRoomsQuantity: yup.number().positive().required("Обязательное поле"),
+  similarRoomsQuantity: yup
+    .number()
+    .typeError("Введите число")
+    .positive("Число не может быть отрицательным")
+    .required("Обязательное поле"),
   maxGuestSize: yup
     .number()
+    .typeError("Введите число")
     .positive("Число не может быть отрицательным")
     .required("Обязательное поле"),
   roomSurface: yup
     .number()
+    .typeError("Введите число")
     .positive("Число не может быть отрицательным")
     .required("Обязательное поле"),
   nonResidentPrice: yup
     .number()
+    .typeError("Введите число")
     .positive("Число не может быть отрицательным")
     .required("Обязательное поле"),
   roomBeds: yup.array().of(
@@ -37,6 +44,7 @@ export const roomsInfoSchema = yup.object().shape({
       bedType: yup.number().required("Обязательное поле"),
       quantity: yup
         .number()
+        .typeError("Введите число")
         .positive("Число не может быть отрицательным")
         .required("Обязательное поле"),
     })

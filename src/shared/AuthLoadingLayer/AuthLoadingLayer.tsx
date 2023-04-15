@@ -45,7 +45,7 @@ export default function AuthLoadingLayer({
     ) {
       router.push(routeEndpoints.success);
     }
-  }, [userToken?.accessToken, user, location.asPath, isMounted]);
+  }, [userToken, user, location.asPath, isMounted]);
 
   useEffect(() => {
     const handleStart = (url: string) =>

@@ -45,6 +45,7 @@ export default memo(function RoomsInfoFrom({
     setValue,
     watch,
     getValues,
+    handleSubmit,
     reset,
     formState: { isValid, errors },
   } = useForm<IPropertyRoomWithFacilities>({
@@ -106,6 +107,7 @@ export default memo(function RoomsInfoFrom({
       setAddingRoom(false);
       reset();
     }
+    console.log("errors =", errors);
   }
 
   function onEditRoom(index: number) {
@@ -475,7 +477,7 @@ export default memo(function RoomsInfoFrom({
       )}
       <RegisterPropertyButtons
         onGoBack={addingRoom ? cancelSaveRoom : onGoBack}
-        onNextStep={addingRoom ? onSaveRoom : onSubmit}
+        onNextStep={addingRoom ? handleSubmit(onSaveRoom) : onSubmit}
         cancelText={addingRoom ? "Отменить" : "Назад"}
         submitText={addingRoom ? "Сохранить" : "Продолжить"}
       />
