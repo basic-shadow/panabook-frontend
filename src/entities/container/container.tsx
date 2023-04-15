@@ -12,12 +12,14 @@ export default function Container({
   description = "Panabook - Онлайн бронирование отелей, туров и авиабилетов",
   favicon = "/favicon.ico",
   removeHeader = false,
+  loading = false,
   children,
 }: {
   title?: string;
   description?: string;
   favicon?: string;
   removeHeader?: boolean;
+  loading?: boolean;
   children?: React.ReactNode;
 }) {
   const { user, isLoading } = useGetUser();
@@ -32,7 +34,7 @@ export default function Container({
       </Head>
       {user && !removeHeader ? <RegisterHeader /> : null}
       {/* @ts-ignore */}
-      <AuthLoadingLayer user={user} isLoading={isLoading}>
+      <AuthLoadingLayer user={user} isLoading={isLoading || loading}>
         {children}
       </AuthLoadingLayer>
 

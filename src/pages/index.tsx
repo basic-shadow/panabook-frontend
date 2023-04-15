@@ -6,7 +6,8 @@ import { type NextPage } from "next";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-const limit = 10;
+const limit = 20;
+
 const Home: NextPage = () => {
   const [page, setPage] = useState(1);
   const {
@@ -24,10 +25,10 @@ const Home: NextPage = () => {
     if (error !== null && objectsLoading === false) {
       router.push(routeEndpoints.login);
     }
-  }, [error]);
+  }, [error, objectsLoading]);
 
   return (
-    <Container removeHeader>
+    <Container removeHeader loading={objectsLoading}>
       <HomePage
         objects={objects}
         objectsLoading={objectsLoading}

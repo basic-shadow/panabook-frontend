@@ -118,7 +118,10 @@ export default function PoliciesInfoForm({
 
   useEffect(() => {
     if (error) {
-      notifyError(error.message ?? "Ошибка при отправке данных");
+      console.log("error =", error);
+      notifyError(
+        error.message ?? "Проверьте пожалуйста, все ли поля заполнены правильно"
+      );
     }
   }, [error]);
 

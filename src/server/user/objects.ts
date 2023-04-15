@@ -18,6 +18,6 @@ export async function getObjectsApi(options: {
 
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 }

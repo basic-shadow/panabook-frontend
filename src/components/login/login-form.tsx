@@ -1,5 +1,3 @@
-"use client";
-
 import { type Login } from "@/server/user/login.types";
 import { localStorageKeys } from "@/shared/localStorageKeys";
 import { routeEndpoints } from "@/shared/routeEndpoint";
@@ -10,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { AiOutlineLock } from "react-icons/ai";
 import { GrLogin } from "react-icons/gr";
 import { useLogin } from "./api/useLogin";
-import ErrorBox from "@/widgets/ErrorBox";
 
 export default function LoginForm() {
   // ROUTER

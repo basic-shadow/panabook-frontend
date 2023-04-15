@@ -7,6 +7,8 @@ import SpinnerLoader from "../UI/SpinnerLoader/SpinnerLoader";
 import { useRouter as useLocation } from "next/router";
 import { routeEndpoints } from "../routeEndpoint";
 
+const adminUsers = ["islambek.mamet.00@gmail.com", "dake013013@gmail.com"];
+
 export default function AuthLoadingLayer({
   children,
   user,
@@ -34,6 +36,7 @@ export default function AuthLoadingLayer({
     ) {
       router.push(routeEndpoints.login);
     } else if (user?.numberofobjects == 0) {
+      if (adminUsers.some((email) => email === user.email)) return;
       router.push(routeEndpoints.registerProperty);
     } else if (
       user !== undefined &&
