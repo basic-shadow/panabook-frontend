@@ -4,10 +4,11 @@ import { type UploadPhotoResponse } from "@/server/register_property/upload_phot
 import { AppButton } from "@/shared/UI";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MdAddAPhoto } from "react-icons/md";
 import { IoIosRemoveCircle } from "react-icons/io";
 import RegisterPropertyButtons from "../buttons_box";
+import { useDragAndDrop } from "@/shared/hooks/dragAndDrop";
 
 export default function PhotosForm({
   onGoBack,
@@ -17,53 +18,22 @@ export default function PhotosForm({
   onNextStep: () => void;
 }) {
   const [imageList, setImageList] = useState<UploadPhotoResponse[]>([]);
-  const [dropZoneVisible, setDropZoneVisible] = useState(false);
 
   const onSuccessUpload = (data: UploadPhotoResponse) => {
     setImageList((prev) => [...prev, data]);
   };
   // API
   const { mutateAsync, isLoading } = useUploadPhoto(onSuccessUpload);
-
-  async function handleDrop(event: React.DragEvent<HTMLDivElement>) {
-    event.preventDefault();
-    setDropZoneVisible(false);
-    const file = event.dataTransfer.files[0];
-    if (file === null || file === undefined) return;
-
-    await mutateAsync(file);
-  }
-
-  async function onUploadImage(event: React.ChangeEvent<HTMLInputElement>) {
-    if (event.target.files === null || event.target.files.length === 0) return;
-
-    const image = event.target.files[0]!;
-    await mutateAsync(image);
-  }
-
-  function onDeleteImage(index: number) {
-    setImageList((prev) => prev.filter((_, i) => i !== index));
-  }
-
-  // handle drag over and drag leave events
-  useEffect(() => {
-    function handleDragOver(event: DragEvent) {
-      event.preventDefault();
-      setDropZoneVisible(true);
-    }
-    function handleDragLeave(event: DragEvent) {
-      event.preventDefault();
-      setDropZoneVisible(false);
-    }
-
-    window.addEventListener("dragover", handleDragOver);
-    window.addEventListener("dragleave", handleDragLeave);
-
-    return () => {
-      window.removeEventListener("dragover", handleDragOver);
-      window.removeEventListener("dragleave", handleDragLeave);
-    };
-  }, []);
+  // DRAG AND DROP IMAGES
+  const {
+    onUploadImage,
+    onDeleteImage,
+    dragStart,
+    dragEnter,
+    drop,
+    dropZoneVisible,
+    handleDrop,
+  } = useDragAndDrop(mutateAsync, imageList, setImageList);
 
   function onSubmit() {
     if (imageList.length > 0) {
@@ -109,6 +79,9 @@ export default function PhotosForm({
             accept="image/png, image/jpeg, image/gif, image/webp"
           />
           <p className="mt-2 text-center text-sm text-gray-400">
+            Вы можете щас переставлять фотографий как вам удобно.
+          </p>
+          <p className="text-center text-sm text-gray-400">
             Вы также сможете загрузить больше фотографий <br /> после
             регистрации
           </p>
@@ -116,9 +89,15 @@ export default function PhotosForm({
           {/* PREVIEW IMAGES ARRAY */}
           <div className={`my-4 flex min-h-[100px] flex-wrap gap-2`}>
             {imageList.map((image, index) => (
-              <div key={"image" + index} className="relative">
+              <div
+                key={"image" + index}
+                className="relative"
+                onDragStart={(e) => dragStart(e, index)}
+                onDragEnter={(e) => dragEnter(e, index)}
+                onDragEnd={drop}
+              >
                 <Image
-                  className="object-cover"
+                  className="border-2 border-transparent object-cover hover:border-gray-600"
                   src={process.env.NEXT_PHOTO_BASE_URL + image.url}
                   alt={"object"}
                   width={320}

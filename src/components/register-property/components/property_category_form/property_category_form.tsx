@@ -18,8 +18,9 @@ export default function PropertyCategoryForm({
   // FORM DATA
   const propertyCategory = useRegisterPropertyStore().propertyCategory;
 
-  const onSelect = (index: number) =>
+  const onSelect = (index: number) => {
     useRegisterPropertyStore.setState({ propertyCategory: index });
+  };
 
   return (
     <div className="max-w-7xl bg-white py-6 px-6">
