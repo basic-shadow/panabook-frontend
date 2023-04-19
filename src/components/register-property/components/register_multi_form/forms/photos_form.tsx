@@ -17,7 +17,9 @@ export default function PhotosForm({
   onGoBack: () => void;
   onNextStep: () => void;
 }) {
-  const [imageList, setImageList] = useState<UploadPhotoResponse[]>([]);
+  const { propertyPhotos } = useRegisterPropertyStore();
+  const [imageList, setImageList] =
+    useState<UploadPhotoResponse[]>(propertyPhotos);
 
   const onSuccessUpload = (data: UploadPhotoResponse) => {
     setImageList((prev) => [...prev, data]);
@@ -38,7 +40,7 @@ export default function PhotosForm({
   function onSubmit() {
     if (imageList.length > 0) {
       useRegisterPropertyStore.setState((_) => ({
-        propertyPhotos: imageList.map((val) => val.id),
+        propertyPhotos: imageList,
       }));
       onNextStep();
     }

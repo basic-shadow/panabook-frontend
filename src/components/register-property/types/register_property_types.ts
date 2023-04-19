@@ -1,7 +1,7 @@
 export type IRegisterProperty = {
   propertyCategory: number;
   propertyRooms: IPropertyRoomWithFacilities[];
-  propertyPhotos: number[];
+  propertyPhotos: { id: number; url: string }[];
 } & IGeneralInfo &
   IServicesInfo &
   IRegisterTimeInfo;

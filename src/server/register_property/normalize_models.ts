@@ -40,6 +40,6 @@ export const transformRegisterPropertyModel = (
     })),
     stars: items.starsRating,
     services: items.propertyServices,
-    imageIds: items.propertyPhotos,
+    imageIds: items.propertyPhotos.map((val) => val.id),
   };
 };

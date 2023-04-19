@@ -143,7 +143,10 @@ export default function PoliciesInfoForm({
       };
       useRegisterPropertyStore.setState((_) => policyInfo);
 
-      await mutateAsync({ ...items, ...policyInfo });
+      await mutateAsync({
+        ...items,
+        ...policyInfo,
+      });
     }
   }
 
