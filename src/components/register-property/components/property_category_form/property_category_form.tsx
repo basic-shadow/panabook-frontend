@@ -30,8 +30,7 @@ export default function PropertyCategoryForm({
           <div
             key={category.label}
             className={
-              `flex-grow-1 flex h-60 flex-shrink-0
-              basis-1/4
+              `flex w-[340px]
               cursor-pointer
               rounded-md
               border
