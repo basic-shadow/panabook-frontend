@@ -17,6 +17,8 @@ import {
 import { normalizePropertyValues } from "@/shared/utils/normalizePropertyValues";
 import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 
+import { FiTrash } from "react-icons/fi";
+
 type ObjectsTableData = {
   name: string;
   stars: number;
@@ -33,6 +35,7 @@ export default function HomePage({
   fetchNextPage: () => void;
   objectsLoading: boolean;
 }) {
+  const [deleteObjectId, setDeleteObjectId] = useState<string | null>(null);
   const [selectedObject, setSelectedObject] =
     useState<ObjectsParsedInfo | null>(null);
   const closeModal = useCallback(() => {
@@ -149,6 +152,15 @@ export default function HomePage({
     }
   }, []);
 
+  // HANDLER
+  const onDeleteObject = useCallback((object?: ObjectsInfo) => {
+    return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      if (object === undefined) return;
+      e.stopPropagation();
+      setDeleteObjectId(object.address);
+    };
+  }, []);
+
   return (
     <MainDashboard>
       <div className="w-full px-8 py-8">
@@ -207,6 +219,15 @@ export default function HomePage({
                       </td>
                     );
                   })}
+                  {/* DELETE */}
+                  <td>
+                    <button
+                      className="text-red-500 hover:text-red-700"
+                      onClick={onDeleteObject(objects ? objects[i] : undefined)}
+                    >
+                      <FiTrash className="h-5 w-5" />
+                    </button>
+                  </td>
                 </tr>
               );
             })}

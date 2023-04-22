@@ -1,6 +1,13 @@
 export const KAZAKHSTAN_CITIES = [
   { label: "Астана", value: 0 },
   { label: "Алматы", value: 1 },
+  { label: "Шымкент", value: 2 },
+  { label: "Караганда", value: 3 },
+  { label: "Актау", value: 4 },
+  { label: "Актобе", value: 5 },
+  { label: "Атырау", value: 6 },
+  { label: "Тараз", value: 7 },
+  { label: "Оскемен", value: 8 },
 ];
 
 export const ROOM_TYPES = [

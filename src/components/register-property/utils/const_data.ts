@@ -5,6 +5,7 @@ import hostel from "@/assets/images/property_category/hostel.jpeg";
 import hotel from "@/assets/images/property_category/hotel.jpeg";
 import resort_area from "@/assets/images/property_category/resort_area.jpeg";
 import sanatorium from "@/assets/images/property_category/sanatorium.jpeg";
+import glamping from "@/assets/images/property_category/glamping.jpeg";
 
 export const YES_NO_CHOICES = [
   { label: "Да", value: true },
@@ -69,5 +70,13 @@ export const PROPERTY_CATEGORIES = [
       "Санаторий — лечебно-профилактическое учреждение, в котором для лечения и профилактики заболеваний используют главным образом природные факторы (климат, минеральные воды, лечебные грязи, морские купания и т. п.) в сочетании с лечебной физкультурой, физиотерапией и рациональным питанием (диетой) при соблюдении определённого режима лечения и отдыха.",
     img: sanatorium,
     value: 6,
+  },
+
+  {
+    label: "Глэмпинг",
+    description:
+      "Глэмпинг представляет собой роскошный вариант кемпинга, сочетающий в себе комфорт и близость к природе. Глэмпинг-места часто предлагают шатры, палатки, юрты, домики на дереве или воде, роскошные автодома и другие необычные и стильные варианты размещения.",
+    img: glamping,
+    value: 7,
   },
 ];
