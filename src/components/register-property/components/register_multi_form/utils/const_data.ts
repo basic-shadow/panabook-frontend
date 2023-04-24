@@ -1687,6 +1687,10 @@ export const PROPERTY_SERVICES = [
     value: 8,
   },
   {
+    label: "Оплата Kaspi QR",
+    value: 16,
+  },
+  {
     label: "Ресторан",
     value: 9,
   },
