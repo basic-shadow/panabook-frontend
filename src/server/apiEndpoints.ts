@@ -5,6 +5,10 @@ export const authEndpoints = {
   getObjects: "/api/property",
 };
 
+export const objectsEndpoints = {
+  deleteObject: "api/property/:id",
+};
+
 export const propertyEndpoints = {
   registerProperty: "/api/property",
   uploadPhotos: "/api/image",

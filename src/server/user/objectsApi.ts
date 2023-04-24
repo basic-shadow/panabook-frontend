@@ -1,5 +1,5 @@
 import { API } from "../api/axios.instance";
-import { authEndpoints } from "../apiEndpoints";
+import { authEndpoints, objectsEndpoints } from "../apiEndpoints";
 import { type ObjectsInfo } from "./objects.types";
 
 export async function getObjectsApi(options: {
@@ -17,6 +17,16 @@ export async function getObjectsApi(options: {
     });
 
     return data;
+  } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function deleteObjectApi(objectId: number): Promise<void> {
+  try {
+    await API.delete<void>(
+      objectsEndpoints.deleteObject.replace(":id", objectId.toString())
+    );
   } catch (error: any) {
     throw error;
   }

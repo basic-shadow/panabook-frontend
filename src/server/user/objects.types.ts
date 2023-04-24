@@ -1,4 +1,5 @@
 export type ObjectsInfo = {
+  id: number;
   contactName: string;
   contactPhone1: string;
   contactPhone2?: string;

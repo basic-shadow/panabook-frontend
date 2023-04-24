@@ -1,9 +1,9 @@
 import { queryKeys } from "@/server/queryKeys";
-import { getObjectsApi } from "@/server/user/objects";
+import { deleteObjectApi, getObjectsApi } from "@/server/user/objectsApi";
 import { type ObjectsInfo } from "@/server/user/objects.types";
 import { type TError } from "@/server/user/shared.types";
 import { useEffect, useRef } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 export function useGetObjects({
   page,
@@ -30,4 +30,18 @@ export function useGetObjects({
   }, []);
 
   return { objects: data, isLoading, isFetching, error };
+}
+
+export function useDeleteObject() {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync, isLoading, isSuccess } = useMutation<
+    void,
+    TError,
+    number
+  >(queryKeys.deleteObjects, deleteObjectApi, {
+    onSuccess: () => queryClient.invalidateQueries(queryKeys.getObjects),
+  });
+
+  return { isLoading, mutateAsync, isSuccess };
 }

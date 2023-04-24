@@ -5,4 +5,5 @@ export const queryKeys = {
   uploadPhoto: "uploadPhoto",
   getUser: "getUser",
   getObjects: "getObjects",
+  deleteObjects: "deleteObjects",
 };

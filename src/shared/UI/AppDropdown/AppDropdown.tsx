@@ -12,6 +12,7 @@ interface IAppDropdown<T> {
   options: MenuItemValue[];
   name?: string;
   active?: boolean;
+  height?: string | number;
 }
 
 export default function AppDropdown<T>({
@@ -20,6 +21,7 @@ export default function AppDropdown<T>({
   selectedValue,
   name,
   active = false,
+  height = "40vh",
 }: IAppDropdown<T>) {
   const [open, setOpen] = useState(false);
 
@@ -33,7 +35,7 @@ export default function AppDropdown<T>({
   }, []);
 
   return (
-    <div className="relative w-fit inline-block text-left">
+    <div className="relative inline-block w-fit text-left">
       <div>
         <button
           type="button"
@@ -69,9 +71,7 @@ export default function AppDropdown<T>({
       </div>
       {/* use popupPosition to set popup position */}
       <div
-        className={
-          "absolute max-h-[40vh] overflow-y-scroll top-1/1 left-0 z-10 mt-2 w-52 divide-y divide-gray-100 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-        }
+        className={`top-1/1 absolute left-0 z-10 mt-2 max-h-[${height}] w-52 origin-top-right divide-y divide-gray-100 overflow-y-scroll rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
         role="menu"
         aria-orientation="vertical"
         aria-labelledby="menu-button"
@@ -83,7 +83,7 @@ export default function AppDropdown<T>({
             <div
               key={"menu-item" + option?.label + i}
               className={
-                "text-gray-700 block px-4 py-2 text-sm cursor-pointer " +
+                "block cursor-pointer px-4 py-2 text-sm text-gray-700 " +
                 (option.disabled
                   ? "text-gray-200"
                   : "hover:bg-indigo-500 hover:text-white")

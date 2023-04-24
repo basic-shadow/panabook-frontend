@@ -1,5 +1,5 @@
 import HomePage from "@/components/home/HomePage";
-import { useGetObjects } from "@/components/home/api/useGetObjects";
+import { useGetObjects } from "@/components/home/api/objects";
 import Container from "@/entities/container/container";
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import { type NextPage } from "next";

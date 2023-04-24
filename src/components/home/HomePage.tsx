@@ -10,14 +10,12 @@ import MainDashboard from "@/entities/mainDashboard/mainDashboard";
 import { type ObjectsInfo } from "@/server/user/objects.types";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 import Image from "next/image";
-import {
-  type ObjectsParsedRooms,
-  type ObjectsParsedInfo,
-} from "@/types/objects.types";
+import { type ObjectsParsedInfo } from "@/types/objects.types";
 import { normalizePropertyValues } from "@/shared/utils/normalizePropertyValues";
 import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 
 import { FiTrash } from "react-icons/fi";
+import { useDeleteObject } from "./api/objects";
 
 type ObjectsTableData = {
   name: string;
@@ -35,11 +33,22 @@ export default function HomePage({
   fetchNextPage: () => void;
   objectsLoading: boolean;
 }) {
-  const [deleteObjectId, setDeleteObjectId] = useState<string | null>(null);
+  const [deleteObjectId, setDeleteObjectId] = useState<number | null>(null);
   const [selectedObject, setSelectedObject] =
     useState<ObjectsParsedInfo | null>(null);
   const closeModal = useCallback(() => {
     setSelectedObject(null);
+  }, []);
+
+  // DELETE QUERY
+  const {
+    isLoading: deleteLoading,
+    isSuccess: deleteSuccess,
+    mutateAsync: deleteAsync,
+  } = useDeleteObject();
+
+  const closeDeleteModal = useCallback(() => {
+    setDeleteObjectId(null);
   }, []);
 
   const objectsTableData = useMemo(() => {
@@ -153,13 +162,20 @@ export default function HomePage({
   }, []);
 
   // HANDLER
-  const onDeleteObject = useCallback((object?: ObjectsInfo) => {
+  const onDeleteObject = useCallback((index: number) => {
     return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      if (object === undefined) return;
       e.stopPropagation();
-      setDeleteObjectId(object.address);
+      setDeleteObjectId(index);
     };
   }, []);
+
+  const onDeleteConfirm = useCallback(async () => {
+    if (deleteObjectId === null || objects === undefined || deleteLoading)
+      return;
+    await deleteAsync(objects[deleteObjectId]!.id);
+
+    setDeleteObjectId(null);
+  }, [deleteObjectId]);
 
   return (
     <MainDashboard>
@@ -223,7 +239,7 @@ export default function HomePage({
                   <td>
                     <button
                       className="text-red-500 hover:text-red-700"
-                      onClick={onDeleteObject(objects ? objects[i] : undefined)}
+                      onClick={onDeleteObject(i)}
                     >
                       <FiTrash className="h-5 w-5" />
                     </button>
@@ -271,6 +287,34 @@ export default function HomePage({
             })}
           </div>
         )}
+      </Modal>
+
+      <Modal
+        open={deleteObjectId !== null}
+        onClose={closeDeleteModal}
+        title={
+          objects && deleteObjectId !== null
+            ? "Удаление отеля #" + objects[deleteObjectId]!.name
+            : ""
+        }
+        className="w-[400px] overflow-y-auto"
+      >
+        <div className="flex w-full items-center justify-between">
+          {/* CANCEL BUTTON */}
+          <button
+            className="rounded bg-gray-200 py-2 px-4 font-semibold text-gray-700 hover:bg-gray-300"
+            onClick={closeDeleteModal}
+          >
+            Отмена
+          </button>
+          {/* DELETE BUTTON */}
+          <button
+            className="rounded bg-red-500 py-2 px-4 font-semibold text-white hover:bg-red-700"
+            onClick={onDeleteConfirm}
+          >
+            {deleteLoading ? <SpinnerLoader /> : "Удалить"}
+          </button>
+        </div>
       </Modal>
     </MainDashboard>
   );
