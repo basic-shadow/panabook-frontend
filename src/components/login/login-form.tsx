@@ -7,18 +7,18 @@ import { useForm } from "react-hook-form";
 import { AiOutlineLock } from "react-icons/ai";
 import { GrLogin } from "react-icons/gr";
 import { useLogin } from "./api/useLogin";
-import { useQueryClient } from "react-query";
-import { queryKeys } from "@/server/queryKeys";
+import { useGetUser } from "../home/api/useGetUser";
 
 export default function LoginForm() {
   // ROUTER
   const router = useRouter();
-  const queryClient = useQueryClient();
+  // USER REFETCH
+  const { refetch } = useGetUser();
 
   const onSuccessLogin = useCallback(() => {
-    queryClient.invalidateQueries(queryKeys.getUser);
-
-    router.push(routeEndpoints.registerProperty);
+    refetch().then(() => {
+      router.push(routeEndpoints.registerProperty);
+    });
   }, []);
 
   // FORM
