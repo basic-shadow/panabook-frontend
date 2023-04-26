@@ -221,7 +221,6 @@ export default memo(function GeneralInfoForm({
                     : "",
                 value: watch().propertyCity,
               }}
-              height={"150px"}
               options={KAZAKHSTAN_CITIES}
               onSelect={(val) => {
                 setValue("propertyCity", val as number, {
