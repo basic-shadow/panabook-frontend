@@ -9,6 +9,7 @@ import { MdAddAPhoto } from "react-icons/md";
 import { IoIosRemoveCircle } from "react-icons/io";
 import RegisterPropertyButtons from "../buttons_box";
 import { useDragAndDrop } from "@/shared/hooks/dragAndDrop";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
 export default function PhotosForm({
   onGoBack,
@@ -17,6 +18,7 @@ export default function PhotosForm({
   onGoBack: () => void;
   onNextStep: () => void;
 }) {
+  const { notifyError, notifyInfo } = useNotifications();
   const { propertyPhotos } = useRegisterPropertyStore();
   const [imageList, setImageList] =
     useState<UploadPhotoResponse[]>(propertyPhotos);
@@ -75,9 +77,13 @@ export default function PhotosForm({
           <input
             style={{ display: "none" }}
             id="photo-upload"
-            onChange={onUploadImage}
+            onChange={(e) => {
+              if (isLoading) {
+                return notifyInfo("Ваше прошлое фото ещё загружается");
+              }
+              onUploadImage(e);
+            }}
             type="file"
-            // ref={imageInput}
             accept="image/png, image/jpeg, image/gif, image/webp"
           />
           <p className="mt-2 text-center text-sm text-gray-400">
@@ -113,7 +119,7 @@ export default function PhotosForm({
                 />
               </div>
             ))}
-            {isLoading && <SpinnerLoader />}
+            {isLoading && <SpinnerLoader color={"red"} />}
           </div>
 
           <div className="flex flex-col items-center justify-center gap-4">

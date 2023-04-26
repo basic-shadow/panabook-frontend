@@ -1,7 +1,5 @@
 import { type UserInfo } from "@/server/user/user_info.types";
-import { useLocalStorageHook } from "../hooks/useLocalStorage";
 import { useEffect, useState } from "react";
-import { localStorageKeys } from "../localStorageKeys";
 import { useRouter } from "next/navigation";
 import SpinnerLoader from "../UI/SpinnerLoader/SpinnerLoader";
 import { useRouter as useLocation } from "next/router";
@@ -19,21 +17,12 @@ export default function AuthLoadingLayer({
   isLoading: boolean;
 }) {
   const [routerLoading, setRouterLoading] = useState(false);
-  const [userToken, _, isMounted] = useLocalStorageHook<{
-    accessToken: string;
-  }>(localStorageKeys.userToken, {
-    accessToken: "",
-  });
   // ROUTER
   const router = useRouter();
   const location = useLocation();
 
   useEffect(() => {
-    if (
-      isMounted &&
-      userToken === null &&
-      location.asPath !== routeEndpoints.signup
-    ) {
+    if (user === undefined && location.asPath !== routeEndpoints.signup) {
       router.push(routeEndpoints.login);
     } else if (user?.numberofobjects == 0) {
       if (adminUsers.some((email) => email === user.email)) return;
@@ -45,7 +34,7 @@ export default function AuthLoadingLayer({
     ) {
       router.push(routeEndpoints.success);
     }
-  }, [userToken, user, location.asPath, isMounted]);
+  }, [user, location.asPath]);
 
   useEffect(() => {
     const handleStart = (url: string) =>

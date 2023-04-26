@@ -7,6 +7,14 @@
 
 /** @type {import("next").NextConfig} */
 const config = {
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://panabook.kz/api/:path*", // proxy to external API
+      },
+    ];
+  },
   reactStrictMode: true,
   images: {
     domains: ["kazbooking-images.object.pscloud.io"],
@@ -21,8 +29,8 @@ const config = {
    * @see https://github.com/vercel/next.js/issues/41980
    */
   i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+    locales: ["ru"],
+    defaultLocale: "ru",
   },
 };
 export default config;

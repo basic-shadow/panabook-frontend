@@ -1,15 +1,15 @@
 export const authEndpoints = {
-  signup: "/api/auth/register",
-  login: "/api/auth/login",
-  getUser: "/api/user/me",
-  getObjects: "/api/property",
+  signup: "/auth/register",
+  login: "/auth/login",
+  getUser: "/user/me",
+  getObjects: "/property",
 };
 
 export const objectsEndpoints = {
-  deleteObject: "api/property/:id",
+  deleteObject: "/property/:id",
 };
 
 export const propertyEndpoints = {
-  registerProperty: "/api/property",
-  uploadPhotos: "/api/image",
+  registerProperty: "/property",
+  uploadPhotos: "/image",
 };

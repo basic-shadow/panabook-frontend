@@ -1,4 +1,5 @@
 import React, { type FC } from "react";
+import SpinnerLoader from "../SpinnerLoader/SpinnerLoader";
 
 type styleType = "outlined" | "filled";
 interface IButton {

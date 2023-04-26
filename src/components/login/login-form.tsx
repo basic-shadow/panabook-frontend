@@ -1,5 +1,4 @@
 import { type Login } from "@/server/user/login.types";
-import { localStorageKeys } from "@/shared/localStorageKeys";
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,11 +12,7 @@ export default function LoginForm() {
   // ROUTER
   const router = useRouter();
 
-  const onSuccessLogin = useCallback((data: string) => {
-    localStorage.setItem(
-      localStorageKeys.userToken,
-      JSON.stringify({ accessToken: data })
-    );
+  const onSuccessLogin = useCallback(() => {
     router.push(routeEndpoints.registerProperty);
   }, []);
 

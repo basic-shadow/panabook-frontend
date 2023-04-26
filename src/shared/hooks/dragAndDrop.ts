@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import { useNotifications } from "../UI/AppToaster/AppToaster";
 
 export const useDragAndDrop = (
   mutateAsync: any,
   imageList: any[],
   setImageList: any
 ) => {
+  // NOTIFICATIONS
+  const { notifyError } = useNotifications();
   // ARRANGE IMAGE LIST
   const dragItem = useRef<number | null>(null);
   const dragOverItem = useRef<number | null>(null);
@@ -46,6 +49,11 @@ export const useDragAndDrop = (
     if (event.target.files === null || event.target.files.length === 0) return;
 
     const image = event.target.files[0]!;
+    if (image.size > 4 * 1024 * 1024) {
+      notifyError("Изображение не должно превышать 4 МБ");
+      return;
+    }
+
     await mutateAsync(image);
   }
 

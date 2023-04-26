@@ -1,3 +1,1 @@
-export const localStorageKeys = {
-  userToken: "user-token",
-};
+export const localStorageKeys = {};
