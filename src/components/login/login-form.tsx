@@ -7,12 +7,17 @@ import { useForm } from "react-hook-form";
 import { AiOutlineLock } from "react-icons/ai";
 import { GrLogin } from "react-icons/gr";
 import { useLogin } from "./api/useLogin";
+import { useQueryClient } from "react-query";
+import { queryKeys } from "@/server/queryKeys";
 
 export default function LoginForm() {
   // ROUTER
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const onSuccessLogin = useCallback(() => {
+    queryClient.invalidateQueries(queryKeys.getUser);
+
     router.push(routeEndpoints.registerProperty);
   }, []);
 
@@ -35,7 +40,7 @@ export default function LoginForm() {
 
   return (
     <div className="absolute z-10 flex min-h-full min-w-full items-center justify-center">
-      <div className="w-full max-w-md space-y-8 rounded-md bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8 rounded-md bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div>
           <GrLogin className="mx-auto h-12 w-auto" />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -134,7 +139,7 @@ export default function LoginForm() {
           <div>
             <button
               type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <AiOutlineLock

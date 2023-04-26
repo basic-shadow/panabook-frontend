@@ -1,6 +1,5 @@
 import assert from "assert";
 import Axios, { type AxiosRequestConfig } from "axios";
-import { authEndpoints } from "../apiEndpoints";
 
 assert(
   process.env.NEXT_PUBLIC_API_BASE_URL,

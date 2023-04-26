@@ -1,5 +1,3 @@
-"use client";
-
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import Link from "next/link";
 import React from "react";
@@ -21,7 +19,7 @@ export default function SignupForm() {
 
   return (
     <div className="absolute z-10 flex min-h-full min-w-full items-center justify-center">
-      <div className="w-full max-w-md space-y-8 rounded-md bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8 rounded-md bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div>
           <GrLogin className="mx-auto h-12 w-auto" />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -91,7 +89,7 @@ export default function SignupForm() {
           <div>
             <button
               type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               {isLoading ? <SpinnerLoader /> : "Начать"}
             </button>
