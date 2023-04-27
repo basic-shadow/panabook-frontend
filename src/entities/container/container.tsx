@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useGetUser } from "@/components/home/api/useGetUser";
 
 import "react-toastify/dist/ReactToastify.css";
-import AppToaster from "@/shared/UI/AppToaster/AppToaster";
 import AuthLoadingLayer from "@/shared/AuthLoadingLayer/AuthLoadingLayer";
 import RegisterHeader from "@/components/navbar/RegisterHeader";
 
@@ -37,9 +36,6 @@ export default function Container({
       <AuthLoadingLayer user={user} isLoading={isLoading || loading}>
         {children}
       </AuthLoadingLayer>
-
-      {/* TOASTER */}
-      <AppToaster />
     </>
   );
 }

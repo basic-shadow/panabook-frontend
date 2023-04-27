@@ -8,6 +8,7 @@ export const KAZAKHSTAN_CITIES = [
   { label: "Атырау", value: 6 },
   { label: "Тараз", value: 7 },
   { label: "Оскемен", value: 8 },
+  { label: "Кокшетау", value: 9 },
 ];
 
 export const ROOM_TYPES = [

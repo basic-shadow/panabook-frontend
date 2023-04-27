@@ -18,6 +18,7 @@ import {
   FACILITIES_CATEGORIES,
   ROOM_NAMES,
 } from "../../utils/const_data";
+import { useRegisterPropertyStore } from "@/components/register-property/store/store";
 
 export default function RoomFacilitiesForm({
   room,
@@ -31,8 +32,11 @@ export default function RoomFacilitiesForm({
     index: number
   ) => void;
 }) {
+  const roomFacilities = useRegisterPropertyStore(
+    (state) => state.propertyRooms[index]?.roomFacilities
+  );
   // form state
-  const [facilities, setFacilities] = useState<number[]>([]);
+  const [facilities, setFacilities] = useState<number[]>(roomFacilities || []);
 
   const {
     watch,

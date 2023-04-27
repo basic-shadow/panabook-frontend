@@ -65,7 +65,7 @@ export default function ServicesInfoForm({
           >
             Языки
           </label>
-          <p className="-mx-8 mb-6 mt-4 bg-blue-100 py-4 px-8 text-sm text-gray-600">
+          <p className="-mx-8 mb-6 mt-4 bg-blue-100 px-8 py-4 text-sm text-gray-600">
             Гости больше всего обращают внимание на эти услуги, когда ищут
             место, чтобы остановиться.
           </p>
@@ -120,7 +120,7 @@ export default function ServicesInfoForm({
           >
             Популярные у гостей услуги
           </label>
-          <p className="-mx-8 mb-6 mt-4 bg-blue-100 py-4 px-8 text-sm text-gray-600">
+          <p className="-mx-8 mb-6 mt-4 bg-blue-100 px-8 py-4 text-sm text-gray-600">
             Гости больше всего обращают внимание на эти услуги, когда ищут
             место, чтобы остановиться.
           </p>
