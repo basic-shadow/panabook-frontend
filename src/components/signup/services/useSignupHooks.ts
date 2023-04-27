@@ -3,14 +3,18 @@ import { useRouter } from "next/navigation";
 import { useSignup } from "../api/useSignup";
 import { type Signup } from "@/server/user/signup.types";
 import { useGetUser } from "@/components/home/api/useGetUser";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
 export const useSignupHook = () => {
   const router = useRouter();
   const { mutateAsync, isLoading, error } = useSignup(onSuccess);
   const { refetch } = useGetUser();
+  // NOTIFICATIONS
+  const { notifySuccess } = useNotifications();
 
   function onSuccess() {
     refetch().then(() => {
+      notifySuccess("Вы успешно выполнили регистрацию пользователя");
       router.push(routeEndpoints.registerProperty);
     });
   }

@@ -8,15 +8,19 @@ import { AiOutlineLock } from "react-icons/ai";
 import { GrLogin } from "react-icons/gr";
 import { useLogin } from "./api/useLogin";
 import { useGetUser } from "../home/api/useGetUser";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
 export default function LoginForm() {
   // ROUTER
   const router = useRouter();
   // USER REFETCH
   const { refetch } = useGetUser();
+  // NOTIFICATIONS
+  const { notifySuccess } = useNotifications();
 
   const onSuccessLogin = useCallback(() => {
     refetch().then(() => {
+      notifySuccess("Вы успешно вошли в ваш аккаунт");
       router.push(routeEndpoints.registerProperty);
     });
   }, []);
