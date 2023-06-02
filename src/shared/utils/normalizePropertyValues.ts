@@ -11,7 +11,7 @@ import { PROPERTY_CATEGORIES } from "@/components/register-property/utils/const_
 import {
   type PropertyRoom,
   type ObjectsInfo,
-} from "@/server/user/objects.types";
+} from "@/server/objects/objects.types";
 import { type ObjectsParsedInfo } from "@/types/objects.types";
 
 const ALL_FACILITIES: { label: string; value: number }[] =

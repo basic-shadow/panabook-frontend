@@ -2,7 +2,7 @@ import { routeEndpoints } from "@/shared/routeEndpoint";
 import { useRouter } from "next/navigation";
 import { useSignup } from "../api/useSignup";
 import { type Signup } from "@/server/user/signup.types";
-import { useGetUser } from "@/components/home/api/useGetUser";
+import { useGetUser } from "@/components/admin/api/usersQuery";
 import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
 export const useSignupHook = () => {

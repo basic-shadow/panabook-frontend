@@ -3,7 +3,7 @@ import React, { useState } from "react";
 interface IAccordion {
   headers: string[];
   content: React.ReactNode[];
-  roomName: string;
+  id: string;
 }
 
 function FaqComponent() {
@@ -12,13 +12,13 @@ function FaqComponent() {
       <div className="bg-white">
         <div className="container mx-auto flex flex-col justify-center px-4 py-8 md:p-8">
           <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
-          <p className="mt-4 mb-8 text-gray-600">
+          <p className="mb-8 mt-4 text-gray-600">
             React Interview Questions And Answers
           </p>
           <div className="space-y-4">
             <details className="w-full rounded-lg ring-1 ring-purple-600">
               <summary className="px-4 py-6">What is React?</summary>
-              <p className="ml-4 -mt-4 px-4 py-6 pt-0 text-gray-600">
+              <p className="-mt-4 ml-4 px-4 py-6 pt-0 text-gray-600">
                 React is a front-end JavaScript library developed by Facebook in
                 2011.
               </p>
@@ -27,7 +27,7 @@ function FaqComponent() {
               <summary className="px-4 py-6">
                 What is Props and how to use it give some example?
               </summary>
-              <p className="ml-4 -mt-4 px-4 py-6 pt-0 text-gray-600">
+              <p className="-mt-4 ml-4 px-4 py-6 pt-0 text-gray-600">
                 Props is the shorthand for Properties in React.
               </p>
             </details>
@@ -35,7 +35,7 @@ function FaqComponent() {
               <summary className="px-4 py-6">
                 How to install tailwind css in react js ?
               </summary>
-              <p className="ml-4 -mt-4 px-4 py-6 pt-0 text-gray-600">
+              <p className="-mt-4 ml-4 px-4 py-6 pt-0 text-gray-600">
                 What are synthetic events in React?
               </p>
             </details>
@@ -46,15 +46,15 @@ function FaqComponent() {
   );
 }
 
-export default function Accordion({ headers, content, roomName }: IAccordion) {
+export default function Accordion({ headers, content, id }: IAccordion) {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   return (
     <div data-accordion="collapse">
       {headers.map((header, index) => (
-        <React.Fragment key={"accordion-" + header + "room" + roomName}>
+        <React.Fragment key={"accordion-" + header + "room" + id}>
           <h2
-            id={"accordion-collapse-heading-" + (index + 1) + "room" + roomName}
+            id={"accordion-collapse-heading-" + (index + 1) + "room" + id}
             onClick={() =>
               setActiveIndex((prev) => (prev === index ? -1 : index))
             }
@@ -92,10 +92,10 @@ export default function Accordion({ headers, content, roomName }: IAccordion) {
             </button>
           </h2>
           <div
-            id={"accordion-collapse-body-" + (index + 1) + "room" + roomName}
+            id={"accordion-collapse-body-" + (index + 1) + "room" + id}
             className={index !== activeIndex ? "hidden" : "border"}
             aria-labelledby={
-              "accordion-collapse-heading-" + (index + 1) + "room" + roomName
+              "accordion-collapse-heading-" + (index + 1) + "room" + id
             }
           >
             {content[index]}

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { AiOutlineLock } from "react-icons/ai";
 import { GrLogin } from "react-icons/gr";
 import { useLogin } from "./api/useLogin";
-import { useGetUser } from "../home/api/useGetUser";
+import { useGetUser } from "../admin/api/usersQuery";
 import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
 export default function LoginForm() {

@@ -1,4 +1,4 @@
-import { useGetUser } from "@/components/home/api/useGetUser";
+import { useGetUser } from "@/components/admin/api/usersQuery";
 import Container from "@/entities/container/container";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 import { routeEndpoints } from "@/shared/routeEndpoint";

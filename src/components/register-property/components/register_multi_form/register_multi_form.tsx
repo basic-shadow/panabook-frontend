@@ -1,4 +1,4 @@
-import { useGetUser } from "@/components/home/api/useGetUser";
+import { useGetUser } from "@/components/admin/api/usersQuery";
 import React from "react";
 import {
   FacilitiesInfoForm,
@@ -37,7 +37,7 @@ export default function RegisterMultiForm({
 
   return (
     <div>
-      <div className="mt-8">
+      <div className="mt-8 ">
         <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">
           {currentStep === 1
             ? `Добро пожаловать ${user?.firstname || ""}`
@@ -50,7 +50,7 @@ export default function RegisterMultiForm({
           {mapStepToText[currentStep as keyof typeof mapStepToText]}
         </p>
       </div>
-      <div className="container mx-auto flex max-w-7xl flex-col flex-wrap px-5 py-4">
+      <div className="mx-auto flex w-full max-w-7xl flex-col flex-wrap px-5 py-4">
         {/* STEP TOP BAR */}
         <StepFormHeader currentStep={currentStep} goOnStep={goOnStep} />
         {/* FORM BODY */}

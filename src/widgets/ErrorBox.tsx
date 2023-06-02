@@ -1,4 +1,4 @@
-import { type TError } from "@/server/user/shared.types";
+import { type TError } from "@/types/shared.types";
 import React from "react";
 
 export default function ErrorBox({ data }: TError) {

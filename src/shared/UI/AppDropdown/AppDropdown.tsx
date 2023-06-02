@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-type MenuItemValue = {
+export type MenuItemValue = {
   label: string | number;
   value: number | string;
   disabled?: boolean;
 };
 
 interface IAppDropdown<T> {
+  id?: string;
   selectedValue: MenuItemValue;
   onSelect: (id: number | string) => void;
   options: MenuItemValue[];
@@ -15,6 +16,7 @@ interface IAppDropdown<T> {
 }
 
 export default function AppDropdown<T>({
+  id,
   onSelect,
   options,
   selectedValue,
@@ -36,6 +38,7 @@ export default function AppDropdown<T>({
     <div className="relative inline-block w-fit text-left">
       <div>
         <button
+          aria-labelledby={id}
           type="button"
           className={
             "inline-flex w-fit justify-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 " +

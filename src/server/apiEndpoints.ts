@@ -2,14 +2,18 @@ export const authEndpoints = {
   signup: "/auth/register",
   login: "/auth/login",
   getUser: "/user/me",
-  getObjects: "/property",
-};
-
-export const objectsEndpoints = {
-  deleteObject: "/property/:id",
 };
 
 export const propertyEndpoints = {
   registerProperty: "/property",
   uploadPhotos: "/image",
+};
+
+export const objectsEndpoints = {
+  getObjects: "/property",
+};
+
+export const adminEndpoints = {
+  deleteObject: "/property/:id",
+  getObjects: "/property",
 };

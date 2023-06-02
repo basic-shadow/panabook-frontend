@@ -1,5 +1,5 @@
 import { queryKeys } from "@/server/queryKeys";
-import { type TError } from "@/server/user/shared.types";
+import { type TError } from "@/types/shared.types";
 import { signup } from "@/server/user/signup";
 import { type Signup, type SignupResponse } from "@/server/user/signup.types";
 import { useMutation } from "react-query";

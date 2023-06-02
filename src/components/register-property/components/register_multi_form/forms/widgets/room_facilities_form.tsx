@@ -178,7 +178,7 @@ export default function RoomFacilitiesForm({
             Выберите удобства в номере
           </p>
           <Accordion
-            roomName={index.toString()}
+            id={index.toString()}
             headers={FACILITIES_CATEGORIES.map((val) => val.label)}
             content={FACILITIES_CATEGORIES.map((val) => {
               return val.value.map((facility) => (

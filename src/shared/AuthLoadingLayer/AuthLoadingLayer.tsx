@@ -5,8 +5,6 @@ import SpinnerLoader from "../UI/SpinnerLoader/SpinnerLoader";
 import { useRouter as useLocation } from "next/router";
 import { routeEndpoints } from "../routeEndpoint";
 
-const adminUsers = ["islambek.mamet.00@gmail.com", "dake013013@gmail.com"];
-
 export default function AuthLoadingLayer({
   children,
   user,
@@ -22,19 +20,20 @@ export default function AuthLoadingLayer({
   const location = useLocation();
 
   useEffect(() => {
-    if (user === undefined && location.asPath !== routeEndpoints.signup) {
-      router.push(routeEndpoints.login);
-    } else if (user?.numberofobjects == 0) {
-      if (adminUsers.some((email) => email === user.email)) return;
-      router.push(routeEndpoints.registerProperty);
-    } else if (
-      user !== undefined &&
-      (location.asPath === routeEndpoints.login ||
-        location.asPath === routeEndpoints.signup)
-    ) {
-      router.push(routeEndpoints.success);
-    }
-  }, [user, location.asPath]);
+    if (isLoading) return;
+
+    // if (user === undefined && location.asPath !== routeEndpoints.signup) {
+    //   router.push(routeEndpoints.login);
+    // } else if (user?.numberofobjects == 0) {
+    //   router.push(routeEndpoints.registerProperty);
+    // } else if (
+    //   user !== undefined &&
+    //   (location.asPath === routeEndpoints.login ||
+    //     location.asPath === routeEndpoints.signup)
+    // ) {
+    //   router.push(routeEndpoints.home);
+    // }
+  }, [user, location.asPath, isLoading]);
 
   useEffect(() => {
     const handleStart = (url: string) =>
@@ -64,6 +63,6 @@ export default function AuthLoadingLayer({
       <SpinnerLoader color={"text-indigo-500"} />
     </div>
   ) : (
-    children
+    <div className="bg-slate-100">{children}</div>
   );
 }

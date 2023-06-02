@@ -1,11 +1,14 @@
 import { queryKeys } from "@/server/queryKeys";
-import { deleteObjectApi, getObjectsApi } from "@/server/user/objectsApi";
-import { type ObjectsInfo } from "@/server/user/objects.types";
-import { type TError } from "@/server/user/shared.types";
+import {
+  deleteObjectApi,
+  getAllObjectsApi,
+} from "@/server/objects/adminObjectsApi";
+import { type ObjectsInfo } from "@/server/objects/objects.types";
+import { type TError } from "@/types/shared.types";
 import { useEffect, useRef } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-export function useGetObjects({
+export function useGetAllObjects({
   page,
   limit,
 }: {
@@ -18,7 +21,7 @@ export function useGetObjects({
     TError
   >(
     queryKeys.getObjects,
-    ({ signal }) => getObjectsApi({ signal, page, limit }),
+    ({ signal }) => getAllObjectsApi({ signal, page, limit }),
     { enabled: mounted.current }
   );
 

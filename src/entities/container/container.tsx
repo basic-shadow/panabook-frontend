@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import { useGetUser } from "@/components/home/api/useGetUser";
+import { useGetUser } from "@/components/admin/api/usersQuery";
 
 import "react-toastify/dist/ReactToastify.css";
 import AuthLoadingLayer from "@/shared/AuthLoadingLayer/AuthLoadingLayer";

@@ -73,13 +73,12 @@ function TimeSlots({
 
 export default function PoliciesInfoForm({
   onGoBack,
-  onNextStep,
 }: {
   onGoBack: () => void;
   onNextStep: () => void;
 }) {
   // NOTIFICATIONS
-  const { notifySuccess, notifyError } = useNotifications();
+  const { notifyError } = useNotifications();
   // ROUTER
   const router = useRouter();
 
@@ -153,7 +152,7 @@ export default function PoliciesInfoForm({
   return (
     <div>
       <div className="flex items-center justify-between gap-6">
-        <div className="flex w-1/2 flex-col bg-white py-6 px-8">
+        <div className="flex w-1/2 flex-col bg-white px-8 py-6">
           <h3 className="mb-4 text-lg font-semibold">Регистрация заезда</h3>
           <p className="mb-2 text-gray-500">с:</p>
           <div className="flex flex-wrap gap-2">
@@ -192,7 +191,7 @@ export default function PoliciesInfoForm({
             ))}
           </div>
         </div>
-        <div className="flex w-1/2 flex-col bg-white py-6 px-8">
+        <div className="flex w-1/2 flex-col bg-white px-8 py-6">
           <h3 className="mb-4 text-lg font-semibold">Регистрация отъезда</h3>
           <p className="mb-2 text-gray-500">с:</p>
           <div className="flex flex-wrap gap-2">
