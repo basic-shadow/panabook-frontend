@@ -17,7 +17,7 @@ const timeSlots = Array.from({ length: 48 }, (_, i) => {
   return `${hours > 9 ? hours : "0" + hours}:${minutes}`;
 });
 
-export default function EditPropertyPoliciesPage({
+export default function EditPropertyPoliciesSection({
   initState,
 }: {
   initState?: IRegisterTimeInfo;

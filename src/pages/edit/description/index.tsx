@@ -1,11 +1,11 @@
-import EditPropertyDescriptionPage from "@/components/editDescription/EditPropertyDescriptionPage";
+import EditPropertyDescriptionSection from "@/components/editDescription/EditPropertyDescriptionSection";
 import Container from "@/entities/container/container";
 import React from "react";
 
-export default function EditPropertyDescription() {
+export default function EditPropertyDescriptionPage() {
   return (
     <Container authHeader>
-      <EditPropertyDescriptionPage />
+      <EditPropertyDescriptionSection />
     </Container>
   );
 }

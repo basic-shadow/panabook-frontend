@@ -1,8 +1,15 @@
 import MainDashboard from "@/entities/mainDashboard/MainDashboard";
+import { routeEndpoints } from "@/shared/routeEndpoint";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { AiFillTags } from "react-icons/ai";
 
 export default function RoomsSection() {
+  // ROUTER
+  const router = useRouter();
+  const onEditRoom = (id: number) => () =>
+    router.push(routeEndpoints.editRoom + id);
+
   return (
     <MainDashboard>
       <div className="px-6 py-4">
@@ -33,7 +40,10 @@ export default function RoomsSection() {
                   <button className="rounded bg-blue-700 px-4 py-2 text-sm text-white hover:bg-blue-500">
                     Загрузить фотографии
                   </button>
-                  <button className="rounded border-blue-700 px-4 py-2 text-sm text-blue-700 hover:bg-blue-700 hover:text-white">
+                  <button
+                    className="rounded border-blue-700 px-4 py-2 text-sm text-blue-700 hover:bg-blue-700 hover:text-white"
+                    onClick={onEditRoom(1)}
+                  >
                     Редактировать
                   </button>
                 </div>

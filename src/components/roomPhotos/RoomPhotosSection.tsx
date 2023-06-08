@@ -7,7 +7,9 @@ export default function RoomPhotosSection() {
       <div className="px-6 py-4">
         <div className="bg-white shadow">
           <div className="mb-4 flex items-center gap-2 px-4 pt-4">
-            <h3 className="text-xl font-semibold">Фотографии номера</h3>
+            <h2 className="text-xl font-semibold">
+              Выберите номер для управления фотографиями
+            </h2>
           </div>
           {/* ROOMS LIST */}
           <div className="px-4 py-4">

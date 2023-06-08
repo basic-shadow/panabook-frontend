@@ -10,7 +10,7 @@ import GeneralDescriptionForm from "./forms/GeneralDescriptionForm";
 import AddressForm from "./forms/AddressForm";
 import { LANGUAGES } from "../registerProperty/components/register_multi_form/utils/const_data";
 
-export default function EditPropertyDescriptionPage({
+export default function EditPropertyDescriptionSection({
   initState,
 }: {
   initState?: IGeneralInfo;
