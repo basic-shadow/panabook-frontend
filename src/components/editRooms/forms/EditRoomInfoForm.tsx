@@ -11,10 +11,12 @@ export default function EditRoomInfoForm({
   value: EditRoom;
 }) {
   return (
-    <div>
-      <h3 className="border-b px-4 py-4 text-xl font-semibold">Название</h3>
+    <div className="mt-4 bg-white shadow">
+      <h3 className="border-b px-4 py-4 text-xl font-semibold">
+        Информация о номере
+      </h3>
 
-      <div className="mt-4 px-4">
+      <div className="mt-4 px-4 pb-4">
         <NewInput
           id={"maxGuests"}
           name={"maxGuests"}

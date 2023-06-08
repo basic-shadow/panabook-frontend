@@ -6,6 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { type EditRoom, editRoomSchema } from "./types/editRoomTypes";
 import EditRoomNameForm from "./forms/EditRoomNameForm";
 import EditRoomInfoForm from "./forms/EditRoomInfoForm";
+import EditRoomQuantityForm from "./forms/EditRoomQuantityForm";
 
 export default function EditRoomInfoSection({
   id,
@@ -39,6 +40,10 @@ export default function EditRoomInfoSection({
             setValue={formMethods.setValue}
           />
           <EditRoomInfoForm
+            value={formMethods.watch()}
+            setValue={formMethods.setValue}
+          />
+          <EditRoomQuantityForm
             value={formMethods.watch()}
             setValue={formMethods.setValue}
           />

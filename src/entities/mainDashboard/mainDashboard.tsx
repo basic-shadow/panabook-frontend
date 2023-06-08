@@ -3,7 +3,7 @@ import { routeEndpoints } from "@/shared/routeEndpoint";
 import Link from "next/link";
 import React, { useState } from "react";
 import { AiFillSetting, AiFillTags, AiOutlineMenu } from "react-icons/ai";
-import { FaBuilding, FaHome } from "react-icons/fa";
+import { FaBuilding, FaHome, FaKey, FaMoneyCheck } from "react-icons/fa";
 import {
   MdDesignServices,
   MdOutlineKeyboardDoubleArrowDown,
@@ -13,7 +13,11 @@ import {
 } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { MdEdit } from "react-icons/md";
-import { BsFileEarmarkRuledFill, BsFillBuildingFill } from "react-icons/bs";
+import {
+  BsFileEarmarkRuledFill,
+  BsFillBuildingFill,
+  BsFillFileBarGraphFill,
+} from "react-icons/bs";
 
 const editPageLinks = [
   {
@@ -76,7 +80,7 @@ export default function MainDashboard({
           {/* HOME */}
           <Link
             className={
-              "mb-3 flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              "flex cursor-pointer items-center gap-4 px-8 py-2 " +
               linkClassName("/")
             }
             href={routeEndpoints.home}
@@ -84,12 +88,25 @@ export default function MainDashboard({
             <FaHome />
             <p>Главная</p>
           </Link>
+          {/* BOOKINGS */}
+          <Link
+            className={
+              "mb-3 flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              linkClassName(routeEndpoints.bookings)
+            }
+            href={routeEndpoints.bookings}
+          >
+            <FaKey />
+            <p>Брони</p>
+          </Link>
+          {/* DIVIDER */}
+          <div className="my-10"></div>
           {/* EDIT PROPERTY */}
           <div>
             <div
               className={
                 "flex cursor-pointer items-center gap-2 px-8 " +
-                (!openPropertyEdit ? "mb-3" : "")
+                (!openPropertyEdit ? "mb-2" : "")
               }
               onClick={() => setOpenPropertyEdit((prev) => !prev)}
             >
@@ -106,7 +123,7 @@ export default function MainDashboard({
             <div
               className={`${
                 openPropertyEdit
-                  ? "h-42 pt-4 transition-all"
+                  ? "h-42 mb-2 pt-2 transition-all"
                   : "pointer-events-none h-0 opacity-0"
               }`}
             >
@@ -125,17 +142,6 @@ export default function MainDashboard({
               ))}
             </div>
           </div>
-          {/* PROPERTY LIST */}
-          <Link
-            className={
-              "flex cursor-pointer items-center gap-4 px-8 py-2 " +
-              linkClassName(routeEndpoints.properties)
-            }
-            href={routeEndpoints.properties}
-          >
-            <FaBuilding />
-            <p>Список объектов</p>
-          </Link>
           {/* ROOM LIST */}
           <Link
             className={
@@ -146,6 +152,28 @@ export default function MainDashboard({
           >
             <AiFillTags />
             <p>Номера</p>
+          </Link>
+          {/* RATES */}
+          <Link
+            className={
+              "flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              linkClassName(routeEndpoints.rates)
+            }
+            href={routeEndpoints.rates}
+          >
+            <FaMoneyCheck />
+            <p>Тарифы</p>
+          </Link>
+          {/* RATES OVERVIEW */}
+          <Link
+            className={
+              "mb-2 flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              linkClassName(routeEndpoints.ratesOverview)
+            }
+            href={routeEndpoints.ratesOverview}
+          >
+            <BsFillFileBarGraphFill />
+            <p>Шахматка</p>
           </Link>
           {/* PHOTOS */}
           <div>
@@ -188,6 +216,19 @@ export default function MainDashboard({
               ))}
             </div>
           </div>
+          {/* DIVIDER */}
+          <div className="my-10"></div>
+          {/* PROPERTY LIST */}
+          <Link
+            className={
+              "flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              linkClassName(routeEndpoints.properties)
+            }
+            href={routeEndpoints.properties}
+          >
+            <FaBuilding />
+            <p>Список объектов</p>
+          </Link>
         </div>
       </div>
       <div className="w-full">

@@ -10,4 +10,7 @@ export const routeEndpoints = {
   roomPhotos: "/photos/room",
   propertyPhotos: "/photos/property",
   editRoom: "/rooms/edit/",
+  bookings: "/bookings",
+  rates: "/rates",
+  ratesOverview: "/rates/overview",
 };

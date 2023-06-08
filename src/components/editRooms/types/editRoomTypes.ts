@@ -12,7 +12,7 @@ export type EditRoom = {
   beds: {
     type: number;
     quantity: number;
-  };
+  }[];
   facilities: number[];
 };
 
@@ -23,9 +23,11 @@ export const editRoomSchema = yup.object().shape({
   maxChildren: yup.number().required(requiredField),
   surfaceArea: yup.number().required(requiredField),
   allowedSmoking: yup.boolean().required(requiredField),
-  beds: yup.object().shape({
-    type: yup.number().required(requiredField),
-    quantity: yup.number().required(requiredField),
-  }),
+  beds: yup.array().of(
+    yup.object().shape({
+      type: yup.number().required(requiredField),
+      quantity: yup.number().required(requiredField),
+    })
+  ),
   facilities: yup.array().of(yup.number()).required(requiredField),
 });
