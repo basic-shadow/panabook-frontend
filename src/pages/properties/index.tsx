@@ -1,11 +1,14 @@
-import UserPropertiesPage from "@/components/userProperties/UserPropertiesPage";
+import { useGetUserObjects } from "@/components/home/api/objectsQuery";
+import UserPropertiesSection from "@/components/userProperties/UserPropertiesSection";
 import Container from "@/entities/container/container";
 import React from "react";
 
-export default function UserProperties() {
+export default function UserPropertiesPage() {
+  const { isLoading: objectsLoading, objects } = useGetUserObjects();
+
   return (
-    <Container removeHeader>
-      <UserPropertiesPage />
+    <Container authHeader loading={objectsLoading}>
+      <UserPropertiesSection />
     </Container>
   );
 }

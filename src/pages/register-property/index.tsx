@@ -1,4 +1,4 @@
-import RegisterPropertyForm from "@/components/register-property/register_property_form";
+import RegisterPropertyForm from "@/components/registerProperty/register_property_form";
 import Container from "@/entities/container/container";
 
 export default function RegisterPropertyPage() {

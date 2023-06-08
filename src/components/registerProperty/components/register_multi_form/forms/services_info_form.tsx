@@ -1,4 +1,4 @@
-import { useRegisterPropertyStore } from "@/components/register-property/store/store";
+import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 import AppDropdown from "@/shared/UI/AppDropdown/AppDropdown";
 import Checkbox from "@/shared/UI/Checkbox/Checkbox";
 import React, { useCallback, useMemo, useState } from "react";

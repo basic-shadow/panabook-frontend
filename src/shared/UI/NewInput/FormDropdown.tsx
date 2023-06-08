@@ -12,6 +12,7 @@ export default function FormDropdown({
   required,
   onSelect,
   selectedValue,
+  active,
 }: {
   id: string;
   label?: string;
@@ -21,6 +22,7 @@ export default function FormDropdown({
   onSelect: (id: number | string) => void;
   className?: string;
   required?: boolean;
+  active?: boolean;
 }) {
   const { getFieldState } = useFormContext();
   const { error } = getFieldState(name);
@@ -47,6 +49,7 @@ export default function FormDropdown({
         selectedValue={selectedValue}
         options={options}
         onSelect={onSelect}
+        active={active}
       />
     </div>
   );

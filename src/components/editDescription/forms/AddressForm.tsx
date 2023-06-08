@@ -3,7 +3,7 @@ import { type PropertyDescription } from "../types/descriptionTypes";
 import { type UseFormSetValue } from "react-hook-form";
 import NewInput from "@/shared/UI/NewInput/NewInput";
 import FormDropdown from "@/shared/UI/NewInput/FormDropdown";
-import { KAZAKHSTAN_CITIES } from "@/components/register-property/components/register_multi_form/utils/const_data";
+import { KAZAKHSTAN_CITIES } from "@/components/registerProperty/components/register_multi_form/utils/const_data";
 
 export default function AddressForm({
   setValue,

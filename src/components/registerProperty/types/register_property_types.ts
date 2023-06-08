@@ -38,6 +38,7 @@ export type IPropertyRoomWithFacilities = IPropertyRoom & IFacilitiesInfo;
 export type IRegisterTimeInfo = {
   checkInTime: IRegisterDate;
   checkOutTime: IRegisterDate;
+  allowedPets?: boolean;
 };
 
 export type IFacilitiesInfo = {

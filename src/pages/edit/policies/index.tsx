@@ -4,8 +4,13 @@ import React from "react";
 
 export default function EditPropertyServices() {
   return (
-    <Container removeHeader>
-      <EditPropertyPoliciesPage />
+    <Container authHeader>
+      <EditPropertyPoliciesPage
+        initState={{
+          checkInTime: { from: "00:00", to: "00:00" },
+          checkOutTime: { from: "00:00", to: "00:00" },
+        }}
+      />
     </Container>
   );
 }

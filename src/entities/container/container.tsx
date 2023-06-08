@@ -10,14 +10,14 @@ export default function Container({
   title = "Panabook",
   description = "Panabook - Онлайн бронирование отелей, туров и авиабилетов",
   favicon = "/favicon.ico",
-  removeHeader = false,
+  authHeader = false,
   loading = false,
   children,
 }: {
   title?: string;
   description?: string;
   favicon?: string;
-  removeHeader?: boolean;
+  authHeader?: boolean;
   loading?: boolean;
   children?: React.ReactNode;
 }) {
@@ -31,7 +31,7 @@ export default function Container({
         <meta name="description" content={description} />
         <link rel="icon" href={favicon} />
       </Head>
-      {user && !removeHeader ? <RegisterHeader /> : null}
+      {user && !authHeader ? <RegisterHeader /> : null}
       {/* @ts-ignore */}
       <AuthLoadingLayer user={user} isLoading={isLoading || loading}>
         {children}

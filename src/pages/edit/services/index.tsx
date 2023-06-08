@@ -4,8 +4,8 @@ import React from "react";
 
 export default function EditPropertyServices() {
   return (
-    <Container removeHeader>
-      <EditPropertyServicesPage />
+    <Container authHeader>
+      <EditPropertyServicesPage initState={[]} />
     </Container>
   );
 }

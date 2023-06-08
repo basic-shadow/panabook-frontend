@@ -3,25 +3,25 @@ import * as yup from "yup";
 const requiredField = "Обязательное поле";
 
 export type PropertyPolicies = {
-  checkIn: {
+  checkInTime: {
     from: string;
     to: string;
   };
-  checkOut: {
+  checkOutTime: {
     from: string;
     to: string;
   };
-  allowPets: boolean;
+  allowedPets?: boolean;
 };
 
 export const policiesSchema = yup.object().shape({
-  checkIn: yup.object().shape({
+  checkInTime: yup.object().shape({
     from: yup.string().required(requiredField),
     to: yup.string().required(requiredField),
   }),
-  checkOut: yup.object().shape({
+  checkOutTime: yup.object().shape({
     from: yup.string().required(requiredField),
     to: yup.string().required(requiredField),
   }),
-  allowPets: yup.boolean().required(requiredField),
+  allowedPets: yup.boolean(),
 });

@@ -1,4 +1,4 @@
-import { type IRegisterProperty } from "@/components/register-property/types/register_property_types";
+import { type IRegisterProperty } from "@/components/registerProperty/types/register_property_types";
 import { type RegisterPropertyRequest } from "./register_property.types";
 
 export const transformRegisterPropertyModel = (

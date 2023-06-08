@@ -10,7 +10,10 @@ export const propertyEndpoints = {
 };
 
 export const objectsEndpoints = {
-  getObjects: "/property",
+  getObjects: "/user/property",
+  singleObject: "/user/property/:id",
+  getSingleObject: "/user/property",
+  singleRoom: "/user/room/:id",
 };
 
 export const adminEndpoints = {

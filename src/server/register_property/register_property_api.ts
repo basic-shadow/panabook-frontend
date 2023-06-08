@@ -1,4 +1,4 @@
-import { type IRegisterProperty } from "@/components/register-property/types/register_property_types";
+import { type IRegisterProperty } from "@/components/registerProperty/types/register_property_types";
 import { API } from "../api/axios.instance";
 import { propertyEndpoints } from "../apiEndpoints";
 import { transformRegisterPropertyModel } from "./normalize_models";

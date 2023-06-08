@@ -1,1 +1,3 @@
-export const localStorageKeys = {};
+export const localStorageKeys = {
+  selectedObjectId: "selectedObjectId",
+};

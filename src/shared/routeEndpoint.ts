@@ -4,4 +4,9 @@ export const routeEndpoints = {
   login: "/login",
   registerProperty: "/register-property",
   success: "/success",
+  profile: "/profile",
+  rooms: "/rooms",
+  properties: "/properties",
+  roomPhotos: "/photos/room",
+  propertyPhotos: "/photos/property",
 };

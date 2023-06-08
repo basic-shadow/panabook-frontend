@@ -28,7 +28,7 @@ const Admin: NextPage = () => {
   }, [error, objectsLoading]);
 
   return (
-    <Container removeHeader loading={objectsLoading}>
+    <Container authHeader loading={objectsLoading}>
       <AdminPage
         objects={objects}
         objectsLoading={objectsLoading}

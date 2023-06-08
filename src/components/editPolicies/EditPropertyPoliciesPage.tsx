@@ -1,5 +1,5 @@
-import MainDashboard from "@/entities/mainDashboard/mainDashboard";
-import { type IGeneralInfo } from "../register-property/types/register_property_types";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard";
+import { type IRegisterTimeInfo } from "../registerProperty/types/register_property_types";
 import React from "react";
 import {
   policiesSchema,
@@ -7,16 +7,24 @@ import {
 } from "./types/editPoliciesTypes";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import NewInput from "@/shared/UI/NewInput/NewInput";
 import FormDropdown from "@/shared/UI/NewInput/FormDropdown";
+
+// time slots from 00:00 to 23:30 with 30 min step generate full array
+const timeSlots = Array.from({ length: 48 }, (_, i) => {
+  const hours = Math.floor(i / 2);
+  const minutes = i % 2 === 0 ? "00" : "30";
+
+  return `${hours > 9 ? hours : "0" + hours}:${minutes}`;
+});
 
 export default function EditPropertyPoliciesPage({
   initState,
 }: {
-  initState?: IGeneralInfo;
+  initState?: IRegisterTimeInfo;
 }) {
   const formMethods = useForm<PropertyPolicies>({
     resolver: yupResolver(policiesSchema),
+    defaultValues: initState,
   });
 
   async function onSubmit(data: PropertyPolicies) {
@@ -34,16 +42,38 @@ export default function EditPropertyPoliciesPage({
               Регистрация заезда
             </h3>
             <div className="mt-4 px-4">
-              <NewInput
+              <FormDropdown
+                selectedValue={{
+                  label: formMethods.watch().checkInTime.from,
+                  value: formMethods.watch().checkInTime.from,
+                }}
+                onSelect={(sTime) => {
+                  formMethods.setValue("checkInTime.from", `${sTime}`);
+                }}
+                options={timeSlots.map((time) => ({
+                  label: time,
+                  value: time,
+                }))}
                 id={"checkInFrom"}
-                label={"С:"}
-                name={"checkIn.from"}
+                name={"checkInFrom"}
                 required
+                label="С:"
               />
-              <NewInput
+              <FormDropdown
+                selectedValue={{
+                  label: formMethods.watch().checkInTime.to,
+                  value: formMethods.watch().checkInTime.to,
+                }}
+                onSelect={(sTime) => {
+                  formMethods.setValue("checkInTime.to", `${sTime}`);
+                }}
+                options={timeSlots.map((time) => ({
+                  label: time,
+                  value: time,
+                }))}
                 id={"checkInTo"}
                 label={"По:"}
-                name={"checkIn.to"}
+                name={"checkInTime.to"}
                 required
               />
             </div>
@@ -53,16 +83,38 @@ export default function EditPropertyPoliciesPage({
               Регистрация отъезда
             </h3>
             <div className="mt-4 px-4">
-              <NewInput
+              <FormDropdown
+                selectedValue={{
+                  label: formMethods.watch().checkOutTime.from,
+                  value: formMethods.watch().checkOutTime.from,
+                }}
+                onSelect={(sTime) => {
+                  formMethods.setValue("checkOutTime.from", `${sTime}`);
+                }}
+                options={timeSlots.map((time) => ({
+                  label: time,
+                  value: time,
+                }))}
                 id={"checkOutFrom"}
                 label={"С:"}
-                name={"checkOut.from"}
+                name={"checkOutTime.from"}
                 required
               />
-              <NewInput
+              <FormDropdown
+                selectedValue={{
+                  label: formMethods.watch().checkOutTime.to,
+                  value: formMethods.watch().checkOutTime.to,
+                }}
+                onSelect={(sTime) => {
+                  formMethods.setValue("checkOutTime.to", `${sTime}`);
+                }}
+                options={timeSlots.map((time) => ({
+                  label: time,
+                  value: time,
+                }))}
                 id={"checkOutTo"}
                 label={"По:"}
-                name={"checkOut.to"}
+                name={"checkOutTime.to"}
                 required
               />
             </div>
@@ -73,22 +125,22 @@ export default function EditPropertyPoliciesPage({
             </h3>
             <div className="mt-4 px-4">
               <FormDropdown
-                id={"allowPets"}
+                id={"allowedPets"}
                 label={"Можно ли у вас проживать с домашними животными?:"}
-                name={"allowPets"}
+                name={"allowedPets"}
                 required
                 options={[
                   { label: "Да", value: "true" },
                   { label: "Нет", value: "false" },
                 ]}
                 selectedValue={
-                  formMethods.watch().allowPets
+                  formMethods.watch().allowedPets
                     ? { label: "Да", value: "true" }
                     : { label: "Нет", value: "false" }
                 }
                 onSelect={(id: string | number) => {
                   formMethods.setValue(
-                    "allowPets",
+                    "allowedPets",
                     id === "true" ? true : false
                   );
                 }}
@@ -96,6 +148,7 @@ export default function EditPropertyPoliciesPage({
             </div>
           </div>
         </FormProvider>
+
         {/* SUBMIT */}
         <div className="my-8">
           <button

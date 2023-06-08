@@ -1,8 +1,8 @@
 "use client";
 
-import { generalInfoSchema } from "@/components/register-property/types/validations";
-import { type IGeneralInfo } from "@/components/register-property/types/register_property_types";
-import { useRegisterPropertyStore } from "@/components/register-property/store/store";
+import { generalInfoSchema } from "@/components/registerProperty/types/validations";
+import { type IGeneralInfo } from "@/components/registerProperty/types/register_property_types";
+import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 import AppDropdown from "@/shared/UI/AppDropdown/AppDropdown";
 import React, { memo } from "react";
 import { useForm } from "react-hook-form";

@@ -1,5 +1,5 @@
-import { type IPropertyRoomWithFacilities } from "@/components/register-property/types/register_property_types";
-import { useRegisterPropertyStore } from "@/components/register-property/store/store";
+import { type IPropertyRoomWithFacilities } from "@/components/registerProperty/types/register_property_types";
+import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 import React from "react";
 import RegisterPropertyButtons from "../buttons_box";
 import RoomFacilitiesForm from "./widgets/room_facilities_form";

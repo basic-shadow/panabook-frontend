@@ -1,5 +1,5 @@
-import { useUploadPhoto } from "@/components/register-property/api/useUploadObject";
-import { useRegisterPropertyStore } from "@/components/register-property/store/store";
+import { useUploadPhoto } from "@/components/registerProperty/api/useUploadObject";
+import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 import { type UploadPhotoResponse } from "@/server/register_property/upload_photos.types";
 import { AppButton } from "@/shared/UI";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
@@ -53,7 +53,7 @@ export default function PhotosForm({
       {/* IMAGE DROP ZONE */}
       <div
         className={
-          "fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center text-4xl font-bold text-white " +
+          "fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center text-4xl font-bold text-white " +
           (dropZoneVisible ? "bg-black bg-opacity-50" : "hidden bg-transparent")
         }
         onDrop={handleDrop}

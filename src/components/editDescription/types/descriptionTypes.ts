@@ -3,6 +3,7 @@ import * as yup from "yup";
 const requiredField = "Обязательное поле";
 
 export type PropertyDescription = {
+  name: string;
   commission: number;
   type: number;
   city: number;
@@ -18,6 +19,7 @@ export type PropertyDescription = {
 };
 
 export const descriptionSchema = yup.object().shape({
+  name: yup.string().required(requiredField),
   type: yup.number().required(requiredField),
   city: yup.number().typeError(requiredField).required(requiredField),
   totalRooms: yup.number().typeError(requiredField).required(requiredField),

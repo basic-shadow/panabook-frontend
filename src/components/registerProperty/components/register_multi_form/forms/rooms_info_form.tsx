@@ -10,14 +10,14 @@ import {
   ROOM_TYPES,
 } from "../utils/const_data";
 import RadioGroup from "@/shared/UI/RadioGroup/RadioGroup";
-import { SMOKING_CATEGORY } from "@/components/register-property/utils/const_data";
+import { SMOKING_CATEGORY } from "@/components/registerProperty/utils/const_data";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { useForm } from "react-hook-form";
-import { type IPropertyRoomWithFacilities } from "@/components/register-property/types/register_property_types";
+import { type IPropertyRoomWithFacilities } from "@/components/registerProperty/types/register_property_types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { roomsInfoSchema } from "@/components/register-property/types/validations";
-import { useRegisterPropertyStore } from "@/components/register-property/store/store";
+import { roomsInfoSchema } from "@/components/registerProperty/types/validations";
+import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 import RegisterPropertyButtons from "../buttons_box";
 
 const NO_ROOM_TEXT =
@@ -148,7 +148,7 @@ export default memo(function RoomsInfoFrom({
             {NO_ROOM_TEXT}
           </p>
           <div className="relative mt-6 rounded-full border border-gray-400 p-4">
-            <div className="absolute top-0 right-0 z-10 h-8 w-8 rounded-full border-2 border-gray-400 bg-white">
+            <div className="absolute right-0 top-0 z-10 h-8 w-8 rounded-full border-2 border-gray-400 bg-white">
               <div className="flex h-full items-center justify-center">
                 <BsPlusLg color="#198AE1" />
               </div>
@@ -275,11 +275,11 @@ export default memo(function RoomsInfoFrom({
               <h2 className="mb-2 text-lg font-semibold text-gray-800">
                 Количество кроватей в данном номере
               </h2>
-              <p className="-mx-8 mb-6 mt-4 bg-blue-100 py-4 px-8 text-sm text-gray-600">
+              <p className="-mx-8 mb-6 mt-4 bg-blue-100 px-8 py-4 text-sm text-gray-600">
                 Расскажите нам о кроватях в вашем номере, не включая
                 дополнительные кровати.
               </p>
-              <div className="border py-4 px-8">
+              <div className="border px-8 py-4">
                 <h2 className="mb-2 text-lg font-semibold text-gray-800">
                   Кровати
                 </h2>
@@ -405,7 +405,7 @@ export default memo(function RoomsInfoFrom({
               <h2 className="mb-2 text-lg font-semibold text-gray-800">
                 Базовая цена
               </h2>
-              <p className="-mx-8 mb-6 mt-4 bg-blue-100 py-4 px-8 text-sm text-gray-600">
+              <p className="-mx-8 mb-6 mt-4 bg-blue-100 px-8 py-4 text-sm text-gray-600">
                 Это цена за номер при стандартном размещении, которая будет
                 автоматически применена для всех дней на год вперед. Вы сможете
                 настроить цены в разделе шахматка перед тем, как ваш объект

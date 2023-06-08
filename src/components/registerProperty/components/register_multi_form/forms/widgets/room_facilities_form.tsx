@@ -1,9 +1,9 @@
 import {
   type IFacilitiesInfo,
   type IPropertyRoomWithFacilities,
-} from "@/components/register-property/types/register_property_types";
-import { facilitiesInfoSchema } from "@/components/register-property/types/validations";
-import { YES_NO_CHOICES } from "@/components/register-property/utils/const_data";
+} from "@/components/registerProperty/types/register_property_types";
+import { facilitiesInfoSchema } from "@/components/registerProperty/types/validations";
+import { YES_NO_CHOICES } from "@/components/registerProperty/utils/const_data";
 import { Accordion, RadioGroup } from "@/shared/UI";
 import AppDropdown from "@/shared/UI/AppDropdown/AppDropdown";
 import Checkbox from "@/shared/UI/Checkbox/Checkbox";
@@ -18,7 +18,7 @@ import {
   FACILITIES_CATEGORIES,
   ROOM_NAMES,
 } from "../../utils/const_data";
-import { useRegisterPropertyStore } from "@/components/register-property/store/store";
+import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 
 export default function RoomFacilitiesForm({
   room,

@@ -6,8 +6,8 @@ import {
   PROPERTY_SERVICES,
   ROOM_NAMES,
   ROOM_TYPES,
-} from "@/components/register-property/components/register_multi_form/utils/const_data";
-import { PROPERTY_CATEGORIES } from "@/components/register-property/utils/const_data";
+} from "@/components/registerProperty/components/register_multi_form/utils/const_data";
+import { PROPERTY_CATEGORIES } from "@/components/registerProperty/utils/const_data";
 import {
   type PropertyRoom,
   type ObjectsInfo,

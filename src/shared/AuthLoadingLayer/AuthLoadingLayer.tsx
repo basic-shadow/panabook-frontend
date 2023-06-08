@@ -22,17 +22,17 @@ export default function AuthLoadingLayer({
   useEffect(() => {
     if (isLoading) return;
 
-    // if (user === undefined && location.asPath !== routeEndpoints.signup) {
-    //   router.push(routeEndpoints.login);
-    // } else if (user?.numberofobjects == 0) {
-    //   router.push(routeEndpoints.registerProperty);
-    // } else if (
-    //   user !== undefined &&
-    //   (location.asPath === routeEndpoints.login ||
-    //     location.asPath === routeEndpoints.signup)
-    // ) {
-    //   router.push(routeEndpoints.home);
-    // }
+    if (user === undefined && location.asPath !== routeEndpoints.signup) {
+      router.push(routeEndpoints.login);
+    } else if (user !== undefined && user?.numberofobjects == 0) {
+      router.push(routeEndpoints.registerProperty);
+    } else if (
+      user !== undefined &&
+      (location.asPath === routeEndpoints.login ||
+        location.asPath === routeEndpoints.signup)
+    ) {
+      router.push(routeEndpoints.home);
+    }
   }, [user, location.asPath, isLoading]);
 
   useEffect(() => {
@@ -44,11 +44,9 @@ export default function AuthLoadingLayer({
           setRouterLoading(false);
         }, 1000);
     };
-
     location.events.on("routeChangeStart", handleStart);
     location.events.on("routeChangeComplete", handleComplete);
     location.events.on("routeChangeError", handleComplete);
-
     return () => {
       location.events.off("routeChangeStart", handleStart);
       location.events.off("routeChangeComplete", handleComplete);

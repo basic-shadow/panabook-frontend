@@ -1,6 +1,6 @@
-import MainDashboard from "@/entities/mainDashboard/mainDashboard";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { FormProvider, useForm } from "react-hook-form";
-import { type IGeneralInfo } from "../register-property/types/register_property_types";
+import { type IGeneralInfo } from "../registerProperty/types/register_property_types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   descriptionSchema,
@@ -8,7 +8,7 @@ import {
 } from "./types/descriptionTypes";
 import GeneralDescriptionForm from "./forms/GeneralDescriptionForm";
 import AddressForm from "./forms/AddressForm";
-import { LANGUAGES } from "../register-property/components/register_multi_form/utils/const_data";
+import { LANGUAGES } from "../registerProperty/components/register_multi_form/utils/const_data";
 
 export default function EditPropertyDescriptionPage({
   initState,

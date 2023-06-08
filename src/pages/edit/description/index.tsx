@@ -4,7 +4,7 @@ import React from "react";
 
 export default function EditPropertyDescription() {
   return (
-    <Container removeHeader>
+    <Container authHeader>
       <EditPropertyDescriptionPage />
     </Container>
   );

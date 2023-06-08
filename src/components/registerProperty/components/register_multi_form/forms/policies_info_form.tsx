@@ -1,5 +1,5 @@
-import { useUploadObject } from "@/components/register-property/api/useUploadObject";
-import { useRegisterPropertyStore } from "@/components/register-property/store/store";
+import { useUploadObject } from "@/components/registerProperty/api/useUploadObject";
+import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import { AppDropdown } from "@/shared/UI";
 import { useRouter } from "next/navigation";

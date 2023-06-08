@@ -1,7 +1,7 @@
 import React from "react";
 import { type PropertyDescription } from "../types/descriptionTypes";
 import { type UseFormSetValue } from "react-hook-form";
-import { PROPERTY_CATEGORIES } from "@/components/register-property/utils/const_data";
+import { PROPERTY_CATEGORIES } from "@/components/registerProperty/utils/const_data";
 import NewInput from "@/shared/UI/NewInput/NewInput";
 import FormDropdown from "@/shared/UI/NewInput/FormDropdown";
 
@@ -14,6 +14,7 @@ export default function GeneralDescriptionForm({
 }) {
   return (
     <div className="px-4 py-4">
+      <NewInput id={"name"} label={"Название:"} name={"name"} required />
       <NewInput
         id={"commission"}
         label={"Комиссия Panabook.kz (%):"}

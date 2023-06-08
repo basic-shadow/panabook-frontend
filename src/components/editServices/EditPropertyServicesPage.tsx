@@ -1,13 +1,13 @@
-import MainDashboard from "@/entities/mainDashboard/mainDashboard";
-import { type IGeneralInfo } from "../register-property/types/register_property_types";
-import { PROPERTY_SERVICES } from "../register-property/components/register_multi_form/utils/const_data";
-import { FACILITIES_CATEGORIES } from "../register-property/components/register_multi_form/utils/const_data";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard";
+import { type IGeneralInfo } from "../registerProperty/types/register_property_types";
+import { PROPERTY_SERVICES } from "../registerProperty/components/register_multi_form/utils/const_data";
+import { FACILITIES_CATEGORIES } from "../registerProperty/components/register_multi_form/utils/const_data";
 import React from "react";
 
 export default function EditPropertyServicesPage({
   initState,
 }: {
-  initState?: IGeneralInfo;
+  initState?: number[];
 }) {
   async function onSubmit() {
     console.log("submit");
