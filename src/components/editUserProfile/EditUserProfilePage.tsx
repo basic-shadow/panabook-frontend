@@ -1,4 +1,4 @@
-import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";

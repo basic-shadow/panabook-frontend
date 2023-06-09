@@ -1,4 +1,4 @@
-import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import React from "react";
 
 export default function RatesOverviewSection() {

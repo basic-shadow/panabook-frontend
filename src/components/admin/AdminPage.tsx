@@ -6,7 +6,7 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import Modal from "@/shared/UI/Modal/Modal";
-import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { type ObjectsInfo } from "@/server/objects/objects.types";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 import Image from "next/image";

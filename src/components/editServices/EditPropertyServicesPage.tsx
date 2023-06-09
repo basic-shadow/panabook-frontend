@@ -1,4 +1,4 @@
-import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { type IGeneralInfo } from "../registerProperty/types/register_property_types";
 import { PROPERTY_SERVICES } from "../registerProperty/components/register_multi_form/utils/const_data";
 import { FACILITIES_CATEGORIES } from "../registerProperty/components/register_multi_form/utils/const_data";

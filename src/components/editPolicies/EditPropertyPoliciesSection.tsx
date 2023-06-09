@@ -1,4 +1,4 @@
-import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { type IRegisterTimeInfo } from "../registerProperty/types/register_property_types";
 import React from "react";
 import {

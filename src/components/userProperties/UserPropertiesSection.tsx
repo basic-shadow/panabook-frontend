@@ -1,5 +1,5 @@
 import React from "react";
-import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { BsFillBuildingFill } from "react-icons/bs";
 import { IoAddOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
