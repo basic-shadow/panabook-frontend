@@ -1,4 +1,4 @@
-import MainDashboard from "@/entities/mainDashboard/MainDashboard";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
 import React from "react";
 
 export default function RoomPhotosSection() {

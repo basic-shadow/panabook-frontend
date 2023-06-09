@@ -1,4 +1,4 @@
-import MainDashboard from "@/entities/mainDashboard/MainDashboard";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import { useRouter } from "next/navigation";
 import React from "react";

@@ -1,4 +1,4 @@
-import MainDashboard from "@/entities/mainDashboard/MainDashboard";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
 import { FormProvider, useForm } from "react-hook-form";
 import { type IGeneralInfo } from "../registerProperty/types/register_property_types";
 import { yupResolver } from "@hookform/resolvers/yup";

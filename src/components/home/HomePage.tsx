@@ -1,4 +1,4 @@
-import MainDashboard from "@/entities/mainDashboard/MainDashboard";
+import MainDashboard from "@/entities/mainDashboard/MainDashboard1";
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import StatisticBox from "./widgets/StatisticBox";
