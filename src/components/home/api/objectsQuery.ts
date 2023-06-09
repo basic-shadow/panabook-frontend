@@ -24,7 +24,7 @@ export function useGetUserSelectedObject({
   enabled: boolean;
 }) {
   const { data, isLoading, refetch, isFetching, error } = useQuery<
-    ObjectsInfo[],
+    ObjectsInfo,
     TError
   >(
     queryKeys.getSingleObject,

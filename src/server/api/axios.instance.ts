@@ -24,8 +24,8 @@ export const API = {
     apiInstance.post<T>(url, data, {
       ...config,
     }),
-  patch: <T>(url: string, data: any, config?: AxiosRequestConfig) =>
-    apiInstance.patch<T>(url, data, {
+  put: <T>(url: string, data: any, config?: AxiosRequestConfig) =>
+    apiInstance.put<T>(url, data, {
       ...config,
     }),
   delete: <T>(url: string, config?: AxiosRequestConfig) =>

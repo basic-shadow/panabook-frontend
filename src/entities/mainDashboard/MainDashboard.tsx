@@ -65,14 +65,17 @@ export default function MainDashboard({
 
   const linkClassName = (path: string) => {
     if (pathname === path) {
-      return "bg-slate-800 text-white";
+      return "bg-sky-700 text-white";
     }
   };
 
   return (
     <div className="flex">
-      <div className="flex min-h-screen w-1/5 flex-col bg-slate-700 text-white">
-        <div className="flex items-center gap-2 border-b border-gray-500 px-8 py-6">
+      <div
+        className="flex min-h-screen w-1/5 flex-col text-white"
+        style={{ backgroundColor: "rgb(4,38,60)" }}
+      >
+        <div className="flex items-center gap-2 px-8 pb-4 pt-10">
           <AiOutlineMenu size={20} />
           <p>Menu</p>
         </div>
@@ -81,7 +84,7 @@ export default function MainDashboard({
           <Link
             className={
               "flex cursor-pointer items-center gap-4 px-8 py-2 " +
-              linkClassName("/")
+              linkClassName(routeEndpoints.home)
             }
             href={routeEndpoints.home}
           >

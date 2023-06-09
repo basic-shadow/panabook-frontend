@@ -21,25 +21,22 @@ export default function AppTabs({
           >
             {tabsHeader.map((tab, index) => (
               <li className="flex-auto text-center" key={tab}>
-                <a
+                <button
                   className={
-                    "block rounded px-5 py-3 text-xs font-bold uppercase leading-normal " +
+                    "block w-full rounded px-5 py-3 text-xs font-bold uppercase leading-normal " +
                     (selectedTab === index
-                      ? "bg-gray-600 text-white"
+                      ? "bg-sky-600 text-white"
                       : "bg-white text-gray-600")
                   }
                   onClick={() => onSelect(index)}
                   data-toggle="tab"
-                  href={"#" + tab}
                   role="tablist"
                 >
-                  <span className="mr-2">{tab}</span>
-                  {tabsHeaderCount && tabsHeaderCount[index] && (
-                    <span className="rounded-full bg-gray-600 p-1">
-                      {tabsHeaderCount[index]}
-                    </span>
-                  )}
-                </a>
+                  <span>{tab}</span>
+                  <span className={"rounded-full p-1"}>
+                    {tabsHeaderCount && `(${tabsHeaderCount[index]})`}
+                  </span>
+                </button>
               </li>
             ))}
           </ul>

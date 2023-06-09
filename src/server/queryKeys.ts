@@ -1,5 +1,6 @@
 export const queryKeys = {
   login: "login",
+  logout: "logout",
   signup: "signup",
   registerProperty: "registerProperty",
   uploadPhoto: "uploadPhoto",
@@ -7,4 +8,5 @@ export const queryKeys = {
   getObjects: "getObjects",
   getSingleObject: "getSingleObject",
   deleteObjects: "deleteObjects",
+  updateUser: "updateUser",
 };

@@ -2,6 +2,8 @@ export const authEndpoints = {
   signup: "/auth/register",
   login: "/auth/login",
   getUser: "/user/me",
+  updateUser: "/user/me",
+  logout: "/auth/logout",
 };
 
 export const propertyEndpoints = {
@@ -11,8 +13,8 @@ export const propertyEndpoints = {
 
 export const objectsEndpoints = {
   getObjects: "/user/property",
-  singleObject: "/user/property/:id",
-  getSingleObject: "/user/property",
+  getSingleObject: "/user/property/:id",
+  getFirstObject: "/user/property/first",
   singleRoom: "/user/room/:id",
 };
 

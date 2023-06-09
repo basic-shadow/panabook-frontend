@@ -9,7 +9,8 @@ const maskTypesMap = {
   phone: "+7(999)999-99-99",
 } as const;
 
-export const unmaskPhone = (phone: string) => "+" + phone.replace(/[^\d]/g, "");
+export const unmaskPhone = (phone: string) =>
+  phone.length < 10 ? "" : "+" + phone.replace(/[^\d]/g, "");
 
 export default function NewInput({
   id,

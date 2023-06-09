@@ -5,11 +5,12 @@ import StatisticBox from "./widgets/StatisticBox";
 import { IoMdPerson } from "react-icons/io";
 import { BsHouseCheck } from "react-icons/bs";
 import BookingTabs from "./widgets/BookingTabs";
+import { FiBookOpen } from "react-icons/fi";
 
 const emptyText = "На данный момент у вас нет броней";
 
 const activeBlockClass =
-  "flex w-full items-center justify-center font-semibold";
+  "flex flex-col gap-4 w-full items-center justify-center font-semibold";
 
 export default function HomePage() {
   const [bookingTabs, setBookingTabs] = useState(0);
@@ -57,30 +58,34 @@ export default function HomePage() {
               tabsHeaderCount={[0, 0, 0, 0]}
               tabsHeader={["Заезд", "Выезд", "Прибытие", "Отъезд"]}
             />
-            <div className="tab-content tab-space flex h-40 px-4 py-4">
+            <div className="tab-content tab-space flex h-60 px-4 py-4">
               <div
                 className={bookingTabs === 0 ? activeBlockClass : "hidden"}
                 id="link1"
               >
                 {emptyText}
+                <FiBookOpen size={96} color="rgb(59,139,246)" />
               </div>
               <div
                 className={bookingTabs === 1 ? activeBlockClass : "hidden"}
                 id="link2"
               >
                 {emptyText}
+                <FiBookOpen size={96} color="rgb(59,139,246)" />
               </div>
               <div
                 className={bookingTabs === 2 ? activeBlockClass : "hidden"}
                 id="link3"
               >
                 {emptyText}
+                <FiBookOpen size={96} color="rgb(59,139,246)" />
               </div>
               <div
                 className={bookingTabs === 3 ? activeBlockClass : "hidden"}
                 id="link4"
               >
                 {emptyText}
+                <FiBookOpen size={96} color="rgb(59,139,246)" />
               </div>
             </div>
           </div>

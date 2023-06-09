@@ -20,13 +20,13 @@ export async function getUserObjectsApi(options: {
 export async function getUserSingleObjectApi(options: {
   signal?: AbortSignal;
   id?: number | null;
-}): Promise<ObjectsInfo[]> {
+}): Promise<ObjectsInfo> {
   try {
-    const { data } = await API.get<ObjectsInfo[]>(
+    const { data } = await API.get<ObjectsInfo>(
       pathToUrl(
-        objectsEndpoints.singleObject,
+        objectsEndpoints.getSingleObject,
         options.id ? { id: options.id } : null,
-        objectsEndpoints.getSingleObject
+        objectsEndpoints.getFirstObject
       ),
       {
         signal: options?.signal,

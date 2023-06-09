@@ -2,19 +2,38 @@ import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import NewInput from "@/shared/UI/NewInput/NewInput";
-import { profileSchema } from "./types/editUserProfile.types";
+import NewInput, { unmaskPhone } from "@/shared/UI/NewInput/NewInput";
+import {
+  type EditUserProfileInfo,
+  profileSchema,
+} from "./types/editUserProfile.types";
 import FormLabel from "@/shared/UI/NewInput/FormLabel";
+import { type UserInfo } from "@/server/user/user_info.types";
+import { useUpdateUser } from "./api/editUsersQuery";
 
-export default function EditUserProfilePage(initState: any) {
-  const formMethods = useForm({
-    defaultValues: initState,
+export default function EditUserProfileSection(initState: UserInfo) {
+  // API QUERY
+  const { mutateAsync, isLoading } = useUpdateUser();
+
+  const formMethods = useForm<EditUserProfileInfo>({
+    defaultValues: {
+      firstName: initState.firstname,
+      lastName: initState.surname ?? "",
+      email: initState.email,
+      newPassword: "",
+      confirmNewPassword: "",
+      contactPhone: initState.phoneNumber ?? "",
+    },
     resolver: yupResolver(profileSchema),
   });
 
-  async function onSubmit(data: any) {
+  async function onSubmit(data: EditUserProfileInfo) {
     if (formMethods.formState.isValid) {
-      console.log("submit data = ", data);
+      const unmaskedPhone = unmaskPhone(data.contactPhone);
+      mutateAsync({
+        ...data,
+        contactPhone: unmaskedPhone,
+      });
     }
   }
 
@@ -28,17 +47,11 @@ export default function EditUserProfilePage(initState: any) {
             </h3>
             <div className="mt-4 px-4">
               <NewInput
-                id={"checkInFrom"}
+                id={"email"}
                 label={"E-mail:"}
                 name={"email"}
-                value={"qwe"}
+                value={initState.email}
                 disabled
-              />
-              <NewInput
-                id={"password"}
-                label={"Текущий пароль:"}
-                name={"password"}
-                required
               />
               <NewInput
                 id={"firstName"}
@@ -47,11 +60,6 @@ export default function EditUserProfilePage(initState: any) {
                 required
               />
               <NewInput id={"lastName"} label={"Фамилия:"} name={"lastName"} />
-              <NewInput
-                id={"fatherName"}
-                label={"Отчество:"}
-                name={"fatherName"}
-              />
               <NewInput
                 id={"newPassword"}
                 label={"Новый пароль:"}
@@ -68,14 +76,14 @@ export default function EditUserProfilePage(initState: any) {
                 name={"contactPhone"}
                 maskType="phone"
               />
-              <FormLabel label="Загрузите фото:" id={"photo"}>
+              {/* <FormLabel label="Загрузите фото:" id={"photo"}>
                 <input
                   type="file"
                   name="photo"
                   id="photo"
                   className="rounded-md border border-gray-300 px-4 py-2"
                 />
-              </FormLabel>
+              </FormLabel> */}
             </div>
           </div>
         </FormProvider>

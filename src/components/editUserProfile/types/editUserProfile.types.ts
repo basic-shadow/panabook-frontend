@@ -4,36 +4,33 @@ const requiredField = "Обязательное поле";
 export type EditUserProfileInfo = {
   email: string;
   firstName: string;
-  lastName: string;
-  fatherName?: string;
-  password: string;
+  lastName?: string;
   newPassword?: string;
   confirmNewPassword?: string;
-  birthDate?: string;
-  gender?: string;
-  contactPhone?: string;
-  photo?: string;
+  // birthDate?: string;
+  // gender?: string;
+  contactPhone: string;
+  // photo?: string;
 };
 
 export const profileSchema = yup.object().shape({
   email: yup.string().email("Некорректный email").required(requiredField),
   firstName: yup.string().required(requiredField),
-  lastName: yup.string().required(requiredField),
-  fatherName: yup.string(),
-  password: yup.string().required(requiredField),
+  lastName: yup.string(),
   newPassword: yup.string(),
   confirmNewPassword: yup
     .string()
     .when("newPassword", (newPassword: any, schema: any) => {
-      if (newPassword && newPassword.length > 0) {
+      if (newPassword && newPassword[0].length > 0) {
+        console.log("newPassword =", newPassword);
         return schema
           .oneOf([yup.ref("newPassword")], "Пароли не совпадают")
           .required(requiredField);
       }
       return schema;
     }),
-  birthDate: yup.string(),
-  gender: yup.mixed().oneOf(["male", "female"]).notRequired(),
+  // birthDate: yup.string(),
+  // gender: yup.mixed().oneOf(["male", "female"]).notRequired(),
   contactPhone: yup.string(),
-  photo: yup.string(),
+  // photo: yup.string(),
 });
