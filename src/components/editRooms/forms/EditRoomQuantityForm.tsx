@@ -21,7 +21,7 @@ export default function EditRoomInfoForm({
       label: bedType.label,
       value: bedType.value,
       disabled: !!value.beds.find(
-        (prevBeds) => prevBeds.type === bedType.value
+        (prevBeds) => +prevBeds.type === bedType.value
       ),
     }));
   }, [value.beds]);
@@ -37,14 +37,14 @@ export default function EditRoomInfoForm({
     if (roomBeds.length === BED_TYPES.length) return;
 
     const unSelectedBedType = BED_TYPES.find(
-      (val) => !roomBeds.find((prevBeds) => prevBeds.type === val.value)
+      (val) => !roomBeds.find((prevBeds) => +prevBeds.type === val.value)
     );
     const bedType = unSelectedBedType?.value || 1;
     setValue("beds", [...roomBeds, { type: bedType, quantity: 1 }]);
   };
 
   return (
-    <div className="bg-white shadow">
+    <div className="mt-4 bg-white pb-4 shadow">
       <h3 className="border-b px-4 py-4 text-xl font-semibold">
         Количество кроватей в данном номере
       </h3>
@@ -60,6 +60,7 @@ export default function EditRoomInfoForm({
                 label: BED_TYPES[bed.type - 1]!.label,
                 value: bed.type,
               }}
+              className="mb-0"
               options={bedTypesList}
               onSelect={(val) => {
                 const roomBeds = value.beds;
@@ -80,6 +81,7 @@ export default function EditRoomInfoForm({
                 label: bed.quantity,
                 value: bed.quantity,
               }}
+              className="mb-0"
               options={BED_NUMBERS}
               onSelect={(val) => {
                 const roomBeds = value.beds;
@@ -106,7 +108,7 @@ export default function EditRoomInfoForm({
         {/* ADD NEW ROOM BED */}
         {value.beds.length !== BED_TYPES.length && (
           <div
-            className="mb-4 flex w-fit cursor-pointer items-center gap-2 rounded-md border border-indigo-500 px-2 py-2 text-indigo-500"
+            className="my-4 flex w-fit cursor-pointer items-center gap-2 rounded-md border border-indigo-500 px-2 py-2 text-indigo-500"
             onClick={onAddNewBed}
           >
             <IoAddCircleOutline size={24} />

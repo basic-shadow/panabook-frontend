@@ -26,7 +26,7 @@ export default function EditRoomNameForm({
     <div className="bg-white shadow">
       <h3 className="border-b px-4 py-4 text-xl font-semibold">Название</h3>
 
-      <div className="mt-4 px-4">
+      <div className="mt-4 px-4 pb-4">
         <FormDropdown
           selectedValue={{
             label: ROOM_TYPES[value.type - 1]!.label,

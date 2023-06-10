@@ -1,6 +1,5 @@
 import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { FormProvider, useForm } from "react-hook-form";
-import { type IGeneralInfo } from "../registerProperty/types/register_property_types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   descriptionSchema,
@@ -9,15 +8,53 @@ import {
 import GeneralDescriptionForm from "./forms/GeneralDescriptionForm";
 import AddressForm from "./forms/AddressForm";
 import { LANGUAGES } from "../registerProperty/components/register_multi_form/utils/const_data";
+import { type ObjectsInfo } from "@/server/objects/objects.types";
+import { normalizeStringToArrayNumber } from "@/shared/utils/normalizePropertyValues";
+
+const findObjectsDetails = (property: ObjectsInfo) => {
+  const minResidentPrice = property.rooms.reduce((acc, room) => {
+    if (room.residentPricePerNight < acc) {
+      return room.residentPricePerNight;
+    }
+    return acc;
+  }, property.rooms[0]?.residentPricePerNight ?? 0);
+
+  const minNonResidentPrice = property.rooms.reduce((acc, room) => {
+    if (room.nonResidentPricePerNight < acc) {
+      return room.nonResidentPricePerNight;
+    }
+    return acc;
+  }, property.rooms[0]?.nonResidentPricePerNight ?? 0);
+
+  const roomsQuantity = property.rooms.reduce((acc, room) => {
+    return acc + room.similarRoomsNumber + 1;
+  }, 0);
+
+  return { minResidentPrice, minNonResidentPrice, roomsQuantity };
+};
 
 export default function EditPropertyDescriptionSection({
   initState,
 }: {
-  initState?: IGeneralInfo;
+  initState: ObjectsInfo;
 }) {
+  const { minNonResidentPrice, minResidentPrice, roomsQuantity } =
+    findObjectsDetails(initState);
   const formMethods = useForm<PropertyDescription>({
     resolver: yupResolver(descriptionSchema),
-    defaultValues: initState,
+    defaultValues: {
+      type: +initState.category,
+      city: +initState.city,
+      address: initState.address,
+      name: initState.name,
+      stars: initState.stars,
+      priceForNonResidents: minNonResidentPrice,
+      priceForResidents: minResidentPrice,
+      totalRooms: roomsQuantity,
+      language: normalizeStringToArrayNumber(initState.languageSpoken),
+      contactName: initState.contactName,
+      contactPhone: initState.contactPhone1,
+    },
   });
 
   async function onSubmit(data: PropertyDescription) {

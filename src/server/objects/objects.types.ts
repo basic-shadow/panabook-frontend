@@ -21,6 +21,7 @@ export type ObjectsInfo = {
 };
 
 export type PropertyRoom = {
+  id: number;
   roomType: string;
   roomName: string;
   surfaceArea: number;
@@ -31,7 +32,7 @@ export type PropertyRoom = {
   allowedSmoking?: boolean;
   facility: string;
   beds: {
-    type: string;
+    type: number;
     quantity: number;
   }[];
   extraBeds?: {

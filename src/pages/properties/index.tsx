@@ -8,7 +8,7 @@ export default function UserPropertiesPage() {
 
   return (
     <Container authHeader loading={objectsLoading}>
-      <UserPropertiesSection />
+      {objects && <UserPropertiesSection objects={objects} />}
     </Container>
   );
 }

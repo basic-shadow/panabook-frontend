@@ -1,37 +1,40 @@
 import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { type EditRoom, editRoomSchema } from "./types/editRoomTypes";
 import EditRoomNameForm from "./forms/EditRoomNameForm";
 import EditRoomInfoForm from "./forms/EditRoomInfoForm";
 import EditRoomQuantityForm from "./forms/EditRoomQuantityForm";
+import { type PropertyRoom } from "@/server/objects/objects.types";
+import { normalizeStringToArrayNumber } from "@/shared/utils/normalizePropertyValues";
+import { AiFillTags } from "react-icons/ai";
 
 export default function EditRoomInfoSection({
-  id,
   initState,
 }: {
-  id: string;
-  initState: any;
+  initState: PropertyRoom;
 }) {
-  const router = useRouter();
   // FORM
   const formMethods = useForm<EditRoom>({
     resolver: yupResolver(editRoomSchema),
-    defaultValues: initState,
+    defaultValues: {
+      allowedSmoking: initState.allowedSmoking,
+      beds: initState.beds,
+      facilities: normalizeStringToArrayNumber(initState.facility),
+      maxGuests: initState.maxGuests,
+      surfaceArea: initState.surfaceArea,
+      name: +initState.roomName,
+      type: +initState.roomType,
+      maxChildren: 0,
+    },
   });
-
-  useEffect(() => {
-    if (!id) {
-      router.push("/rooms");
-    }
-  }, [id]);
 
   return (
     <MainDashboard>
       <div className="px-4 py-6">
-        <h2 className="border-b px-4 py-4 text-xl font-semibold">
+        <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
+          <AiFillTags />
           Изменить номер
         </h2>
         <FormProvider {...formMethods}>
@@ -47,6 +50,8 @@ export default function EditRoomInfoSection({
             value={formMethods.watch()}
             setValue={formMethods.setValue}
           />
+          {/* SPACER */}
+          <div className="my-16"></div>
         </FormProvider>
       </div>
     </MainDashboard>

@@ -6,27 +6,15 @@ import { BsCaretDownFill } from "react-icons/bs";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 import { useState } from "react";
 import { useGetUserSelectedObject } from "../home/api/objectsQuery";
-import { localStorageKeys } from "@/shared/localStorageKeys";
 import Tooltip from "@/shared/UI/Tooltip/Tooltip";
 import { useLogoutUser } from "./api/useUserQuery";
 import { useRouter } from "next/navigation";
 
 export default function HomeHeader() {
   const [openProfile, setOpenProfile] = useState(false);
-  const [selectedObjectId, setSelectedObjectId] = useState(() => {
-    if (typeof localStorage === "undefined") return null;
-    const objectId = localStorage.getItem(localStorageKeys.selectedObjectId);
-    if (objectId === null) {
-      return -1;
-    }
-    return +objectId;
-  });
+
   // QUERY
-  const { object, isLoading: objectsLoading } = useGetUserSelectedObject({
-    id: selectedObjectId,
-    enabled: true,
-  });
-  console.log("object =", object);
+  const { object, isLoading: objectsLoading } = useGetUserSelectedObject();
   // USER QUERY
   const { isLoading: userLoading, user } = useGetUser();
   // LOGOUT
@@ -41,18 +29,31 @@ export default function HomeHeader() {
   return (
     <header className="bg-white text-black shadow-md">
       <nav className="flex items-center justify-between px-8 py-4">
-        <Link
-          href={routeEndpoints.home}
-          className="flex items-center gap-2 text-xl"
-        >
-          <span>
-            <FaBookReader fill="rgb(2,132,199)" />
-          </span>
-          <span className="tracking-wider text-sky-600">
-            Pana
-            <span className="tracking-normal text-black">booking</span>
-          </span>
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            href={routeEndpoints.home}
+            className="flex items-center gap-2 border-r pr-4 text-xl"
+          >
+            <span>
+              <FaBookReader fill="rgb(2,132,199)" />
+            </span>
+            <span className="tracking-wider text-sky-600">
+              Pana
+              <span className="tracking-normal text-black">booking</span>
+            </span>
+          </Link>
+          {/* OBJECT NAME */}
+          {objectsLoading && !object ? (
+            <SpinnerLoader color="#000" />
+          ) : (
+            <p className="text-gray-800">
+              {object?.name}
+              <span className="ml-1 text-xs text-gray-500">
+                (ID: {object?.id})
+              </span>
+            </p>
+          )}
+        </div>
 
         <div className="flex">
           {/* OUR TELEGRAM */}

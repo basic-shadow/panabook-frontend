@@ -23,7 +23,7 @@ const ALL_FACILITIES: { label: string; value: number }[] =
     []
   );
 
-const normalizeStringToArrayNumber = (value: string): number[] => {
+export const normalizeStringToArrayNumber = (value: string): number[] => {
   if (typeof value === "string") {
     return value
       .substring(1, value.length - 1)

@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import React from "react";
+import { twMerge } from "tailwind-merge";
 import { useFormContext } from "react-hook-form";
 import AppDropdown, { type MenuItemValue } from "../AppDropdown/AppDropdown";
 
@@ -28,7 +28,7 @@ export default function FormDropdown({
   const { error } = getFieldState(name);
 
   return (
-    <div className={clsx("mb-4 flex flex-col gap-2", className)}>
+    <div className={twMerge("mb-4 flex flex-col gap-2", className)}>
       {label && (
         <label
           htmlFor={id}

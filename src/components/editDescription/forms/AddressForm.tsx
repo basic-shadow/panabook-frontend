@@ -41,6 +41,7 @@ export default function AddressForm({
         id={"contactPhone"}
         label={"Номер телефона:"}
         name={"contactPhone"}
+        maskType="phone"
         required
       />
       <NewInput
