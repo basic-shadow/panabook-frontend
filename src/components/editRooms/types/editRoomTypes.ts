@@ -19,9 +19,9 @@ export type EditRoom = {
 export const editRoomSchema = yup.object().shape({
   type: yup.number().required(requiredField),
   name: yup.number().required(requiredField),
-  maxGuests: yup.number().required(requiredField),
-  maxChildren: yup.number().required(requiredField),
-  surfaceArea: yup.number().required(requiredField),
+  maxGuests: yup.number().typeError(requiredField).required(requiredField),
+  maxChildren: yup.number().typeError(requiredField).required(requiredField),
+  surfaceArea: yup.number().typeError(requiredField).required(requiredField),
   allowedSmoking: yup.boolean().required(requiredField),
   beds: yup.array().of(
     yup.object().shape({

@@ -9,6 +9,7 @@ import { useGetUserSelectedObject } from "../home/api/objectsQuery";
 import Tooltip from "@/shared/UI/Tooltip/Tooltip";
 import { useLogoutUser } from "./api/useUserQuery";
 import { useRouter } from "next/navigation";
+import React, { Fragment } from "react";
 
 export default function HomeHeader() {
   const [openProfile, setOpenProfile] = useState(false);
@@ -28,8 +29,8 @@ export default function HomeHeader() {
 
   return (
     <header className="bg-white text-black shadow-md">
-      <nav className="flex items-center justify-between px-8 py-4">
-        <div className="flex items-center gap-4">
+      <nav className="flex items-center xs:justify-end xs:px-2 xs:py-2 lg:justify-between lg:px-8 lg:py-4">
+        <div className={"flex items-center gap-4 max-lg:hidden"}>
           <Link
             href={routeEndpoints.home}
             className="flex items-center gap-2 border-r pr-4 text-xl"
@@ -55,7 +56,7 @@ export default function HomeHeader() {
           )}
         </div>
 
-        <div className="flex">
+        <div className={"ml-[50px] flex"}>
           {/* OUR TELEGRAM */}
           <Tooltip
             text="Наш телеграмм чат"
@@ -67,7 +68,9 @@ export default function HomeHeader() {
               onClick={openTelegramChat}
             >
               <FaTelegram size={24} color="#229ED9" />
-              <p className="text-xs text-gray-500">+7 707 253 7787</p>
+              <p className={"text-xs text-gray-500 max-[350px]:hidden"}>
+                +7 707 253 7787
+              </p>
             </button>
           </Tooltip>
 
@@ -78,7 +81,7 @@ export default function HomeHeader() {
               id="dropdownDefaultButton"
               data-dropdown-toggle="dropdown"
               onClick={() => setOpenProfile((prev) => !prev)}
-              className="relative flex w-44 cursor-pointer items-center gap-2 rounded p-2"
+              className="relative flex w-44 cursor-pointer items-center gap-2 rounded xs:px-1 xs:py-2 lg:p-2"
             >
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-white">
                 {user?.firstname[0] ?? ""}

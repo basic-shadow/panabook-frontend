@@ -24,14 +24,16 @@ export default function UserPropertiesSection({
     <MainDashboard>
       <div className="px-6 py-4">
         <div className="bg-white shadow">
-          {/* ADD BUTTON */}
-          <div className="flex gap-4 border-b px-4 py-4">
-            <div className="my-2 flex items-center gap-2">
-              <BsFillBuildingFill size={24} />
-              <h2 className="text-xl font-semibold">Объекты размещения</h2>
+          <div className="flex gap-4 border-b px-4 xs:py-2 lg:py-4">
+            <div className="flex items-center gap-2 xs:my-1 lg:my-2">
+              <BsFillBuildingFill className="xs:h-[16px] xs:w-[16px] lg:h-[24px] lg:w-[24px]" />
+              <h2 className="font-semibold xs:text-base lg:text-xl">
+                Объекты размещения
+              </h2>
             </div>
+            {/* ADD BUTTON */}
             <button
-              className="flex items-center gap-2 rounded bg-blue-500 px-4 font-bold text-white hover:bg-blue-700"
+              className="flex items-center gap-2 rounded bg-blue-500 font-bold text-white hover:bg-blue-700 xs:px-2 xs:text-xs lg:px-4 lg:text-base"
               onClick={() => router.push(routeEndpoints.registerProperty)}
             >
               Добавить
@@ -39,15 +41,15 @@ export default function UserPropertiesSection({
             </button>
           </div>
           {/* TABLE */}
-          <div className="px-4 pb-16 pt-8">
+          <div className="overflow-x-auto px-4 pb-16 pt-8">
             <table className="w-full border">
               <thead className="w-full">
                 <tr className="bg-blue-100">
                   <th className="px-4 py-4 text-left text-sm">ID</th>
-                  <th className="py-4 text-left text-sm">Название</th>
-                  <th className="py-4 text-left text-sm">Адрес</th>
-                  <th className="py-4 text-left text-sm">Статус</th>
-                  <th className="py-4 text-left text-sm"></th>
+                  <th className="px-4 py-4 text-left text-sm">Название</th>
+                  <th className="px-4 py-4 text-left text-sm">Адрес</th>
+                  <th className="px-4 py-4 text-left text-sm">Статус</th>
+                  <th className="px-4 py-4 text-left text-sm"></th>
                 </tr>
               </thead>
               <tbody>
@@ -57,13 +59,17 @@ export default function UserPropertiesSection({
                     key={object.id}
                   >
                     <td className="px-4 py-4 text-left text-sm">{object.id}</td>
-                    <td className="py-4 text-left text-sm">{object.name}</td>
-                    <td className="py-4 text-left text-sm">{object.address}</td>
-                    <td className="py-4 text-left text-sm">{"status"}</td>
-                    <td className="py-4 text-left text-sm">
+                    <td className="px-4 py-4 text-left text-sm">
+                      {object.name}
+                    </td>
+                    <td className="px-4 py-4 text-left text-sm">
+                      {object.address}
+                    </td>
+                    <td className="px-4 py-4 text-left text-sm">{"status"}</td>
+                    <td className="px-4 py-4 text-left text-sm">
                       {objectId !== null &&
                       objectId === object.id.toString() ? (
-                        <span className="rounded bg-blue-500 px-2 py-1 text-xs font-bold text-white">
+                        <span className="whitespace-nowrap rounded bg-blue-500 px-2 py-1 text-xs font-bold text-white">
                           Текущий объект
                         </span>
                       ) : (

@@ -30,17 +30,16 @@ export default function RoomsSection({ rooms }: { rooms: PropertyRoom[] }) {
                 const name = ROOM_TYPES[+room.roomType - 1]!.label;
                 return (
                   <div className="px-4 py-4" key={room.id}>
-                    <div className="relative mb-4 h-[300px] w-[400px]">
+                    <div className="relative mb-4 xs:h-[150px] xs:w-full lg:h-[300px] lg:w-[400px]">
                       <Image
                         src={noImgPlaceholder}
                         alt={name}
-                        className="absolute inset-0 h-[300px] object-cover"
-                        width={400}
+                        className="absolute inset-0 object-cover xs:h-[150px] xs:w-full lg:h-[300px] lg:w-[400px]"
                       />
                       {/* BACKDROP  */}
                       <div className="absolute inset-0 bg-black opacity-50"></div>
                       {/* TEXT IN WHITE IN CENTER */}
-                      <div className="absolute inset-0 flex items-center justify-center px-4 text-center text-2xl font-semibold text-white">
+                      <div className="absolute inset-0 flex items-center justify-center px-4 text-center font-semibold text-white xs:text-base lg:text-2xl">
                         Вы можете загрузить фотографии
                       </div>
                     </div>

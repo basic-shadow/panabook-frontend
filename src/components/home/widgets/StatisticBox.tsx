@@ -12,7 +12,7 @@ export default function StatisticBox({
   label: string;
 }) {
   return (
-    <div className="flex w-fit gap-4 bg-white px-6 py-4">
+    <div className="flex gap-4 bg-white xs:w-full xs:px-4 xs:py-2 lg:w-fit lg:px-6 lg:py-4">
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
         {icon}
       </div>

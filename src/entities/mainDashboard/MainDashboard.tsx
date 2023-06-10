@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { AiFillSetting, AiFillTags, AiOutlineMenu } from "react-icons/ai";
 import { FaBuilding, FaHome, FaKey, FaMoneyCheck } from "react-icons/fa";
 import {
+  MdClose,
   MdDesignServices,
   MdOutlineKeyboardDoubleArrowDown,
   MdOutlineKeyboardDoubleArrowUp,
@@ -18,6 +19,7 @@ import {
   BsFillBuildingFill,
   BsFillFileBarGraphFill,
 } from "react-icons/bs";
+import { twMerge } from "tailwind-merge";
 
 const editPageLinks = [
   {
@@ -56,6 +58,7 @@ export default function MainDashboard({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const [openMenu, setOpenMenu] = useState(false);
   const [openPropertyEdit, setOpenPropertyEdit] = useState<boolean>(
     !!pathname?.includes("/edit")
   );
@@ -70,20 +73,39 @@ export default function MainDashboard({
   };
 
   return (
-    <div className="flex">
+    <div className="relative flex">
       <div
-        className="flex min-h-screen w-1/5 flex-col text-white"
-        style={{ backgroundColor: "rgb(4,38,60)" }}
+        className={twMerge(
+          "flex flex-col text-white transition-all xs:absolute xs:z-50 xs:overflow-y-auto lg:relative lg:min-h-screen lg:w-1/5 " +
+            (openMenu
+              ? "w-full xs:min-h-screen"
+              : "w-[50px] xs:h-[64px] xs:overflow-hidden ")
+        )}
+        style={{ backgroundColor: "rgb(4, 38, 60)" }}
       >
-        <div className="flex items-center gap-2 px-8 pb-4 pt-10">
-          <AiOutlineMenu size={20} />
-          <p>Menu</p>
+        <div
+          className={
+            "flex items-center justify-between xs:px-4 xs:py-6 lg:px-8 lg:pb-4 lg:pt-10"
+          }
+        >
+          <div
+            className="flex cursor-pointer items-center gap-2"
+            onClick={() => setOpenMenu((prev) => !prev)}
+          >
+            <AiOutlineMenu size={20} />
+            <p className={!openMenu ? "inline-block xs:hidden" : ""}>Menu</p>
+          </div>
+          <MdClose
+            size={20}
+            className={"cursor-pointer " + (!openMenu ? "hidden" : "block")}
+            onClick={() => setOpenMenu((prev) => !prev)}
+          />
         </div>
         <div className="mt-8">
           {/* HOME */}
           <Link
             className={
-              "flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              "flex cursor-pointer items-center gap-4 py-2 xs:px-4 lg:px-8 " +
               linkClassName(routeEndpoints.home)
             }
             href={routeEndpoints.home}
@@ -94,7 +116,7 @@ export default function MainDashboard({
           {/* BOOKINGS */}
           <Link
             className={
-              "mb-3 flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              "mb-3 flex cursor-pointer items-center gap-4 py-2 xs:px-4 lg:px-8 " +
               linkClassName(routeEndpoints.bookings)
             }
             href={routeEndpoints.bookings}
@@ -108,7 +130,7 @@ export default function MainDashboard({
           <div>
             <div
               className={
-                "flex cursor-pointer items-center gap-2 px-8 " +
+                "flex cursor-pointer items-center gap-2 xs:px-4 lg:px-8 " +
                 (!openPropertyEdit ? "mb-2" : "")
               }
               onClick={() => setOpenPropertyEdit((prev) => !prev)}
@@ -135,7 +157,7 @@ export default function MainDashboard({
                   href={link.link}
                   key={link.name}
                   className={
-                    "flex items-center gap-4 px-14 py-2 " +
+                    "flex items-center gap-4 py-2 xs:px-4 lg:px-14 " +
                     linkClassName(link.link)
                   }
                 >
@@ -148,7 +170,7 @@ export default function MainDashboard({
           {/* ROOM LIST */}
           <Link
             className={
-              "flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              "flex cursor-pointer items-center gap-4 py-2 xs:px-4 lg:px-8 " +
               linkClassName(routeEndpoints.rooms)
             }
             href={routeEndpoints.rooms}
@@ -159,7 +181,7 @@ export default function MainDashboard({
           {/* RATES */}
           <Link
             className={
-              "flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              "flex cursor-pointer items-center gap-4 py-2 xs:px-4 lg:px-8 " +
               linkClassName(routeEndpoints.rates)
             }
             href={routeEndpoints.rates}
@@ -170,7 +192,7 @@ export default function MainDashboard({
           {/* RATES OVERVIEW */}
           <Link
             className={
-              "mb-2 flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              "mb-2 flex cursor-pointer items-center gap-4 py-2 xs:px-4 lg:px-8 " +
               linkClassName(routeEndpoints.ratesOverview)
             }
             href={routeEndpoints.ratesOverview}
@@ -182,7 +204,7 @@ export default function MainDashboard({
           <div>
             <div
               className={
-                "mt-1 flex cursor-pointer items-center gap-2 px-8 " +
+                "mt-1 flex cursor-pointer items-center gap-2 xs:px-4 lg:px-8 " +
                 (!openPropertyPhotos ? "mb-3" : "")
               }
               onClick={() => setOpenPropertyPhotos((prev) => !prev)}
@@ -209,7 +231,7 @@ export default function MainDashboard({
                   href={link.link}
                   key={link.name}
                   className={
-                    "flex items-center gap-4 px-14 py-2 " +
+                    "flex items-center gap-4 py-2 xs:px-4 lg:px-14 " +
                     linkClassName(link.link)
                   }
                 >
@@ -224,7 +246,7 @@ export default function MainDashboard({
           {/* PROPERTY LIST */}
           <Link
             className={
-              "flex cursor-pointer items-center gap-4 px-8 py-2 " +
+              "flex cursor-pointer items-center gap-4 py-2 xs:px-4 lg:px-8 " +
               linkClassName(routeEndpoints.properties)
             }
             href={routeEndpoints.properties}

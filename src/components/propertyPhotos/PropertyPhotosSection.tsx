@@ -11,10 +11,12 @@ export default function PropertyPhotosPage() {
           {/* ADD BUTTON */}
           <div className="flex gap-4 border-b px-4 py-4">
             <div className="my-2 flex items-center gap-2">
-              <BsFillBuildingFill size={24} />
-              <h2 className="text-xl font-semibold">Фотографии объекта</h2>
+              <BsFillBuildingFill className="xs:h-[16px] xs:w-[16px] lg:h-[24px] lg:w-[24px]" />
+              <h2 className="font-semibold xs:text-base lg:text-xl">
+                Фотографии объекта
+              </h2>
             </div>
-            <button className="flex items-center gap-2 rounded bg-blue-500 px-4 font-bold text-white hover:bg-blue-700">
+            <button className="flex items-center gap-2 rounded bg-blue-500 font-bold text-white hover:bg-blue-700 xs:px-2 xs:text-xs lg:px-4 lg:text-base">
               Добавить
               <IoAddOutline />
             </button>

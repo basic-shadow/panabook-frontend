@@ -10,7 +10,7 @@ import { FiBookOpen } from "react-icons/fi";
 const emptyText = "На данный момент у вас нет броней";
 
 const activeBlockClass =
-  "flex flex-col gap-4 w-full items-center justify-center font-semibold";
+  "flex flex-col gap-4 w-full items-center justify-center font-semibold text-center";
 
 export default function HomePage() {
   const [bookingTabs, setBookingTabs] = useState(0);

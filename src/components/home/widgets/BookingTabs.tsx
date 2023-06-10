@@ -20,10 +20,10 @@ export default function AppTabs({
             role="tablist"
           >
             {tabsHeader.map((tab, index) => (
-              <li className="flex-auto text-center" key={tab}>
+              <li className="flex-auto text-center xs:w-1/2 lg:w-1/4" key={tab}>
                 <button
                   className={
-                    "block w-full rounded px-5 py-3 text-xs font-bold uppercase leading-normal " +
+                    "block w-full rounded px-5 py-3 text-xs font-bold uppercase leading-normal xs:text-xs " +
                     (selectedTab === index
                       ? "bg-sky-600 text-white"
                       : "bg-white text-gray-600")
