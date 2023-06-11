@@ -13,7 +13,7 @@ export type ObjectsInfo = {
   languageSpoken: string;
   services: string;
   category: string;
-  imageIds: string[];
+  imageUrls: string[];
   checkInFrom: string;
   checkInTo: string;
   checkOutFrom: string;

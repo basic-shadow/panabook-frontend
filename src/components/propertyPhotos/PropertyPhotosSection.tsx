@@ -2,8 +2,13 @@ import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import React from "react";
 import { BsFillBuildingFill } from "react-icons/bs";
 import { IoAddOutline } from "react-icons/io5";
+import Image from "next/image";
 
-export default function PropertyPhotosPage() {
+export default function PropertyPhotosPage({
+  photosUrl,
+}: {
+  photosUrl: string[];
+}) {
   return (
     <MainDashboard>
       <div className="px-6 py-4">
@@ -16,13 +21,30 @@ export default function PropertyPhotosPage() {
                 Фотографии объекта
               </h2>
             </div>
-            <button className="flex items-center gap-2 rounded bg-blue-500 font-bold text-white hover:bg-blue-700 xs:px-2 xs:text-xs lg:px-4 lg:text-base">
+            <button className="flex items-center gap-2 rounded bg-blue-500 font-bold text-white hover:bg-blue-600 xs:px-2 xs:text-xs lg:px-4 lg:text-base">
               Добавить
               <IoAddOutline />
             </button>
           </div>
           {/* PHOTOS LIST */}
-          <div></div>
+          <div className="flex flex-wrap gap-4 px-4 py-4">
+            {photosUrl.map((url, i) => (
+              <div key={"image" + i} className={i === 0 ? "relative" : ""}>
+                <Image
+                  src={process.env.NEXT_PHOTO_BASE_URL + url}
+                  alt={"image" + i}
+                  className="object-cover"
+                  width={250}
+                  height={300}
+                />
+                {i === 0 && (
+                  <div className="absolute bottom-0 left-0 right-0 h-7 bg-sky-400 pt-1 text-center text-sm font-semibold text-white">
+                    Главное фото
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </MainDashboard>
