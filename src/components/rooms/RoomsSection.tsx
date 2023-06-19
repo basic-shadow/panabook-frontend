@@ -1,8 +1,8 @@
+import React from "react";
 import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { type PropertyRoom } from "@/server/objects/objects.types";
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { AiFillTags } from "react-icons/ai";
 import { ROOM_TYPES } from "../registerProperty/components/register_multi_form/utils/const_data";
 import noImgPlaceholder from "@/assets/images/no_img_placeholder.jpeg";

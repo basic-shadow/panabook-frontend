@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SpinnerLoader from "../UI/SpinnerLoader/SpinnerLoader";
 import { useRouter as useLocation } from "next/router";
-import { routeEndpoints } from "../routeEndpoint";
+import { adminRouteEndpoints, routeEndpoints } from "../routeEndpoint";
+
+export const adminEmails = ["dake013013@gmail.com", "islambek@gmail.com"];
 
 export default function AuthLoadingLayer({
   children,
@@ -21,6 +23,10 @@ export default function AuthLoadingLayer({
 
   useEffect(() => {
     if (isLoading) return;
+
+    if (user !== undefined && adminEmails.includes(user.email)) {
+      return router.push(adminRouteEndpoints.home);
+    }
 
     if (user === undefined && location.asPath !== routeEndpoints.signup) {
       router.push(routeEndpoints.login);

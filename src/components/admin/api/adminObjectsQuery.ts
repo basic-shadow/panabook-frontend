@@ -5,8 +5,9 @@ import {
 } from "@/server/objects/adminObjectsApi";
 import { type ObjectsInfo } from "@/server/objects/objects.types";
 import { type TError } from "@/types/shared.types";
-import { useEffect, useRef } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useGetUser } from "./usersQuery";
+import { adminEmails } from "@/shared/AuthLoadingLayer/AuthLoadingLayer";
 
 export function useGetAllObjects({
   page,
@@ -15,22 +16,19 @@ export function useGetAllObjects({
   page: number;
   limit: number;
 }) {
-  const mounted = useRef<boolean>(false);
-  const { data, isLoading, refetch, isFetching, error } = useQuery<
+  // USER DATA
+  const { user } = useGetUser();
+
+  const isAdmin = adminEmails.includes(user?.email ?? "");
+
+  const { data, isLoading, isFetching, error } = useQuery<
     ObjectsInfo[],
     TError
   >(
     queryKeys.getObjects,
     ({ signal }) => getAllObjectsApi({ signal, page, limit }),
-    { enabled: mounted.current }
+    { enabled: isAdmin }
   );
-
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      refetch();
-    }
-  }, []);
 
   return { objects: data, isLoading, isFetching, error };
 }

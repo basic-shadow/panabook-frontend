@@ -12,7 +12,7 @@ const emptyText = "На данный момент у вас нет броней"
 const activeBlockClass =
   "flex flex-col gap-4 w-full items-center justify-center font-semibold text-center";
 
-export default function HomePage() {
+export default function HomeSection() {
   const [bookingTabs, setBookingTabs] = useState(0);
 
   const onSelectTab = (tab: number) => {

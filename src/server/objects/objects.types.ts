@@ -18,6 +18,9 @@ export type ObjectsInfo = {
   checkInTo: string;
   checkOutFrom: string;
   checkOutTo: string;
+  minimumNonResidentPrice: number;
+  minimumResidentPrice: number;
+  totalRoomsNumber: number;
 };
 
 export type PropertyRoom = {
@@ -30,7 +33,10 @@ export type PropertyRoom = {
   residentPricePerNight: number;
   similarRoomsNumber: number;
   allowedSmoking?: boolean;
-  facility: string;
+  facilities: string;
+  // roomImages: {
+
+  // }[],
   beds: {
     type: number;
     quantity: number;

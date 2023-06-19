@@ -16,6 +16,8 @@ export const objectsEndpoints = {
   getSingleObject: "/user/property/:id",
   getFirstObject: "/user/property/first",
   singleRoom: "/user/room/:id",
+  editProperty: "/property/:id",
+  editRoom: "/room/:id",
 };
 
 export const adminEndpoints = {

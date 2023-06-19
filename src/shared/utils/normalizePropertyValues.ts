@@ -70,7 +70,9 @@ export const normalizePropertyValues = (
         ...acc,
         rooms: (value as PropertyRoom[]).map((room) => ({
           ...room,
-          facility: normalizeStringToArrayNumber(room.facility as string).map(
+          facilities: normalizeStringToArrayNumber(
+            room.facilities as string
+          ).map(
             (facility) =>
               ALL_FACILITIES.find((f) => f.value === facility)?.label
           ),

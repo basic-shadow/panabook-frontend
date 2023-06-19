@@ -1,4 +1,4 @@
-import AdminPage from "@/components/admin/AdminPage";
+import AdminSection from "@/components/admin/AdminSection";
 import { useGetAllObjects } from "@/components/admin/api/adminObjectsQuery";
 import Container from "@/entities/container/container";
 import { routeEndpoints } from "@/shared/routeEndpoint";
@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 
 const limit = 20;
 
-const Admin: NextPage = () => {
+const AdminPage: NextPage = () => {
   const [page, setPage] = useState(1);
   const {
     isLoading: objectsLoading,
@@ -29,7 +29,7 @@ const Admin: NextPage = () => {
 
   return (
     <Container authHeader loading={objectsLoading}>
-      <AdminPage
+      <AdminSection
         objects={objects}
         objectsLoading={objectsLoading}
         fetchNextPage={fetchNextPage}
@@ -38,4 +38,4 @@ const Admin: NextPage = () => {
   );
 };
 
-export default Admin;
+export default AdminPage;

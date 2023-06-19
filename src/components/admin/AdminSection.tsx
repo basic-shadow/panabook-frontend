@@ -6,7 +6,6 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import Modal from "@/shared/UI/Modal/Modal";
-import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { type ObjectsInfo } from "@/server/objects/objects.types";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 import Image from "next/image";
@@ -16,6 +15,7 @@ import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 
 import { FiTrash } from "react-icons/fi";
 import { useDeleteObject } from "./api/adminObjectsQuery";
+import AdminDashboard from "@/entities/adminDashboard/AdminDashboard";
 
 type ObjectsTableData = {
   name: string;
@@ -24,7 +24,7 @@ type ObjectsTableData = {
   phone: string;
 };
 
-export default function AdminPage({
+export default function AdminSection({
   objects,
   fetchNextPage,
   objectsLoading,
@@ -59,6 +59,7 @@ export default function AdminPage({
     }));
   }, [objects]);
 
+  console.log("objects = ", objects);
   const columns = useMemo<ColumnDef<ObjectsTableData>[]>(
     () => [
       {
@@ -175,7 +176,7 @@ export default function AdminPage({
   }, [deleteObjectId]);
 
   return (
-    <MainDashboard>
+    <AdminDashboard>
       <div className="w-full px-8 py-8">
         <table className="w-full text-left text-sm text-gray-500">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700">
@@ -313,6 +314,6 @@ export default function AdminPage({
           </button>
         </div>
       </Modal>
-    </MainDashboard>
+    </AdminDashboard>
   );
 }

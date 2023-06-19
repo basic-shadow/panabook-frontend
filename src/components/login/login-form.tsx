@@ -9,6 +9,7 @@ import { GrLogin } from "react-icons/gr";
 import { useLogin } from "./api/useLogin";
 import { useGetUser } from "../admin/api/usersQuery";
 import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
+import { localStorageKeys } from "@/shared/localStorageKeys";
 
 export default function LoginForm() {
   // ROUTER
@@ -37,6 +38,7 @@ export default function LoginForm() {
     if (isLoading) return;
     try {
       await mutateAsync(data);
+      localStorage.removeItem(localStorageKeys.selectedObjectId);
     } catch (error) {
       console.log("error =", error);
     }

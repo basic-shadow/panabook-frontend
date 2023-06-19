@@ -38,3 +38,16 @@ export async function getUserSingleObjectApi(options: {
     throw error;
   }
 }
+
+export async function putUserObjectApi(object: ObjectsInfo): Promise<void> {
+  try {
+    const { data } = await API.put<void>(
+      pathToUrl(objectsEndpoints.editProperty, { id: object.id }),
+      object
+    );
+
+    return data;
+  } catch (error: any) {
+    throw error;
+  }
+}

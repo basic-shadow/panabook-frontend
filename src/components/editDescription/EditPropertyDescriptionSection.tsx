@@ -10,36 +10,18 @@ import AddressForm from "./forms/AddressForm";
 import { LANGUAGES } from "../registerProperty/components/register_multi_form/utils/const_data";
 import { type ObjectsInfo } from "@/server/objects/objects.types";
 import { normalizeStringToArrayNumber } from "@/shared/utils/normalizePropertyValues";
-
-const findObjectsDetails = (property: ObjectsInfo) => {
-  const minResidentPrice = property.rooms.reduce((acc, room) => {
-    if (room.residentPricePerNight < acc) {
-      return room.residentPricePerNight;
-    }
-    return acc;
-  }, property.rooms[0]?.residentPricePerNight ?? 0);
-
-  const minNonResidentPrice = property.rooms.reduce((acc, room) => {
-    if (room.nonResidentPricePerNight < acc) {
-      return room.nonResidentPricePerNight;
-    }
-    return acc;
-  }, property.rooms[0]?.nonResidentPricePerNight ?? 0);
-
-  const roomsQuantity = property.rooms.reduce((acc, room) => {
-    return acc + room.similarRoomsNumber + 1;
-  }, 0);
-
-  return { minResidentPrice, minNonResidentPrice, roomsQuantity };
-};
+import { useMutateProperty } from "./service/useMutateProperty";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
 export default function EditPropertyDescriptionSection({
   initState,
 }: {
   initState: ObjectsInfo;
 }) {
-  const { minNonResidentPrice, minResidentPrice, roomsQuantity } =
-    findObjectsDetails(initState);
+  const { notifySuccess } = useNotifications();
+  // MUTATION
+  const { mutateAsync, isLoading } = useMutateProperty();
+
   const formMethods = useForm<PropertyDescription>({
     resolver: yupResolver(descriptionSchema),
     defaultValues: {
@@ -48,9 +30,9 @@ export default function EditPropertyDescriptionSection({
       address: initState.address,
       name: initState.name,
       stars: initState.stars,
-      priceForNonResidents: minNonResidentPrice,
-      priceForResidents: minResidentPrice,
-      totalRooms: roomsQuantity,
+      priceForNonResidents: initState.minimumNonResidentPrice,
+      priceForResidents: initState.minimumResidentPrice,
+      totalRooms: initState.totalRoomsNumber,
       language: normalizeStringToArrayNumber(initState.languageSpoken),
       contactName: initState.contactName,
       contactPhone: initState.contactPhone1,
@@ -58,8 +40,25 @@ export default function EditPropertyDescriptionSection({
   });
 
   async function onSubmit(data: PropertyDescription) {
-    if (formMethods.formState.isValid) {
+    if (formMethods.formState.isValid && !isLoading) {
       const contactPhone2 = formMethods.getValues().contactPhone2;
+      await mutateAsync({
+        ...initState,
+        address: data.address,
+        category: data.type.toString(),
+        city: data.city,
+        contactName: data.contactName,
+        contactPhone1: data.contactPhone,
+        contactPhone2: contactPhone2 ? contactPhone2 : "",
+        languageSpoken: data.language.join(","),
+        minimumNonResidentPrice: data.priceForNonResidents,
+        minimumResidentPrice: data.priceForResidents,
+        name: data.name,
+        stars: data.stars,
+        totalRoomsNumber: data.totalRooms,
+      });
+
+      notifySuccess("Изменения сохранены");
     }
   }
   return (

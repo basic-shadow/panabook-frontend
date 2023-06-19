@@ -14,3 +14,7 @@ export const routeEndpoints = {
   rates: "/rates",
   ratesOverview: "/rates/overview",
 };
+
+export const adminRouteEndpoints = {
+  home: "/admin",
+};

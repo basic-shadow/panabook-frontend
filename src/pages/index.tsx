@@ -1,13 +1,13 @@
-import HomePage from "@/components/home/HomePage";
+import HomeSection from "@/components/home/HomeSection";
 import Container from "@/entities/container/container";
 import { type NextPage } from "next";
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
   return (
     <Container authHeader>
-      <HomePage />
+      <HomeSection />
     </Container>
   );
 };
 
-export default Home;
+export default HomePage;

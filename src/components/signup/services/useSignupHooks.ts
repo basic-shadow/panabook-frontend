@@ -4,6 +4,7 @@ import { useSignup } from "../api/useSignup";
 import { type Signup } from "@/server/user/signup.types";
 import { useGetUser } from "@/components/admin/api/usersQuery";
 import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
+import { localStorageKeys } from "@/shared/localStorageKeys";
 
 export const useSignupHook = () => {
   const router = useRouter();
@@ -22,6 +23,7 @@ export const useSignupHook = () => {
   const onSignup = async (user: Signup) => {
     try {
       await mutateAsync(user);
+      localStorage.removeItem(localStorageKeys.selectedObjectId);
     } catch (error) {
       console.log("error =", error);
     }

@@ -6,7 +6,7 @@ import React from "react";
 
 export default function EditPropertyServicesPage() {
   const { object, isLoading } = useGetUserSelectedObject();
-
+  console.log("object =", object);
   return (
     <Container authHeader loading={isLoading}>
       {object && (
