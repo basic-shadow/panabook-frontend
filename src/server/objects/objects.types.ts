@@ -1,19 +1,21 @@
+import { type UploadPhotoResponse } from "../register_property/upload_photos.types";
+
 export type ObjectsInfo = {
   id: number;
   contactName: string;
   contactPhone1: string;
   contactPhone2?: string;
-
+  imageIds: number[];
   name: string;
   stars: number;
   city: number;
   address: string;
   postCode: string;
   rooms: Array<PropertyRoom>;
-  languageSpoken: string;
-  services: string;
-  category: string;
-  imageUrls: string[];
+  languageSpoken: string | number[];
+  services: number[];
+  category: string | number;
+  images: UploadPhotoResponse[];
   checkInFrom: string;
   checkInTo: string;
   checkOutFrom: string;
@@ -21,22 +23,23 @@ export type ObjectsInfo = {
   minimumNonResidentPrice: number;
   minimumResidentPrice: number;
   totalRoomsNumber: number;
+  status: "pending" | "accepted" | "rejected";
 };
 
 export type PropertyRoom = {
   id: number;
-  roomType: string;
-  roomName: string;
+  roomType: string | number;
+  roomName: string | number;
   surfaceArea: number;
   maxGuests: number;
+  maxChildren: number;
   nonResidentPricePerNight: number;
   residentPricePerNight: number;
   similarRoomsNumber: number;
   allowedSmoking?: boolean;
-  facilities: string;
-  // roomImages: {
-
-  // }[],
+  facilities: number[];
+  imageIds: number[];
+  images: UploadPhotoResponse[] | null;
   beds: {
     type: number;
     quantity: number;

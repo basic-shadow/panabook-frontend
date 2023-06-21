@@ -29,7 +29,12 @@ export default function EditPropertyPoliciesPage() {
 
   return (
     <Container authHeader loading={isLoading}>
-      {object && <EditPropertyPoliciesSection initState={checkTimes(object)} />}
+      {object && (
+        <EditPropertyPoliciesSection
+          id={object.id}
+          initState={checkTimes(object)}
+        />
+      )}
     </Container>
   );
 }

@@ -1,6 +1,7 @@
 import * as yup from "yup";
 
 const requiredField = "Обязательное поле";
+const positive = "Число должно быть положительным";
 
 export type EditRoom = {
   type: number;
@@ -9,19 +10,36 @@ export type EditRoom = {
   maxChildren: number;
   surfaceArea: number;
   allowedSmoking: boolean;
+  similarRoomsNumber: number;
   beds: {
     type: number;
     quantity: number;
   }[];
-  facilities: number[];
 };
 
 export const editRoomSchema = yup.object().shape({
   type: yup.number().required(requiredField),
   name: yup.number().required(requiredField),
-  maxGuests: yup.number().typeError(requiredField).required(requiredField),
-  maxChildren: yup.number().typeError(requiredField).required(requiredField),
-  surfaceArea: yup.number().typeError(requiredField).required(requiredField),
+  similarRoomsNumber: yup
+    .number()
+    .positive(positive)
+    .typeError(requiredField)
+    .required(requiredField),
+  maxGuests: yup
+    .number()
+    .positive(positive)
+    .typeError(requiredField)
+    .required(requiredField),
+  maxChildren: yup
+    .number()
+    .positive(positive)
+    .typeError(requiredField)
+    .required(requiredField),
+  surfaceArea: yup
+    .number()
+    .positive(positive)
+    .typeError(requiredField)
+    .required(requiredField),
   allowedSmoking: yup.boolean().required(requiredField),
   beds: yup.array().of(
     yup.object().shape({
@@ -29,5 +47,4 @@ export const editRoomSchema = yup.object().shape({
       quantity: yup.number().required(requiredField),
     })
   ),
-  facilities: yup.array().of(yup.number()).required(requiredField),
 });

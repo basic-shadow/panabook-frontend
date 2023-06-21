@@ -30,11 +30,18 @@ export default function RoomsSection({ rooms }: { rooms: PropertyRoom[] }) {
                 const name = ROOM_TYPES[+room.roomType - 1]!.label;
                 return (
                   <div className="px-4 py-4" key={room.id}>
-                    <div className="relative mb-4 xs:h-[150px] xs:w-full lg:h-[300px] lg:w-[400px]">
+                    <div className="relative mb-4 xs:h-[150px] xs:w-full lg:h-[300px]">
                       <Image
-                        src={noImgPlaceholder}
-                        alt={name}
                         className="absolute inset-0 object-cover xs:h-[150px] xs:w-full lg:h-[300px] lg:w-[400px]"
+                        src={
+                          room.images && room.images.length > 0
+                            ? process.env.NEXT_PHOTO_BASE_URL +
+                              room.images[0]!.url
+                            : noImgPlaceholder
+                        }
+                        height={300}
+                        width={400}
+                        alt={name}
                       />
                       {/* BACKDROP  */}
                       <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -55,7 +62,12 @@ export default function RoomsSection({ rooms }: { rooms: PropertyRoom[] }) {
                       <span className="font-bold text-gray-600">Детей: 3</span>
                     </p>
                     <div className="mt-4 flex items-center justify-between gap-4">
-                      <button className="rounded bg-blue-700 px-4 py-2 text-sm text-white hover:bg-blue-500">
+                      <button
+                        className="rounded bg-blue-700 px-4 py-2 text-sm text-white hover:bg-blue-500"
+                        onClick={() =>
+                          router.push(routeEndpoints.singleRoomPhotos + (i + 1))
+                        }
+                      >
                         Загрузить фотографии
                       </button>
                       <button

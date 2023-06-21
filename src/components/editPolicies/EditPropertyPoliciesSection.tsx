@@ -8,6 +8,8 @@ import {
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormDropdown from "@/shared/UI/NewInput/FormDropdown";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
+import { useMutateProperty } from "../editDescription/service/useMutateProperty";
 
 // time slots from 00:00 to 23:30 with 30 min step generate full array
 const timeSlots = Array.from({ length: 48 }, (_, i) => {
@@ -18,18 +20,34 @@ const timeSlots = Array.from({ length: 48 }, (_, i) => {
 });
 
 export default function EditPropertyPoliciesSection({
+  id,
   initState,
 }: {
+  id: number;
   initState?: IRegisterTimeInfo;
 }) {
+  // NOTIFICATIONS
+  const { notifySuccess, notifyInfo } = useNotifications();
+  // API
+  const { mutateAsync, isLoading } = useMutateProperty();
+
   const formMethods = useForm<PropertyPolicies>({
     resolver: yupResolver(policiesSchema),
     defaultValues: initState,
   });
 
   async function onSubmit(data: PropertyPolicies) {
-    if (formMethods.formState.isValid) {
-      console.log("submit");
+    if (!isLoading) {
+      await mutateAsync({
+        id,
+        checkInFrom: data.checkInTime.from,
+        checkInTo: data.checkInTime.to,
+        checkOutFrom: data.checkOutTime.from,
+        checkOutTo: data.checkOutTime.to,
+      });
+      notifySuccess("Услуги успешно изменены");
+    } else {
+      notifyInfo("Подождите, идет загрузка");
     }
   }
 

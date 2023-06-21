@@ -18,7 +18,7 @@ export default function PhotosForm({
   onGoBack: () => void;
   onNextStep: () => void;
 }) {
-  const { notifyError, notifyInfo } = useNotifications();
+  const { notifyInfo } = useNotifications();
   const { propertyPhotos } = useRegisterPropertyStore();
   const [imageList, setImageList] =
     useState<UploadPhotoResponse[]>(propertyPhotos);

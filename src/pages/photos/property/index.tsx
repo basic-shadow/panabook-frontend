@@ -7,7 +7,9 @@ export default function PropertyPhotosPage() {
   const { object, isLoading } = useGetUserSelectedObject();
   return (
     <Container authHeader loading={isLoading}>
-      {object && <PropertyPhotosSection photosUrl={object.imageUrls} />}
+      {object && (
+        <PropertyPhotosSection photos={object.images} propertyId={object.id} />
+      )}
     </Container>
   );
 }

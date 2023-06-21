@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import { BsFillBuildingFill } from "react-icons/bs";
 import { IoAddOutline } from "react-icons/io5";
@@ -6,6 +6,18 @@ import { useRouter } from "next/navigation";
 import { routeEndpoints } from "@/shared/routeEndpoint";
 import { type ObjectsInfo } from "@/server/objects/objects.types";
 import { localStorageKeys } from "@/shared/localStorageKeys";
+
+const mapStatusToText = (status: string) => {
+  switch (status) {
+    case "accepted":
+      return "Активный";
+    case "rejected":
+      return "Неактивный";
+    case "pending":
+    default:
+      return "На модерации";
+  }
+};
 
 export default function UserPropertiesSection({
   objects,
@@ -65,7 +77,11 @@ export default function UserPropertiesSection({
                     <td className="px-4 py-4 text-left text-sm">
                       {object.address}
                     </td>
-                    <td className="px-4 py-4 text-left text-sm">{"status"}</td>
+                    <td className="px-4 py-4 text-left text-sm">
+                      <span className="rounded border-sky-500 px-2 py-1 font-semibold text-sky-500">
+                        {mapStatusToText(object.status)}
+                      </span>
+                    </td>
                     <td className="px-4 py-4 text-left text-sm">
                       {objectId !== null &&
                       objectId === object.id.toString() ? (

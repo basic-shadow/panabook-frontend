@@ -13,6 +13,7 @@ export const routeEndpoints = {
   bookings: "/bookings",
   rates: "/rates",
   ratesOverview: "/rates/overview",
+  singleRoomPhotos: "/photos/room/",
 };
 
 export const adminRouteEndpoints = {

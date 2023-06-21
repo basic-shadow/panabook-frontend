@@ -61,7 +61,7 @@ export const normalizePropertyValues = (
     } else if (key === "services") {
       return {
         ...acc,
-        services: normalizeStringToArrayNumber(value as string).map(
+        services: (value as number[]).map(
           (service) => PROPERTY_SERVICES.find((f) => f.value == +service)?.label
         ),
       };
@@ -70,9 +70,7 @@ export const normalizePropertyValues = (
         ...acc,
         rooms: (value as PropertyRoom[]).map((room) => ({
           ...room,
-          facilities: normalizeStringToArrayNumber(
-            room.facilities as string
-          ).map(
+          facilities: room.facilities.map(
             (facility) =>
               ALL_FACILITIES.find((f) => f.value === facility)?.label
           ),

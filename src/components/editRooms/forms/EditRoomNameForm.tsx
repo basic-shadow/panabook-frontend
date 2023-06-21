@@ -6,6 +6,7 @@ import FormDropdown from "@/shared/UI/NewInput/FormDropdown";
 import React, { useMemo } from "react";
 import { type UseFormSetValue } from "react-hook-form";
 import { type EditRoom } from "../types/editRoomTypes";
+import NewInput from "@/shared/UI/NewInput/NewInput";
 
 export default function EditRoomNameForm({
   setValue,
@@ -64,6 +65,13 @@ export default function EditRoomNameForm({
           id={"name"}
           name={"name"}
           label="Название номера:"
+          required
+        />
+        <NewInput
+          id={"similarRoomsNumber"}
+          name={"similarRoomsNumber"}
+          label="Количество номеров такого типа"
+          type="number"
           required
         />
       </div>

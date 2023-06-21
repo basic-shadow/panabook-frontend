@@ -78,7 +78,7 @@ export default function PoliciesInfoForm({
   onNextStep: () => void;
 }) {
   // NOTIFICATIONS
-  const { notifyError } = useNotifications();
+  const { notifySuccess, notifyError } = useNotifications();
   // ROUTER
   const router = useRouter();
 
@@ -146,6 +146,10 @@ export default function PoliciesInfoForm({
         ...items,
         ...policyInfo,
       });
+
+      notifySuccess(
+        "Ваше объявление успешно создано! Перенаправляем вас на страницу успеха"
+      );
     }
   }
 

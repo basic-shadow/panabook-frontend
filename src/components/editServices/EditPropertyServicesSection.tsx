@@ -1,15 +1,44 @@
 import MainDashboard from "@/entities/mainDashboard/MainDashboard";
-import { PROPERTY_SERVICES } from "../registerProperty/components/register_multi_form/utils/const_data";
-import { FACILITIES_CATEGORIES } from "../registerProperty/components/register_multi_form/utils/const_data";
-import React from "react";
+import {
+  PROPERTY_SERVICES,
+  PROPERTY_SERVICES_ADDITIONAL,
+} from "../registerProperty/components/register_multi_form/utils/const_data";
+import React, { useState } from "react";
+import { useMutateProperty } from "../editDescription/service/useMutateProperty";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
 export default function EditPropertyServicesSection({
+  id,
   initState,
 }: {
+  id: number;
   initState: number[];
 }) {
+  // NOTIFICATIONS
+  const { notifySuccess, notifyInfo } = useNotifications();
+  // API
+  const { mutateAsync, isLoading } = useMutateProperty();
+  // STATE
+  const [services, setServices] = useState(initState);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setServices((prev) => [...prev, +value]);
+    } else {
+      setServices((prev) => prev.filter((item) => item !== +value));
+    }
+  };
+
   async function onSubmit() {
-    console.log("submit");
+    if (!isLoading) {
+      await mutateAsync({
+        id,
+        services,
+      });
+      notifySuccess("Услуги успешно изменены");
+    } else {
+      notifyInfo("Подождите, идет загрузка");
+    }
   }
 
   return (
@@ -34,8 +63,9 @@ export default function EditPropertyServicesSection({
                     <input
                       type="checkbox"
                       className="form-checkbox"
-                      name="services"
+                      onChange={onChange}
                       value={service.value}
+                      checked={services.includes(service.value)}
                     />
                     <span className="ml-2">{service.label}</span>
                   </label>
@@ -43,7 +73,7 @@ export default function EditPropertyServicesSection({
               );
             })}
           </div>
-          {FACILITIES_CATEGORIES.map((category) => {
+          {PROPERTY_SERVICES_ADDITIONAL.map((category) => {
             return (
               <React.Fragment key={category.label}>
                 <h3 className="p-4 text-xl font-semibold">{category.label}</h3>
@@ -55,8 +85,9 @@ export default function EditPropertyServicesSection({
                           <input
                             type="checkbox"
                             className="form-checkbox"
-                            name="services"
                             value={service.value}
+                            onChange={onChange}
+                            checked={services.includes(service.value)}
                           />
                           <span className="ml-2">{service.label}</span>
                         </label>

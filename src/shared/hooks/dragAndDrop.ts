@@ -11,8 +11,10 @@ export const useDragAndDrop = (
   // ARRANGE IMAGE LIST
   const dragItem = useRef<number | null>(null);
   const dragOverItem = useRef<number | null>(null);
+  const [dragging, setDragging] = useState(false);
   const dragStart = (e: React.DragEvent<HTMLDivElement>, position: number) => {
     dragItem.current = position;
+    setDragging(true);
   };
 
   const dragEnter = (e: React.DragEvent<HTMLDivElement>, position: number) => {
@@ -20,6 +22,7 @@ export const useDragAndDrop = (
   };
 
   const drop = (e: React.DragEvent<HTMLDivElement>) => {
+    setDragging(false);
     if (dragItem.current === null || dragOverItem.current === null) return;
 
     const copyListItems = [...imageList];
@@ -73,15 +76,16 @@ export const useDragAndDrop = (
       event.preventDefault();
       setDropZoneVisible(false);
     }
-
-    // window.addEventListener("dragover", handleDragOver);
-    // window.addEventListener("dragleave", handleDragLeave);
+    if (!dragging) {
+      window.addEventListener("dragover", handleDragOver);
+      window.addEventListener("dragleave", handleDragLeave);
+    }
 
     return () => {
       window.removeEventListener("dragover", handleDragOver);
       window.removeEventListener("dragleave", handleDragLeave);
     };
-  }, []);
+  }, [dragging]);
 
   return {
     onUploadImage,

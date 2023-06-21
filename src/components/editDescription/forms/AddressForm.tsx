@@ -48,6 +48,7 @@ export default function AddressForm({
         id={"contactPhone2"}
         label={"Альтернативный номер телефона:"}
         name={"contactPhone2"}
+        maskType="phone"
       />
     </div>
   );

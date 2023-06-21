@@ -12,13 +12,15 @@ import { type ObjectsInfo } from "@/server/objects/objects.types";
 import { normalizeStringToArrayNumber } from "@/shared/utils/normalizePropertyValues";
 import { useMutateProperty } from "./service/useMutateProperty";
 import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
+import { unmaskPhone } from "@/shared/UI/NewInput/NewInput";
 
 export default function EditPropertyDescriptionSection({
   initState,
 }: {
   initState: ObjectsInfo;
 }) {
-  const { notifySuccess } = useNotifications();
+  // NOTIFICATIONS
+  const { notifySuccess, notifyInfo } = useNotifications();
   // MUTATION
   const { mutateAsync, isLoading } = useMutateProperty();
 
@@ -33,24 +35,26 @@ export default function EditPropertyDescriptionSection({
       priceForNonResidents: initState.minimumNonResidentPrice,
       priceForResidents: initState.minimumResidentPrice,
       totalRooms: initState.totalRoomsNumber,
-      language: normalizeStringToArrayNumber(initState.languageSpoken),
+      language: normalizeStringToArrayNumber(
+        initState.languageSpoken.toString()
+      ),
       contactName: initState.contactName,
       contactPhone: initState.contactPhone1,
     },
   });
 
   async function onSubmit(data: PropertyDescription) {
-    if (formMethods.formState.isValid && !isLoading) {
-      const contactPhone2 = formMethods.getValues().contactPhone2;
+    if (!isLoading) {
+      const contactPhone2 = unmaskPhone(formMethods.getValues().contactPhone2);
       await mutateAsync({
         ...initState,
         address: data.address,
-        category: data.type.toString(),
+        category: data.type,
         city: data.city,
         contactName: data.contactName,
         contactPhone1: data.contactPhone,
         contactPhone2: contactPhone2 ? contactPhone2 : "",
-        languageSpoken: data.language.join(","),
+        languageSpoken: data.language,
         minimumNonResidentPrice: data.priceForNonResidents,
         minimumResidentPrice: data.priceForResidents,
         name: data.name,
@@ -59,6 +63,8 @@ export default function EditPropertyDescriptionSection({
       });
 
       notifySuccess("Изменения сохранены");
+    } else {
+      notifyInfo("Подождите, идет загрузка");
     }
   }
   return (

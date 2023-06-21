@@ -12,6 +12,29 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { localStorageKeys } from "@/shared/localStorageKeys";
 
+const mapStatusToText = (status: string) => {
+  switch (status) {
+    case "accepted":
+      return "Активный";
+    case "rejected":
+      return "Неактивный";
+    case "pending":
+    default:
+      return "На модерации";
+  }
+};
+
+const mapStatusToColor = (status: string) => {
+  switch (status) {
+    case "accepted":
+      return "text-green-500";
+    case "rejected":
+    case "pending":
+    default:
+      return "text-sky-500";
+  }
+};
+
 export default function HomeHeader() {
   const [openProfile, setOpenProfile] = useState(false);
 
@@ -48,12 +71,17 @@ export default function HomeHeader() {
           {objectsLoading && !object ? (
             <SpinnerLoader color="#000" />
           ) : (
-            <p className="text-gray-800">
-              {object?.name}
-              <span className="ml-1 text-xs text-gray-500">
-                (ID: {object?.id})
-              </span>
-            </p>
+            <div>
+              <p className="leading-6 text-gray-800">
+                {object?.name}
+                <span className="ml-1 text-xs text-gray-500">
+                  (ID: {object?.id})
+                </span>
+              </p>
+              <p className={"text-sm " + mapStatusToColor(object!.status)}>
+                {mapStatusToText(object!.status)}
+              </p>
+            </div>
           )}
         </div>
 

@@ -36,8 +36,8 @@ export const descriptionSchema = yup.object().shape({
   contactName: yup.string().required(requiredField),
   contactPhone: yup
     .string()
-    .transform((value) => value.replace(/\D/g, ""))
-    .min(11, "Введите действующий номер телефона")
+    .transform((value) => "+" + value.replace(/\D/g, ""))
+    .min(12, "Введите действующий номер телефона")
     .required(requiredField),
   contactPhone2: yup.string().notRequired(),
   address: yup.string().required(requiredField),

@@ -76,7 +76,7 @@ export default function MainDashboard({
     <div className="relative flex">
       <div
         className={twMerge(
-          "flex flex-col text-white transition-all xs:absolute xs:z-50 xs:overflow-y-auto lg:relative lg:min-h-screen lg:w-1/5 " +
+          "flex flex-col text-white transition-all xs:absolute xs:z-50 xs:overflow-y-auto lg:sticky lg:top-0 lg:min-h-screen lg:w-1/5 " +
             (openMenu
               ? "w-full xs:min-h-screen"
               : "w-[50px] xs:h-[64px] xs:overflow-hidden ")
