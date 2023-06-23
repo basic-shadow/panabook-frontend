@@ -16,29 +16,29 @@ export default function StepFormHeader({
   const formState = useRegisterPropertyStore();
 
   const onClickStepHeader = (step: number): boolean => {
-    return true;
-    // if (step === 1) {
-    //   return true;
-    // } else if (step === 2) {
-    //   return (
-    //     formState.propertyCity !== -1 &&
-    //     formState.propertyAddress !== "" &&
-    //     formState.propertyPostCode !== "" &&
-    //     formState.contactPhone1 !== "" &&
-    //     formState.propertyName !== "" &&
-    //     formState.contactName !== "" &&
-    //     formState.starsRating !== 0
-    //   );
-    // } else if (step === 3) {
-    //   return formState.propertyRooms.length > 0;
-    // } else if (step === 4) {
-    //   return formState.propertyLanguages.length > 0;
-    // } else if (step === 5) {
-    //   return formState.propertyRooms.length > 0;
-    // } else if (step === 6) {
-    //   return formState.propertyPhotos.length > 0;
-    // }
-    // return false;
+    // return true;
+    if (step === 1) {
+      return true;
+    } else if (step === 2) {
+      return (
+        formState.propertyCity !== -1 &&
+        formState.propertyAddress !== "" &&
+        formState.propertyPostCode !== "" &&
+        formState.contactPhone1 !== "" &&
+        formState.propertyName !== "" &&
+        formState.contactName !== "" &&
+        formState.starsRating !== 0
+      );
+    } else if (step === 3) {
+      return formState.propertyRooms.length > 0;
+    } else if (step === 4) {
+      return formState.propertyLanguages.length > 0;
+    } else if (step === 5) {
+      return formState.propertyRooms.length > 0;
+    } else if (step === 6) {
+      return formState.propertyPhotos.length > 0;
+    }
+    return false;
   };
 
   const totalSteps = Object.values(ADD_PROPERTY_STEPS_HEADER).length;
