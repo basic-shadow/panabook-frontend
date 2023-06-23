@@ -11,7 +11,7 @@ export type ObjectsInfo = {
   city: number;
   address: string;
   postCode: string;
-  rooms: Array<Partial<PropertyRoom>>;
+  rooms: Array<PropertyRoom>;
   languageSpoken: string | number[];
   services: number[];
   category: string | number;

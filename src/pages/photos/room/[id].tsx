@@ -19,9 +19,9 @@ export default function SingleRoomPhotos() {
     <Container authHeader loading={isLoading || !object}>
       {object && (
         <RoomPhotosSection
-          roomName={+object.rooms[+(query as { id: string }).id - 1]!.roomName}
+          roomName={+object.rooms[+(query as { id: string }).id - 1]!.roomName!}
           photos={object.rooms[+(query as { id: string }).id - 1]?.images || []}
-          roomId={object.rooms[+(query as { id: string }).id - 1]!.id}
+          roomId={object.rooms[+(query as { id: string }).id - 1]!.id!}
         />
       )}
     </Container>

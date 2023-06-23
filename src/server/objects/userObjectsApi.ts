@@ -46,7 +46,9 @@ export async function getUserSingleObjectApi(options: {
 }
 
 export async function putUserObjectApi(
-  object: Partial<ObjectsInfo>
+  object: Partial<Omit<ObjectsInfo, "rooms">> & {
+    rooms?: Partial<PropertyRoom>[];
+  }
 ): Promise<void> {
   try {
     const { data } = await API.put<void>(

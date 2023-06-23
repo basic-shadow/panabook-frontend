@@ -16,7 +16,7 @@ export function useMutateProperty() {
   const { mutateAsync, isLoading, isSuccess } = useMutation<
     void,
     TError,
-    Partial<ObjectsInfo>
+    Partial<Omit<ObjectsInfo, "rooms">> & { rooms?: Partial<PropertyRoom>[] }
   >(putUserObjectApi, {
     onSuccess: () => queryClient.invalidateQueries(queryKeys.getSingleObject),
   });
