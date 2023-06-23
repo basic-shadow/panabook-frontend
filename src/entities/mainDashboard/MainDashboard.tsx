@@ -3,7 +3,13 @@ import { routeEndpoints } from "@/shared/routeEndpoint";
 import Link from "next/link";
 import React, { useState } from "react";
 import { AiFillSetting, AiFillTags, AiOutlineMenu } from "react-icons/ai";
-import { FaBuilding, FaHome, FaKey, FaMoneyCheck } from "react-icons/fa";
+import {
+  FaBuilding,
+  FaHome,
+  FaKey,
+  FaMoneyBillAlt,
+  FaMoneyCheck,
+} from "react-icons/fa";
 import {
   MdClose,
   MdDesignServices,
@@ -192,13 +198,24 @@ export default function MainDashboard({
           {/* RATES OVERVIEW */}
           <Link
             className={
-              "mb-2 flex cursor-pointer items-center gap-4 py-2 xs:px-4 lg:px-8 " +
+              "flex cursor-pointer items-center gap-4 py-2 xs:px-4 lg:px-8 " +
               linkClassName(routeEndpoints.ratesOverview)
             }
             href={routeEndpoints.ratesOverview}
           >
             <BsFillFileBarGraphFill />
             <p>Шахматка</p>
+          </Link>
+          {/* PRICES */}
+          <Link
+            className={
+              "mb-2 flex cursor-pointer items-center gap-4 py-2 xs:px-4 lg:px-8 " +
+              linkClassName(routeEndpoints.prices)
+            }
+            href={routeEndpoints.prices}
+          >
+            <FaMoneyBillAlt />
+            <p>Настройка цен</p>
           </Link>
           {/* PHOTOS */}
           <div>

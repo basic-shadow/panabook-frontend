@@ -49,3 +49,12 @@ export type PropertyRoom = {
     quantity: number;
   }[];
 };
+
+export type Rates = {
+  id: number;
+  name: string;
+  propertyId: number;
+  mealPlans: string[];
+  roomPlans: number[];
+  rooms: { id: number; roomName: number }[];
+};

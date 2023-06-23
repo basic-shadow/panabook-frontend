@@ -14,6 +14,9 @@ export const routeEndpoints = {
   rates: "/rates",
   ratesOverview: "/rates/overview",
   singleRoomPhotos: "/photos/room/",
+  editRates: "/rates/edit/",
+  createRate: "/rates/create",
+  prices: "/prices",
 };
 
 export const adminRouteEndpoints = {

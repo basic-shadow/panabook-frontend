@@ -18,6 +18,7 @@ export const objectsEndpoints = {
   singleRoom: "/user/room/:id",
   editProperty: "/property/:id",
   editRoom: "/room/:id",
+  getRates: "/property/:id/rate-plans",
 };
 
 export const adminEndpoints = {

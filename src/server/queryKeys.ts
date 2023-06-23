@@ -9,4 +9,5 @@ export const queryKeys = {
   getSingleObject: "getSingleObject",
   deleteObjects: "deleteObjects",
   updateUser: "updateUser",
+  getRates: "getRates",
 };

@@ -1,7 +1,12 @@
 import { pathToUrl } from "@/shared/utils/pathComplete";
 import { API } from "../api/axios.instance";
 import { objectsEndpoints } from "../apiEndpoints";
-import { type PropertyRoom, type ObjectsInfo } from "./objects.types";
+import {
+  type PropertyRoom,
+  type ObjectsInfo,
+  type Rates,
+} from "./objects.types";
+import { type RateDto } from "@/components/rates/types/editRate.types";
 
 export async function getUserObjectsApi(options: {
   signal?: AbortSignal;
@@ -64,6 +69,35 @@ export async function putObjectRoomApi(
     );
 
     return data;
+  } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function getPropertyRatesApi(options: {
+  signal?: AbortSignal;
+  id: number;
+}): Promise<Rates[]> {
+  try {
+    const { data } = await API.get<Rates[]>(
+      pathToUrl(objectsEndpoints.getRates, { id: options.id }),
+      {
+        signal: options?.signal,
+      }
+    );
+
+    return data;
+  } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function putPropertyRatesApi(rate: RateDto): Promise<void> {
+  try {
+    await API.post<void>(
+      pathToUrl(objectsEndpoints.getRates, { id: rate.objectId }),
+      { meals: rate.meals, name: rate.name, roomIds: rate.roomIds }
+    );
   } catch (error: any) {
     throw error;
   }
