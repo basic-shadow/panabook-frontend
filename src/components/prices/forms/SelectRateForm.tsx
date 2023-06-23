@@ -52,30 +52,34 @@ export default function SelectRateForm({
         }`}
       >
         <div className={`flex flex-wrap gap-6`}>
-          {rates.map((rate) => (
-            <div
-              key={rate.id}
-              className={
-                "flex cursor-pointer items-center gap-2 rounded border px-3 py-2 " +
-                (selected(rate.id) ? "border-sky-600" : "")
-              }
-              onClick={onSelectRate(rate.id)}
-            >
+          {rates
+            .filter((rate) =>
+              rate.rooms.some((room) => room.id === watch("selectedRoom"))
+            )
+            .map((rate) => (
               <div
+                key={rate.id}
                 className={
-                  "h-6 w-6 rounded-full border bg-white " +
+                  "flex cursor-pointer items-center gap-2 rounded border px-3 py-2 " +
                   (selected(rate.id) ? "border-sky-600" : "")
                 }
+                onClick={onSelectRate(rate.id)}
               >
                 <div
-                  className={`ml-[15%] mt-[15%] h-[70%] w-[70%] rounded-full ${
-                    selected(rate.id) ? "bg-sky-600" : "bg-white"
-                  }`}
-                ></div>
+                  className={
+                    "h-6 w-6 rounded-full border bg-white " +
+                    (selected(rate.id) ? "border-sky-600" : "")
+                  }
+                >
+                  <div
+                    className={`ml-[15%] mt-[15%] h-[70%] w-[70%] rounded-full ${
+                      selected(rate.id) ? "bg-sky-600" : "bg-white"
+                    }`}
+                  ></div>
+                </div>
+                <span className="text-sm">{rate.name}</span>
               </div>
-              <span className="text-sm">{rate.name}</span>
-            </div>
-          ))}
+            ))}
         </div>
         {/* NEXT STEP */}
         <div className="mt-4 flex justify-center">

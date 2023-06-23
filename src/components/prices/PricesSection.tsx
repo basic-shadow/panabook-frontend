@@ -1,8 +1,10 @@
 import MainDashboard from "@/entities/mainDashboard/MainDashboard";
 import React, { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
-import { type Rates, type PropertyRoom } from "@/server/objects/objects.types";
-import noImgPlaceholder from "@/assets/images/no_img_placeholder.jpeg";
+import {
+  type Rates,
+  type PropertyRoom,
+  type PriceDto,
+} from "@/server/objects/objects.types";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { type PriceProperty, pricePropertySchema } from "./types/prices.types";
@@ -11,8 +13,11 @@ import SelectRateForm from "./forms/SelectRateForm";
 import SelectPriceForm from "./forms/SelectPriceForm";
 import SelectDiscountForm from "./forms/SelectDiscountForm";
 import { FaMoneyBillAlt } from "react-icons/fa";
-import { ROOM_TYPES } from "../registerProperty/components/register_multi_form/utils/const_data";
-import { format } from "date-fns";
+import { usePropertyPriceObject } from "./api/usePropertyPriceQuery";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
+import Modal from "@/shared/UI/Modal/Modal";
+import { useRouter } from "next/navigation";
+import PricePreview from "./PricePreview";
 
 export type PriceDiscount = {
   [guestNumber: number]: {
@@ -28,8 +33,12 @@ export default function PricesSection({
   rates: Rates[];
   rooms: PropertyRoom[];
 }) {
-  // SPACE SEPARATION
-  const numberFormatter = Intl.NumberFormat("ru-RU");
+  // ROUTER
+  const router = useRouter();
+  // NOTIFICATIONS
+  const { notifyInfo } = useNotifications();
+  // API
+  const { mutateAsync, isLoading, isSuccess } = usePropertyPriceObject();
   const [step, setStep] = useState(0);
 
   const formMethods = useForm<PriceProperty>({
@@ -64,22 +73,52 @@ export default function PricesSection({
     });
   }, [maxGuests]);
 
-  const onSubmit = (data: PriceProperty) => {
-    console.log(data);
+  const onSubmit = async (data: PriceProperty) => {
+    if (!isLoading) {
+      const discounts = Object.entries(discountRate.nonResident)
+        .map(([key, val]) => ({
+          guests: Number(key),
+          amount: val.enabled
+            ? (+formMethods.watch("price") * (100 - val.discount)) / 100
+            : +formMethods.watch("price"),
+          amountLocal: discountRate.resident[+key]?.enabled
+            ? (+formMethods.watch("price") *
+                (100 - discountRate.resident[+key]!.discount)) /
+              100
+            : +formMethods.watch("price"),
+        }))
+        .filter(
+          (discount) =>
+            discount.amount > 0 ||
+            (discount.amountLocal && discount.amountLocal > 0)
+        );
+      const price: PriceDto = {
+        activeDays: data.activeRange,
+        price: data.price,
+        ratePlansId: data.selectedRate,
+        roomId: data.selectedRoom,
+        discounts,
+        startDate: data.dateFrom.toISOString(),
+        endDate: data.dateTo.toISOString(),
+      };
+      await mutateAsync(price);
+    } else {
+      notifyInfo("Подождите, идет сохранение данных...");
+    }
   };
 
   return (
     <MainDashboard>
       <div className="px-6 py-4">
-        <div>
-          <h2 className="flex items-center gap-2 px-4 py-4 text-lg font-semibold">
-            <FaMoneyBillAlt size={22} />
-            Мастер настройки цен
-          </h2>
-          {/* FORM */}
-          <div className="flex justify-between gap-6">
-            <div className="w-full">
-              <FormProvider {...formMethods}>
+        <FormProvider {...formMethods}>
+          <div>
+            <h2 className="flex items-center gap-2 px-4 py-4 text-lg font-semibold">
+              <FaMoneyBillAlt size={22} />
+              Мастер настройки цен
+            </h2>
+            {/* FORM */}
+            <div className="flex justify-between gap-6">
+              <div className="w-full">
                 <SelectRoomForm step={step} setStep={setStep} rooms={rooms} />
                 <SelectRateForm step={step} setStep={setStep} rates={rates} />
                 <SelectPriceForm
@@ -108,165 +147,31 @@ export default function PricesSection({
                     Сохранить
                   </button>
                 </div>
-              </FormProvider>
-            </div>
-            {/* PREVIEW */}
-            <div className="h-fit rounded border bg-white xs:w-full lg:w-[550px]">
-              <h4 className="border-b px-4 py-4 text-lg font-bold">
-                Предварительный просмотр изменений
-              </h4>
-              <div className="px-4 py-4">
-                {formMethods.watch("selectedRoom") !== undefined ? (
-                  <div className="mb-2">
-                    <h5 className="mr-2 font-semibold">Номер:</h5>
-                    <Image
-                      src={
-                        rooms.find(
-                          (room) =>
-                            room.id === formMethods.watch("selectedRoom")
-                        )?.images
-                          ? process.env.NEXT_PHOTO_BASE_URL! +
-                            rooms.find(
-                              (room) =>
-                                room.id === formMethods.watch("selectedRoom")
-                            )!.images![0]?.url
-                          : noImgPlaceholder
-                      }
-                      alt={"room"}
-                      width={300}
-                      height={250}
-                    />
-                    <p className="mt-2">
-                      {ROOM_TYPES[
-                        +rooms.find(
-                          (room) =>
-                            room.id === formMethods.watch("selectedRoom")
-                        )!.roomType - 1
-                      ]?.label ?? ""}
-                    </p>
-                  </div>
-                ) : (
-                  <p className="text-lg font-semibold text-sky-500">
-                    1. Выберите номер
-                  </p>
-                )}
-                {formMethods.watch("selectedRate") !== undefined ? (
-                  <div className="mb-2 mt-4 flex items-center justify-between">
-                    <h5 className="mr-2 font-semibold">Тариф:</h5>
-                    <p>
-                      {
-                        rates.find(
-                          (rate) =>
-                            rate.id === formMethods.watch("selectedRate")
-                        )?.name
-                      }
-                    </p>
-                  </div>
-                ) : (
-                  <p className="mb-2 mt-4 text-lg font-semibold text-sky-500">
-                    2. Выберите тариф
-                  </p>
-                )}
-                {formMethods.watch("dateFrom") !== undefined && (
-                  <div className="mb-2 mt-4 flex items-center justify-between">
-                    <h5 className="mr-2 font-semibold">Дата начала</h5>
-                    <p>
-                      {format(
-                        formMethods.watch("dateFrom") as any,
-                        "dd.MM.yyyy"
-                      )}
-                    </p>
-                  </div>
-                )}
-                {formMethods.watch("dateTo") !== undefined && (
-                  <div className="mb-2 mt-4 flex items-center justify-between">
-                    <h5 className="mr-2 font-semibold">Дата окончания</h5>
-                    <p>
-                      {format(formMethods.watch("dateTo") as any, "dd.MM.yyyy")}
-                    </p>
-                  </div>
-                )}
-                {formMethods.watch("price") !== undefined &&
-                formMethods.watch("price").toString().length > 0 ? (
-                  <div className="mb-2 mt-4 flex w-full items-center justify-between">
-                    <h5 className="mr-2 font-semibold">
-                      Базовая цена ({maxGuests} гостя):
-                    </h5>
-                    <p className="text-center font-bold text-green-600">
-                      {numberFormatter.format(formMethods.watch("price"))} тенге
-                    </p>
-                  </div>
-                ) : (
-                  <p className="mb-2 mt-4 text-lg font-semibold text-sky-500">
-                    3. Укажите базовую цену
-                  </p>
-                )}
-                {/* PRICES */}
-                {formMethods.watch("price") !== undefined &&
-                  formMethods.watch("price").toString().length > 0 &&
-                  Object.entries(discountRate.nonResident)
-                    .reverse()
-                    .map(
-                      ([key, val], i) =>
-                        i !== 0 &&
-                        val.enabled &&
-                        val.discount > 0 && (
-                          <div
-                            key={"non-resident-price + " + i}
-                            className="mb-2 mt-4 flex items-center justify-between"
-                          >
-                            <h5 className="mr-2 font-semibold">
-                              {key} {+key === 1 ? "гость" : "гостя"}{" "}
-                            </h5>
-                            <p className="text-center font-bold text-green-600">
-                              {Number(
-                                numberFormatter.format(
-                                  (+formMethods.watch("price") *
-                                    (100 - val.discount)) /
-                                    100
-                                )
-                              ).toFixed(2)}{" "}
-                              тенге
-                            </p>
-                          </div>
-                        )
-                    )}
-                {formMethods.watch("price") !== undefined &&
-                  formMethods.watch("price").toString().length > 0 && (
-                    <div className="mb-2 mt-6">
-                      <h4 className="font-semibold">Цена для резидентов</h4>
-                      {Object.entries(discountRate.resident)
-                        .reverse()
-                        .map(
-                          ([key, val], i) =>
-                            val.enabled &&
-                            val.discount > 0 && (
-                              <div
-                                key={"resident-price + " + i}
-                                className="mb-2 mt-4 flex items-center justify-between"
-                              >
-                                <h5 className="mr-2 font-semibold">
-                                  {key} {+key === 1 ? "гость" : "гостя"}{" "}
-                                </h5>
-                                <p className="text-center font-bold text-green-600">
-                                  {Number(
-                                    numberFormatter.format(
-                                      (+formMethods.watch("price") *
-                                        (100 - val.discount)) /
-                                        100
-                                    )
-                                  ).toFixed(2)}{" "}
-                                  тенге
-                                </p>
-                              </div>
-                            )
-                        )}
-                    </div>
-                  )}
               </div>
+              {/* PREVIEW */}
+              <PricePreview
+                rooms={rooms}
+                rates={rates}
+                discountRate={discountRate}
+                maxGuests={maxGuests}
+                showHeader
+              />
             </div>
           </div>
-        </div>
+          <Modal
+            open={isSuccess}
+            onClose={() => router.refresh()}
+            title={"Цены сохранены"}
+            className="h-[70vh] overflow-y-auto"
+          >
+            <PricePreview
+              rooms={rooms}
+              rates={rates}
+              discountRate={discountRate}
+              maxGuests={maxGuests}
+            />
+          </Modal>
+        </FormProvider>
       </div>
     </MainDashboard>
   );

@@ -102,8 +102,8 @@ export default function SelectDiscountForm({
                                           ? ""
                                           : +e.target.value <= 0
                                           ? 0
-                                          : +e.target.value >= 100
-                                          ? 100
+                                          : +e.target.value >= 99
+                                          ? 99
                                           : +e.target.value,
                                     },
                                   },
@@ -201,8 +201,8 @@ export default function SelectDiscountForm({
                                         ? ""
                                         : +e.target.value <= 0
                                         ? 0
-                                        : +e.target.value >= 100
-                                        ? 100
+                                        : +e.target.value >= 99
+                                        ? 99
                                         : +e.target.value,
                                   },
                                 },

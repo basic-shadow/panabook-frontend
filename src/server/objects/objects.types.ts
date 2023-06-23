@@ -58,3 +58,17 @@ export type Rates = {
   roomPlans: number[];
   rooms: { id: number; roomName: number }[];
 };
+
+export type PriceDto = {
+  startDate: string;
+  endDate: string;
+  price: number;
+  roomId: number;
+  ratePlansId: number;
+  activeDays: number[];
+  discounts?: {
+    guests: number;
+    amount: number;
+    amountLocal?: number;
+  }[];
+};

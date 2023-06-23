@@ -10,4 +10,5 @@ export const queryKeys = {
   deleteObjects: "deleteObjects",
   updateUser: "updateUser",
   getRates: "getRates",
+  getPrices: "getPrices",
 };

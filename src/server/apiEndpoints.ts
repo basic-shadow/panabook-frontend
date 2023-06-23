@@ -19,6 +19,7 @@ export const objectsEndpoints = {
   editProperty: "/property/:id",
   editRoom: "/room/:id",
   getRates: "/property/:id/rate-plans",
+  createPrice: "/price",
 };
 
 export const adminEndpoints = {

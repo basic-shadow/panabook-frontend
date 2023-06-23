@@ -5,6 +5,7 @@ import {
   type PropertyRoom,
   type ObjectsInfo,
   type Rates,
+  type PriceDto,
 } from "./objects.types";
 import { type RateDto } from "@/components/rates/types/editRate.types";
 
@@ -99,6 +100,14 @@ export async function putPropertyRatesApi(rate: RateDto): Promise<void> {
       { meals: rate.meals, name: rate.name, roomIds: rate.roomIds }
     );
   } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function putPropertyPricesApi(price: PriceDto): Promise<void> {
+  try {
+    await API.post<void>(objectsEndpoints.createPrice, price);
+  } catch (error) {
     throw error;
   }
 }

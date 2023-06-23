@@ -6,8 +6,8 @@ const positive = "Число должно быть положительным";
 export type PriceProperty = {
   selectedRoom: number;
   selectedRate: number;
-  dateFrom: string;
-  dateTo: string;
+  dateFrom: Date;
+  dateTo: Date;
   price: number;
   activeRange: number[];
 };
