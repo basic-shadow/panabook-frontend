@@ -39,7 +39,10 @@ export default function PricesSection({
   const { notifyInfo } = useNotifications();
   // API
   const { mutateAsync, isLoading, isSuccess } = usePropertyPriceObject();
+  // STATE
   const [step, setStep] = useState(0);
+  const [lastStep, setLastStep] = useState(false);
+  const [updateUI, setUpdateUI] = useState(false);
 
   const formMethods = useForm<PriceProperty>({
     defaultValues: {
@@ -78,14 +81,10 @@ export default function PricesSection({
       const discounts = Object.entries(discountRate.nonResident)
         .map(([key, val]) => ({
           guests: Number(key),
-          amount: val.enabled
-            ? (+formMethods.watch("price") * (100 - val.discount)) / 100
-            : +formMethods.watch("price"),
+          amount: val.enabled ? val.discount : 0,
           amountLocal: discountRate.resident[+key]?.enabled
-            ? (+formMethods.watch("price") *
-                (100 - discountRate.resident[+key]!.discount)) /
-              100
-            : +formMethods.watch("price"),
+            ? discountRate.resident[+key]!.discount
+            : 0,
         }))
         .filter(
           (discount) =>
@@ -98,8 +97,8 @@ export default function PricesSection({
         ratePlansId: data.selectedRate,
         roomId: data.selectedRoom,
         discounts,
-        startDate: data.dateFrom.toISOString(),
-        endDate: data.dateTo.toISOString(),
+        startDate: data.dateFrom.toString(),
+        endDate: data.dateTo.toString(),
       };
       await mutateAsync(price);
     } else {
@@ -132,14 +131,19 @@ export default function PricesSection({
                   setStep={setStep}
                   discountRate={discountRate}
                   setDiscountRate={setDiscountRate}
+                  lastStep={lastStep}
+                  setLastStep={setLastStep}
                 />
                 {/* SAVE */}
                 <div className="mt-4 flex justify-center">
                   <button
-                    onClick={formMethods.handleSubmit(onSubmit)}
+                    onClick={formMethods.handleSubmit(onSubmit, (err) => {
+                      console.log("err = ", err);
+                      setUpdateUI((prev) => !prev);
+                    })}
                     className={
                       "w-56 rounded px-4 py-2 text-white " +
-                      (formMethods.formState.isValid
+                      (formMethods.formState.isValid && lastStep
                         ? "bg-sky-500 hover:bg-sky-600"
                         : "cursor-not-allowed bg-gray-300")
                     }

@@ -1,14 +1,14 @@
+import EditRoomInfoSection from "@/components/editRooms/EditRoomInfoSection";
 import { useGetUserSelectedObject } from "@/components/home/api/objectsQuery";
-import RatesOverviewSection from "@/components/ratesOverview/RatesOverviewSection";
 import Container from "@/entities/container/container";
 import React from "react";
 
-export default function RatesOverviewPage() {
+export default function CreateRoomsPage() {
   const { object, isLoading } = useGetUserSelectedObject();
 
   return (
     <Container authHeader loading={isLoading}>
-      {object && <RatesOverviewSection rooms={object.rooms} />}
+      {object && <EditRoomInfoSection object={object} />}
     </Container>
   );
 }

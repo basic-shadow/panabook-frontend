@@ -6,43 +6,66 @@ import { type EditRoom, editRoomSchema } from "./types/editRoomTypes";
 import EditRoomNameForm from "./forms/EditRoomNameForm";
 import EditRoomInfoForm from "./forms/EditRoomInfoForm";
 import EditRoomQuantityForm from "./forms/EditRoomQuantityForm";
-import { type PropertyRoom } from "@/server/objects/objects.types";
+import {
+  type ObjectsInfo,
+  type PropertyRoom,
+} from "@/server/objects/objects.types";
 import { AiFillTags } from "react-icons/ai";
-import { useMutateRoom } from "../editDescription/service/useMutateProperty";
+import {
+  useMutateProperty,
+  useMutateRoom,
+} from "../editDescription/service/useMutateProperty";
 import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 import { FACILITIES_CATEGORIES } from "../registerProperty/components/register_multi_form/utils/const_data";
+import { useRouter } from "next/navigation";
+import { routeEndpoints } from "@/shared/routeEndpoint";
 
 export default function EditRoomInfoSection({
   initState,
+  object,
 }: {
-  initState: PropertyRoom;
+  initState?: PropertyRoom;
+  object?: ObjectsInfo;
 }) {
+  // ROUTER
+  const router = useRouter();
   // FACILITIES
-  const [facilities, setFacilities] = useState(initState.facilities);
+  const [facilities, setFacilities] = useState<number[]>(
+    initState?.facilities || []
+  );
   // NOTIFICATIONS
-  const { notifySuccess, notifyInfo } = useNotifications();
+  const { notifyInfo } = useNotifications();
   // UPDATE STATE AFTER EDIT
   const [_, setUpdateUI] = useState(false);
   // API
-  const { mutateAsync, isLoading } = useMutateRoom();
+  const { mutateAsync: editRoom, isLoading: editLoading } = useMutateRoom();
+  const { mutateAsync: createRoom, isLoading: createLoading } =
+    useMutateProperty();
   // FORM
   const formMethods = useForm<EditRoom>({
     resolver: yupResolver(editRoomSchema),
-    defaultValues: {
-      allowedSmoking: initState.allowedSmoking,
-      beds: initState.beds,
-      maxGuests: initState.maxGuests,
-      surfaceArea: initState.surfaceArea,
-      name: +initState.roomName,
-      type: +initState.roomType,
-      maxChildren: initState.maxChildren,
-      similarRoomsNumber: initState.similarRoomsNumber,
-    },
+    defaultValues: initState
+      ? {
+          allowedSmoking: initState.allowedSmoking,
+          beds: initState.beds,
+          maxGuests: initState.maxGuests,
+          surfaceArea: initState.surfaceArea,
+          name: +initState.roomName,
+          type: +initState.roomType,
+          maxChildren: initState.maxChildren,
+          similarRoomsNumber: initState.similarRoomsNumber,
+        }
+      : {
+          name: 1,
+          type: 1,
+          allowedSmoking: false,
+          beds: [{ type: 1, quantity: 1 }],
+        },
   });
 
   const onSubmit = async (data: EditRoom) => {
-    if (!isLoading) {
-      await mutateAsync({
+    if (!editLoading && initState) {
+      await editRoom({
         id: initState.id,
         allowedSmoking: data.allowedSmoking,
         beds: data.beds,
@@ -54,7 +77,24 @@ export default function EditRoomInfoSection({
         similarRoomsNumber: data.similarRoomsNumber,
         facilities,
       });
-      notifySuccess("Номер успешно изменен");
+      router.push(routeEndpoints.rooms);
+    } else if (!createLoading && object) {
+      const newRoom = {
+        allowedSmoking: data.allowedSmoking,
+        beds: data.beds,
+        maxGuests: data.maxGuests,
+        surfaceArea: data.surfaceArea,
+        roomName: data.name,
+        maxChildren: data.maxChildren,
+        roomType: data.type,
+        similarRoomsNumber: data.similarRoomsNumber,
+        facilities,
+      };
+      await createRoom({
+        id: object.id,
+        rooms: [...object.rooms, newRoom],
+      });
+      router.push(routeEndpoints.rooms);
     } else {
       notifyInfo("Подождите, идет загрузка");
     }
@@ -74,7 +114,7 @@ export default function EditRoomInfoSection({
       <div className="px-4 py-6">
         <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
           <AiFillTags />
-          Изменить номер
+          {initState ? "Изменить" : "Добавить новый"} номер
         </h2>
         <FormProvider {...formMethods}>
           <EditRoomNameForm

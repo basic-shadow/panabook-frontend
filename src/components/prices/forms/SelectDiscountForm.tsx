@@ -7,6 +7,8 @@ export default function SelectDiscountForm({
   setStep,
   discountRate,
   setDiscountRate,
+  lastStep,
+  setLastStep,
 }: {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -20,6 +22,8 @@ export default function SelectDiscountForm({
       nonResident: PriceDiscount;
     }>
   >;
+  lastStep: boolean;
+  setLastStep: (val: boolean) => void;
 }) {
   const { watch } = useFormContext();
 
@@ -39,7 +43,7 @@ export default function SelectDiscountForm({
         <p
           className={
             "text-lg font-semibold " +
-            (filledForm ? "text-green-600" : "text-black")
+            (filledForm && lastStep ? "text-green-600" : "text-black")
           }
         >
           4. Укажите цены по количеству гостей
@@ -257,7 +261,12 @@ export default function SelectDiscountForm({
         {/* NEXT STEP */}
         <div className="mt-4 flex justify-center pb-4">
           <button
-            onClick={() => setStep((prev) => prev + 1)}
+            onClick={() => {
+              setStep((prev) => prev + 1);
+              if (!lastStep) {
+                setLastStep(true);
+              }
+            }}
             className={
               "w-56 rounded px-4 py-2 text-white " +
               (watch("selectedRoom") !== undefined

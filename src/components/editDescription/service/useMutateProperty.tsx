@@ -32,7 +32,9 @@ export function useMutateRoom() {
     TError,
     Partial<PropertyRoom>
   >(putObjectRoomApi, {
-    onSuccess: () => queryClient.invalidateQueries(queryKeys.getSingleObject),
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.getSingleObject);
+    },
   });
 
   return { isLoading, mutateAsync, isSuccess };

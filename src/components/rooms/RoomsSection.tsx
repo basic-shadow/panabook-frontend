@@ -18,9 +18,17 @@ export default function RoomsSection({ rooms }: { rooms: PropertyRoom[] }) {
     <MainDashboard>
       <div className="px-6 py-4">
         <div className="bg-white shadow">
-          <div className="mb-4 flex items-center gap-2 px-4 pt-4">
-            <AiFillTags size={24} />
-            <h3 className="text-xl font-semibold">Номера</h3>
+          <div className="mb-4 flex items-end px-4 pt-4">
+            <div className="flex items-center gap-2">
+              <AiFillTags size={24} />
+              <h3 className="text-xl font-semibold">Номера</h3>
+            </div>
+            <button
+              className="ml-4 rounded bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
+              onClick={() => router.push(routeEndpoints.createRoom)}
+            >
+              Добавить номер
+            </button>
           </div>
 
           <div className="px-4 pb-4">
@@ -63,7 +71,7 @@ export default function RoomsSection({ rooms }: { rooms: PropertyRoom[] }) {
                     </p>
                     <div className="mt-4 flex items-center justify-between gap-4">
                       <button
-                        className="rounded bg-blue-700 px-4 py-2 text-sm text-white hover:bg-blue-500"
+                        className="rounded bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-500"
                         onClick={() =>
                           router.push(routeEndpoints.singleRoomPhotos + (i + 1))
                         }
