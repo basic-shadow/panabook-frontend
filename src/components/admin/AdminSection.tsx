@@ -13,13 +13,29 @@ import { type ObjectsParsedInfo } from "@/types/objects.types";
 import { normalizePropertyValues } from "@/shared/utils/normalizePropertyValues";
 import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 
-import { FiTrash } from "react-icons/fi";
-import { useDeleteObject } from "./api/adminObjectsQuery";
+import { FiEdit, FiTrash } from "react-icons/fi";
+import {
+  useActivateObjectStatus,
+  useDeleteObject,
+} from "./api/adminObjectsQuery";
 import AdminDashboard from "@/entities/adminDashboard/AdminDashboard";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
+
+const mapStatusToText = (status: string) => {
+  switch (status) {
+    case "accepted":
+      return "Активный";
+    case "rejected":
+      return "Неактивный";
+    case "pending":
+    default:
+      return "На модерации";
+  }
+};
 
 type ObjectsTableData = {
   name: string;
-  stars: number;
+  status: string;
   address: string;
   phone: string;
 };
@@ -33,12 +49,19 @@ export default function AdminSection({
   fetchNextPage: () => void;
   objectsLoading: boolean;
 }) {
+  // NOTIFIACTION
+  const { notifyInfo } = useNotifications();
+
   const [deleteObjectId, setDeleteObjectId] = useState<number | null>(null);
   const [selectedObject, setSelectedObject] =
     useState<ObjectsParsedInfo | null>(null);
   const closeModal = useCallback(() => {
     setSelectedObject(null);
   }, []);
+
+  // UPDATE STATUS API
+  const { mutateAsync: updateObjectStatus, isLoading: updateStatusLoading } =
+    useActivateObjectStatus();
 
   // DELETE QUERY
   const { isLoading: deleteLoading, mutateAsync: deleteAsync } =
@@ -53,7 +76,7 @@ export default function AdminSection({
 
     return objects.map((object) => ({
       name: object.name,
-      stars: object.stars,
+      status: mapStatusToText(object.status),
       address: object.address,
       phone: object.contactPhone1,
     }));
@@ -67,8 +90,8 @@ export default function AdminSection({
         accessorKey: "name",
       },
       {
-        header: "Stars",
-        accessorKey: "stars",
+        header: "Status",
+        accessorKey: "status",
       },
       {
         header: "Address",
@@ -175,6 +198,19 @@ export default function AdminSection({
     setDeleteObjectId(null);
   }, [deleteObjectId]);
 
+  const onToggleStatus = (index: number) => {
+    return async (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.stopPropagation();
+      if (objects === undefined || updateStatusLoading) return;
+      const object = objects[index]!;
+      if (object.status === "accepted") {
+        return notifyInfo("Нельзя изменить статус когда он Активный");
+      }
+      await updateObjectStatus(object.id);
+      notifyInfo("Статус успешно изменен");
+    };
+  };
+
   return (
     <AdminDashboard>
       <div className="w-full px-8 py-8">
@@ -183,7 +219,7 @@ export default function AdminSection({
             {getHeaderGroups().map((headerGroup) => {
               return (
                 <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header, i) => {
+                  {headerGroup.headers.map((header) => {
                     return (
                       <th
                         key={header.id}
@@ -208,6 +244,8 @@ export default function AdminSection({
           </thead>
           <tbody>
             {rows.map((row, i) => {
+              const isPropertyActive = row.original.status === "Активный";
+
               return (
                 <tr
                   key={row.id}
@@ -241,6 +279,36 @@ export default function AdminSection({
                     >
                       <FiTrash className="h-5 w-5" />
                     </button>
+                  </td>
+                  <td>
+                    <div
+                      className="flex items-center gap-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <div className="relative inline-block w-10 select-none gap-2 align-middle transition duration-200 ease-in">
+                        <input
+                          type="checkbox"
+                          id={"status_toggle" + i}
+                          onChange={onToggleStatus(i)}
+                          className={
+                            "absolute block h-6 w-6 cursor-pointer appearance-none rounded-full border bg-white transition-all " +
+                            (isPropertyActive ? "right-0" : "right-[50%]")
+                          }
+                        />
+                        <label
+                          htmlFor={"status_toggle" + i}
+                          className={
+                            "toggle-label block h-6 cursor-pointer overflow-hidden rounded-full " +
+                            (isPropertyActive ? "bg-green-500 " : "bg-gray-300")
+                          }
+                        ></label>
+                      </div>
+                      <span className="text-sm">
+                        {isPropertyActive ? "Активирован" : "На модерации"}
+                      </span>
+                    </div>
                   </td>
                 </tr>
               );

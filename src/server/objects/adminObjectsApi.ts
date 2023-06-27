@@ -31,3 +31,16 @@ export async function deleteObjectApi(objectId: number): Promise<void> {
     throw error;
   }
 }
+
+export async function activateObjectsStatusApi(
+  objectId: number
+): Promise<void> {
+  try {
+    await API.put<void>(
+      adminEndpoints.acceptObjectStatus.replace(":id", objectId.toString()),
+      undefined
+    );
+  } catch (error: any) {
+    throw error;
+  }
+}

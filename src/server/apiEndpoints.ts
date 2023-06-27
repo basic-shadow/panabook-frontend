@@ -25,4 +25,5 @@ export const objectsEndpoints = {
 export const adminEndpoints = {
   deleteObject: "/property/:id",
   getObjects: "/property",
+  acceptObjectStatus: "/property/:id/accept",
 };

@@ -1,5 +1,6 @@
 import { queryKeys } from "@/server/queryKeys";
 import {
+  activateObjectsStatusApi,
   deleteObjectApi,
   getAllObjectsApi,
 } from "@/server/objects/adminObjectsApi";
@@ -41,6 +42,20 @@ export function useDeleteObject() {
     TError,
     number
   >(queryKeys.deleteObjects, deleteObjectApi, {
+    onSuccess: () => queryClient.invalidateQueries(queryKeys.getObjects),
+  });
+
+  return { isLoading, mutateAsync, isSuccess };
+}
+
+export function useActivateObjectStatus() {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync, isLoading, isSuccess } = useMutation<
+    void,
+    TError,
+    number
+  >(queryKeys.deleteObjects, activateObjectsStatusApi, {
     onSuccess: () => queryClient.invalidateQueries(queryKeys.getObjects),
   });
 
