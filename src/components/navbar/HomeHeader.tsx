@@ -51,6 +51,8 @@ export default function HomeHeader() {
     window.open("https://t.me/+77072537787", "_blank");
   };
 
+  console.log("object =", object);
+
   return (
     <header className="bg-white text-black shadow-md">
       <nav className="flex items-center xs:justify-end xs:px-2 xs:py-2 lg:justify-between lg:px-8 lg:py-4">
@@ -68,7 +70,7 @@ export default function HomeHeader() {
             </span>
           </Link>
           {/* OBJECT NAME */}
-          {objectsLoading && !object ? (
+          {objectsLoading || !object ? (
             <SpinnerLoader color="#000" />
           ) : (
             <div>
