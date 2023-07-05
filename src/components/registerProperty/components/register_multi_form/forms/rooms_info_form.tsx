@@ -224,7 +224,7 @@ export default memo(function RoomsInfoFrom({
                   />
 
                   <p className="mt-2 text-start text-sm text-gray-400">
-                    Это названия появится на сайте Panabook.kz
+                    Это названия появится на сайте Panabooking.kz
                   </p>
                 </div>
               </div>

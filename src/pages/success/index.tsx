@@ -9,7 +9,7 @@ import { useEffect } from "react";
 const writeToUs = () => {
   // WHATSAPP LINK
   window.open(
-    "https://api.whatsapp.com/send?phone=+77072534999&text=Здравствуйте, пишу из сайта panabook.kz",
+    "https://api.whatsapp.com/send?phone=+77072534999&text=Здравствуйте, пишу из сайта panabooking.kz",
     "_blank"
   );
 };

@@ -17,7 +17,7 @@ export default function GeneralDescriptionForm({
       <NewInput id={"name"} label={"Название:"} name={"name"} required />
       <NewInput
         id={"commission"}
-        label={"Комиссия Panabook.kz (%):"}
+        label={"Комиссия Panabooking.kz (%):"}
         name={"commission"}
         value={12}
         required

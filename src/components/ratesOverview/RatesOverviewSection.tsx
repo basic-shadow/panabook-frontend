@@ -1,16 +1,16 @@
 import MainDashboard from "@/entities/mainDashboard/MainDashboard";
-import { type PropertyRoom } from "@/server/objects/objects.types";
+import { type Rates, type PropertyRoom } from "@/server/objects/objects.types";
 import React, { useState } from "react";
 import DateSelectorSection from "./DateSelectorSection";
 import { ROOM_NAMES } from "../registerProperty/components/register_multi_form/utils/const_data";
-
-const diffDays = (dateFrom: Date, dateTo: Date) =>
-  (dateTo.getTime() - dateFrom.getTime()) / (1000 * 3600 * 24);
+import DatesOverview from "./widgets/DatesOverview";
 
 export default function RatesOverviewSection({
   rooms,
+  rates,
 }: {
   rooms: PropertyRoom[];
+  rates: Rates[];
 }) {
   const [selectedDate, setSelectedDate] = useState({
     dateFrom: new Date(),
@@ -31,47 +31,16 @@ export default function RatesOverviewSection({
           <BookingStateBox />
           {/* ROOMS */}
           {rooms.map((room) => (
-            <div key={room.id} className="mx-4 my-4 border">
+            <div key={room.id} className="mx-4 my-4 border border-b-0">
               <h3 className="px-4 py-2 text-sm font-bold text-zinc-700">
                 {ROOM_NAMES[+room.roomName - 1]?.label}
               </h3>
-              {/* <div className="flex gap-2 px-4">
-                {Array.from({
-                  length: diffDays(selectedDate.dateFrom, selectedDate.dateTo),
-                }).map((_, i) => (
-                  <div
-                    key={"selected-date" + i}
-                    className="flex flex-col justify-end overflow-auto border-r py-2 pr-6 text-sm"
-                  >
-                    {i === 0 ||
-                    new Date(
-                      selectedDate.dateFrom.getTime() + 1000 * 3600 * 24 * i
-                    ).getMonth() !==
-                      new Date(
-                        selectedDate.dateFrom.getTime() +
-                          1000 * 3600 * 24 * (i - 1)
-                      ).getMonth() ? (
-                      <div className="text-xs text-gray-600">
-                        {new Date(
-                          selectedDate.dateFrom.getTime() + 1000 * 3600 * 24 * i
-                        ).toLocaleString("ru", { month: "short" })}
-                      </div>
-                    ) : null}
-                    <div className="flex">
-                      <span className="capitalize">
-                        {new Date(
-                          selectedDate.dateFrom.getTime() + 1000 * 3600 * 24 * i
-                        ).toLocaleString("ru", { weekday: "short" })}
-                      </span>
-                      <span className="ml-1 font-medium">
-                        {new Date(
-                          selectedDate.dateFrom.getTime() + 1000 * 3600 * 24 * i
-                        ).getDate()}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div> */}
+              <DatesOverview
+                roomId={room.id}
+                selectedDate={selectedDate}
+                isLoading={false}
+                roomRates={rates}
+              />
             </div>
           ))}
         </div>

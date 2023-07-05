@@ -13,7 +13,7 @@ export default function RegisterHeader() {
           <span>
             <FaBookReader />
           </span>
-          Panabook
+          Panabooking
         </Link>
       </nav>
     </header>

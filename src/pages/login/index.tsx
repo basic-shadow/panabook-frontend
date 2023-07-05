@@ -5,14 +5,14 @@ import bgImg from "@/assets/images/login.jpeg";
 
 export default function LoginPage() {
   return (
-    <Container title="Panabook - Войти в аккаунт">
+    <Container title="Panabooking - Войти в аккаунт">
       <main className="relative min-h-screen">
         <Image
           src={bgImg}
           alt="alt"
           className="absolute h-screen object-cover"
         />
-        <div className="absolute top-0 left-0 h-screen w-full bg-white/10 backdrop-blur-sm backdrop-brightness-95"></div>
+        <div className="absolute left-0 top-0 h-screen w-full bg-white/10 backdrop-blur-sm backdrop-brightness-95"></div>
         <LoginForm />
       </main>
     </Container>

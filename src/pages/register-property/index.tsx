@@ -3,7 +3,7 @@ import Container from "@/entities/container/container";
 
 export default function RegisterPropertyPage() {
   return (
-    <Container title="Panabook - Добавить отель">
+    <Container title="Panabooking - Добавить отель">
       <main className="min-h-screen bg-slate-200">
         <div className="flex items-center justify-center py-12">
           <RegisterPropertyForm />
