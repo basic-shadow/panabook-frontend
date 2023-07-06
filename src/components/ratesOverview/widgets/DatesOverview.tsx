@@ -1,11 +1,15 @@
 import { type Rates } from "@/server/objects/objects.types";
-import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
+import {
+  MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
+} from "react-icons/md";
+import BookingStatusBar from "./BookingStatusBar";
 
 const diffDays = (dateFrom: Date, dateTo: Date) =>
   (dateTo.getTime() - dateFrom.getTime()) / (1000 * 3600 * 24);
 
-type BookingDayStatus = {
+export type BookingDayStatus = {
   date: Date;
   prevDate: Date;
   status: string;
@@ -22,18 +26,18 @@ export default function DatesOverview({
   roomId: number;
   isLoading: boolean;
 }) {
+  // RATES BOOKINGS
   const rates = useMemo(
     () =>
       roomRates.filter((val) => val.rooms.some((room) => room.id === roomId)),
     [roomRates, roomId]
   );
-
   const [ratesBookingStatus, setRatesBookingStatus] = useState<
     {
       rateId: number;
       bookingDays: BookingDayStatus[];
     }[]
-  >(
+  >(() =>
     rates.map((rate) => ({
       rateId: rate.id,
       bookingDays: Array.from({
@@ -47,7 +51,10 @@ export default function DatesOverview({
       })),
     }))
   );
-
+  const [toggledRates, setToggledRates] = useState<boolean[]>(
+    rates.map((_) => false)
+  );
+  // ROOM BOOKINGS
   const [bookingDays, setBookingDays] = useState(() =>
     Array.from({
       length: diffDays(selectedDate.dateFrom, selectedDate.dateTo),
@@ -62,85 +69,34 @@ export default function DatesOverview({
     }))
   );
 
-  const statusPadding = (bookingDays: BookingDayStatus[], i: number) => {
-    let cl = "";
-    if (
-      bookingDays[i]?.status !== bookingDays[i + 1]?.status &&
-      bookingDays[i]?.status !== bookingDays[i - 1]?.status
-    ) {
-      cl = "px-2 border-l";
-    } else if (bookingDays[i]?.status !== bookingDays[i + 1]?.status) {
-      cl = "pr-2";
-    } else if (bookingDays[i]?.status !== bookingDays[i - 1]?.status) {
-      cl = "pl-2";
-    } else if (i === 0) {
-      cl = "pl-2";
-    } else if (i === bookingDays.length - 1) {
-      cl = "pr-2";
-    }
+  const onChangeStatus = useCallback(
+    (i: number, bookingStatus: BookingDayStatus[], rateIndex?: number) => {
+      return () => {
+        const newBookingDays = [...bookingStatus];
+        if (newBookingDays[i] === undefined) return;
 
-    return cl;
-  };
+        newBookingDays[i]!.status =
+          newBookingDays[i]!.status === "open" ? "closed" : "open";
 
-  const statusBorders = (bookingDays: BookingDayStatus[], i: number) => {
-    let cl = "";
-    if (
-      bookingDays[i]?.status !== bookingDays[i + 1]?.status &&
-      bookingDays[i]?.status !== bookingDays[i - 1]?.status
-    ) {
-      cl = "rounded-full";
-    } else if (bookingDays[i]?.status !== bookingDays[i + 1]?.status) {
-      cl = "rounded-r-full";
-    } else if (bookingDays[i]?.status !== bookingDays[i - 1]?.status) {
-      cl = "rounded-l-full";
-    } else if (i === 0) {
-      cl = "rounded-l-full";
-    } else if (i === bookingDays.length - 1) {
-      cl = "rounded-r-full";
-    }
-
-    if (bookingDays[i]!.status === "open") {
-      cl += " bg-green-600 hover:bg-green-700";
-    } else if (bookingDays[i]!.status === "closed") {
-      cl += " bg-red-600 hover:bg-red-700";
-    }
-
-    return cl;
-  };
-
-  const onChangeRoomStatus = (i: number) => {
-    return () => {
-      const newBookingDays = [...bookingDays];
-      if (newBookingDays[i] === undefined) return;
-
-      newBookingDays[i]!.status =
-        newBookingDays[i]!.status === "open" ? "closed" : "open";
-      setBookingDays(newBookingDays);
-    };
-  };
-
-  const onChangeRateStatus = (rateIndex: number, i: number) => {
-    return () => {
-      const newRatesBookingStatus = ratesBookingStatus[rateIndex]?.bookingDays;
-      if (
-        newRatesBookingStatus === undefined ||
-        newRatesBookingStatus[i] === undefined
-      ) {
-        return;
-      }
-
-      newRatesBookingStatus[i]!.status =
-        newRatesBookingStatus[i]!.status === "open" ? "closed" : "open";
-
-      setRatesBookingStatus((prev) =>
-        prev.map((val, index) =>
-          index === rateIndex
-            ? { ...val, bookingDays: newRatesBookingStatus }
-            : val
-        )
-      );
-    };
-  };
+        if (rateIndex === undefined) {
+          setBookingDays((prev) =>
+            prev.map((val, index) =>
+              index === i ? { ...val, bookingDays: newBookingDays } : val
+            )
+          );
+        } else {
+          setRatesBookingStatus((prev) =>
+            prev.map((val, index) =>
+              index === rateIndex
+                ? { ...val, bookingDays: newBookingDays }
+                : val
+            )
+          );
+        }
+      };
+    },
+    []
+  );
 
   const onChangeActiveRooms = (i: number) => {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,9 +124,30 @@ export default function DatesOverview({
         <div className="h-14 border-b px-4 py-2">Активные бронирования</div>
         {/* RATES */}
         {rates.map((val, i) => (
-          <div key={"rate" + i} className="h-10 truncate border-b px-4 py-2">
-            {val.name}
-          </div>
+          <React.Fragment key={"rate" + i}>
+            <div
+              className="flex h-10 cursor-pointer items-center truncate border-b px-4 py-2 text-blue-500 hover:bg-slate-100"
+              onClick={() =>
+                setToggledRates((prev) =>
+                  prev.map((_, index) =>
+                    index === i ? !prev[index]! : prev[index]!
+                  )
+                )
+              }
+            >
+              {toggledRates[i] ? (
+                <MdOutlineKeyboardArrowUp size={22} />
+              ) : (
+                <MdOutlineKeyboardArrowDown size={22} />
+              )}
+              {val.name}
+            </div>
+
+            {/* RATE TOGGLED DATA */}
+            {toggledRates[i] && (
+              <div className="h-14 border-b px-4 py-2">Цена</div>
+            )}
+          </React.Fragment>
         ))}
       </div>
       {/* RIGHT BAR */}
@@ -192,19 +169,12 @@ export default function DatesOverview({
               </div>
             </div>
             {/* BOOKING STATUS */}
-            <div
-              className={"h-10 border-b py-2 " + statusPadding(bookingDays, i)}
-            >
-              <div
-                className={
-                  "grid h-full cursor-pointer place-items-center " +
-                  statusBorders(bookingDays, i)
-                }
-                onClick={onChangeRoomStatus(i)}
-              >
-                {isLoading && <SpinnerLoader />}
-              </div>
-            </div>
+            <BookingStatusBar
+              onChangeStatus={onChangeStatus(i, bookingDays)}
+              bookingDays={bookingDays}
+              isLoading={isLoading}
+              i={i}
+            />
             {/* ACTIVE ROOMS */}
             <div className="grid h-14 place-items-center border-b border-r px-4 py-2">
               <input
@@ -224,28 +194,28 @@ export default function DatesOverview({
             {rates.map((rate, rateIndex) => (
               <div key={"rate-status-" + rateIndex}>
                 {/* RATING BOOKING STATUS */}
-                <div
-                  className={
-                    "h-10 border-b py-2 " +
-                    statusPadding(
-                      ratesBookingStatus[rateIndex]?.bookingDays || [],
-                      i
-                    )
-                  }
-                >
-                  <div
-                    className={
-                      "grid h-full cursor-pointer place-items-center " +
-                      statusBorders(
-                        ratesBookingStatus[rateIndex]?.bookingDays || [],
-                        i
-                      )
-                    }
-                    onClick={onChangeRateStatus(rateIndex, i)}
-                  >
-                    {isLoading && <SpinnerLoader />}
+                <BookingStatusBar
+                  onChangeStatus={onChangeStatus(
+                    i,
+                    ratesBookingStatus[rateIndex]?.bookingDays || [],
+                    rateIndex
+                  )}
+                  bookingDays={ratesBookingStatus[rateIndex]?.bookingDays || []}
+                  isLoading={isLoading}
+                  i={i}
+                />
+
+                {/* RATE TOGGLED DATA */}
+                {toggledRates[rateIndex] && (
+                  <div className="grid h-14 place-items-center border-b border-r px-4 py-2">
+                    <input
+                      type="number"
+                      className="w-full rounded border py-1 text-center"
+                      value={val.activeRooms}
+                      onChange={onChangeActiveRooms(i)}
+                    />
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>
