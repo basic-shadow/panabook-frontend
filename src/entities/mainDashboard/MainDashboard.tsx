@@ -60,8 +60,10 @@ const photosPageLinks = [
 
 export default function MainDashboard({
   children,
+  bodyClassname,
 }: {
   children: React.ReactNode;
+  bodyClassname?: string;
 }) {
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState(false);
@@ -273,7 +275,7 @@ export default function MainDashboard({
           </Link>
         </div>
       </div>
-      <div className="w-full">
+      <div className={twMerge("w-full", bodyClassname)}>
         {/* HEADER */}
         <HomeHeader />
         {/* BODY */}

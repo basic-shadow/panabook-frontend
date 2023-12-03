@@ -50,78 +50,84 @@ export default function DateSelectorSection({
         Предыдущая неделя
       </button>
       <div className="flex gap-4">
-        {/* DATE FROM */}
-        <div className="flex w-fit cursor-pointer items-center gap-2 rounded border border-gray-300 px-4 py-2">
-          <input
-            readOnly
-            className="w-fit outline-none"
-            value={format(selectedDate.dateFrom, "dd.MM.yyyy")}
-            onClick={onOpenDate("dateFrom")}
-          />
-          <MdDateRange size={18} />
-        </div>
-        {openDate.dateFrom && (
-          <div
-            className="absolute top-full bg-white"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <DayPicker
-              locale={ru}
-              hidden={false}
-              id="dateFrom"
-              mode="single"
-              toDate={selectedDate.dateTo}
-              classNames={{
-                month: "capitalize",
-              }}
-              selected={selectedDate.dateFrom}
-              onSelect={(date?: Date) => {
-                if (!date) return;
-                setSelectedDate((prev) => ({
-                  ...prev,
-                  dateFrom: date,
-                }));
-                closeDates();
-              }}
+        <div className="relative">
+          {/* DATE FROM */}
+          <div className="flex w-fit cursor-pointer items-center gap-2 rounded border border-gray-300 px-4 py-2">
+            <input
+              readOnly
+              className="w-fit cursor-pointer outline-none"
+              value={format(selectedDate.dateFrom, "dd.MM.yyyy")}
+              onClick={onOpenDate("dateFrom")}
             />
+            <MdDateRange size={18} />
           </div>
-        )}
+          {openDate.dateFrom && (
+            <div
+              className="absolute top-full border bg-white"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <DayPicker
+                locale={ru}
+                hidden={false}
+                id="dateFrom"
+                mode="single"
+                toDate={selectedDate.dateTo}
+                classNames={{
+                  month: "capitalize",
+                }}
+                selected={selectedDate.dateFrom}
+                onSelect={(date?: Date) => {
+                  if (!date) return;
+                  setSelectedDate((prev) => ({
+                    ...prev,
+                    dateFrom: date,
+                  }));
+                  closeDates();
+                }}
+              />
+            </div>
+          )}
+        </div>
+
         {/* DATE TO */}
-        <div className="flex w-fit cursor-pointer items-center gap-2 rounded border border-gray-300 px-4 py-2">
-          <input
-            readOnly
-            className="w-fit outline-none"
-            value={format(selectedDate.dateTo, "dd.MM.yyyy")}
-            onClick={onOpenDate("dateTo")}
-          />
-          <MdDateRange size={18} />
-        </div>
-        {openDate.dateTo && (
-          <div
-            className="absolute top-full bg-white"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <DayPicker
-              locale={ru}
-              hidden={false}
-              id="dateTo"
-              mode="single"
-              fromDate={selectedDate.dateFrom}
-              classNames={{
-                month: "capitalize",
-              }}
-              selected={selectedDate.dateTo}
-              onSelect={(date?: Date) => {
-                if (!date) return;
-                setSelectedDate((prev) => ({
-                  ...prev,
-                  dateTo: date,
-                }));
-                closeDates();
-              }}
+        <div className="relative">
+          <div className="flex w-fit cursor-pointer items-center gap-2 rounded border border-gray-300 px-4 py-2">
+            <input
+              readOnly
+              className="w-fit cursor-pointer outline-none"
+              value={format(selectedDate.dateTo, "dd.MM.yyyy")}
+              onClick={onOpenDate("dateTo")}
             />
+            <MdDateRange size={18} />{" "}
           </div>
-        )}
+          {openDate.dateTo && (
+            <div
+              className="absolute top-full border bg-white"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <DayPicker
+                locale={ru}
+                hidden={false}
+                id="dateTo"
+                mode="single"
+                fromDate={selectedDate.dateFrom}
+                classNames={{
+                  month: "capitalize",
+                }}
+                selected={selectedDate.dateTo}
+                onSelect={(date?: Date) => {
+                  if (!date) return;
+                  setSelectedDate((prev) => ({
+                    ...prev,
+                    dateTo: date,
+                  }));
+                  closeDates();
+                }}
+              />
+            </div>
+          )}
+        </div>
+
         {/* SEARCH RATES */}
         <button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
           Установить

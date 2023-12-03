@@ -18,7 +18,7 @@ export default function RatesOverviewSection({
   });
 
   return (
-    <MainDashboard>
+    <MainDashboard bodyClassname="w-[85%]">
       <div className="px-6 py-4">
         <div className="bg-white pb-2 shadow">
           <h2 className="px-4 py-4 text-lg font-semibold">
@@ -36,7 +36,7 @@ export default function RatesOverviewSection({
                 {ROOM_NAMES[+room.roomName - 1]?.label}
               </h3>
               <DatesOverview
-                roomId={room.id}
+                room={room}
                 selectedDate={selectedDate}
                 isLoading={false}
                 roomRates={rates}

@@ -1,10 +1,13 @@
-import { type Rates } from "@/server/objects/objects.types";
+import { type PropertyRoom, type Rates } from "@/server/objects/objects.types";
 import React, { useCallback, useMemo, useState } from "react";
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 import BookingStatusBar from "./BookingStatusBar";
+import { IoPersonSharp } from "react-icons/io5";
+import Modal from "@/shared/UI/Modal/Modal";
+import EditPriceModal from "./EditPriceModal";
 
 const diffDays = (dateFrom: Date, dateTo: Date) =>
   (dateTo.getTime() - dateFrom.getTime()) / (1000 * 3600 * 24);
@@ -18,19 +21,21 @@ export type BookingDayStatus = {
 export default function DatesOverview({
   selectedDate,
   roomRates,
-  roomId,
+  room,
   isLoading,
 }: {
   selectedDate: { dateFrom: Date; dateTo: Date };
   roomRates: Rates[];
-  roomId: number;
+  room: PropertyRoom;
   isLoading: boolean;
 }) {
+  // MODALS
+  const [editPriceRateId, setEditPriceRateId] = useState(-1);
   // RATES BOOKINGS
   const rates = useMemo(
     () =>
-      roomRates.filter((val) => val.rooms.some((room) => room.id === roomId)),
-    [roomRates, roomId]
+      roomRates.filter((val) => val.rooms.some((room) => room.id === room.id)),
+    [roomRates, room]
   );
   const [ratesBookingStatus, setRatesBookingStatus] = useState<
     {
@@ -145,13 +150,30 @@ export default function DatesOverview({
 
             {/* RATE TOGGLED DATA */}
             {toggledRates[i] && (
-              <div className="h-14 border-b px-4 py-2">Цена</div>
+              <div className="h-48 border-b px-4 py-2">
+                <div className="flex items-center gap-2">
+                  <span>Цена</span>
+                  <div className="flex w-fit items-center rounded bg-slate-400 px-1">
+                    <IoPersonSharp color={"#fff"} />{" "}
+                    <span className="ml-1 text-white">x {room.maxGuests}</span>
+                  </div>
+                </div>
+                <button
+                  className="mt-2 flex w-fit items-center rounded bg-slate-400 px-2 py-2 text-white hover:bg-slate-500"
+                  onClick={() => setEditPriceRateId(rates[i]?.id ?? -1)}
+                >
+                  Изменить цены
+                </button>
+                <button className="mt-2 flex w-fit items-center rounded bg-slate-400 px-2 py-2 text-white hover:bg-slate-500">
+                  Тарифы по числу гостей
+                </button>
+              </div>
             )}
           </React.Fragment>
         ))}
       </div>
       {/* RIGHT BAR */}
-      <div className="flex w-full overflow-x-scroll">
+      <div className="flex overflow-x-scroll">
         {bookingDays.map((val, i) => (
           <div key={"selected-date" + i} className="w-28 text-sm">
             {/* DATES */}
@@ -207,7 +229,7 @@ export default function DatesOverview({
 
                 {/* RATE TOGGLED DATA */}
                 {toggledRates[rateIndex] && (
-                  <div className="grid h-14 place-items-center border-b border-r px-4 py-2">
+                  <div className="grid h-48 place-items-center border-b border-r px-4 py-2">
                     <input
                       type="number"
                       className="w-full rounded border py-1 text-center"
@@ -221,6 +243,13 @@ export default function DatesOverview({
           </div>
         ))}
       </div>
+      {/* MODAL */}
+      <EditPriceModal
+        onClose={() => setEditPriceRateId(-1)}
+        open={editPriceRateId !== -1}
+        rateId={editPriceRateId}
+        title="Изменение цены"
+      />
     </div>
   );
 }

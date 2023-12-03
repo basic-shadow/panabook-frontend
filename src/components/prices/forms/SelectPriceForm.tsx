@@ -8,7 +8,7 @@ import { ru } from "date-fns/locale";
 import NewInput from "@/shared/UI/NewInput/NewInput";
 
 // WEEKDAYS
-const WEEKDAYS_SHORT = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+export const WEEKDAYS_SHORT = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 export default function SelectPriceForm({
   step,
