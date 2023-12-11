@@ -9,7 +9,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { KAZAKHSTAN_CITIES } from "../utils/const_data";
 import RegisterPropertyButtons from "../buttons_box";
-import ReactInputMask from "react-input-mask";
 import { PhoneInputMask } from "@/shared/UI/Input/PhoneInputMask";
 
 // @ts-ignore
