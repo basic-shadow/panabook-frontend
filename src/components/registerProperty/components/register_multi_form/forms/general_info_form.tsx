@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { KAZAKHSTAN_CITIES } from "../utils/const_data";
 import RegisterPropertyButtons from "../buttons_box";
-import InputMask from "react-input-mask";
+import ReactInputMask from "react-input-mask";
 
 // @ts-ignore
 export default memo(function GeneralInfoForm({
@@ -146,12 +146,15 @@ export default memo(function GeneralInfoForm({
               >
                 Номер телефона
               </label>
-              {/* @ts-ignore */}
-              <InputMask
-                mask="+7(999)999-99-99"
-                {...register("contactPhone1")}
-                className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
-              />
+              {
+                (
+                  <ReactInputMask
+                    mask="+7(999)999-99-99"
+                    {...register("contactPhone1")}
+                    className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
+                  />
+                ) as JSX.Element
+              }
 
               {errors.contactPhone1 && (
                 <p className="mt-2 text-start text-sm text-red-500">
@@ -171,12 +174,15 @@ export default memo(function GeneralInfoForm({
               >
                 Номер телефона
               </label>
-              {/* @ts-ignore */}
-              <InputMask
-                mask="+7(999)999-99-99"
-                {...register("contactPhone2")}
-                className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
-              />
+              {
+                (
+                  <ReactInputMask
+                    mask="+7(999)999-99-99"
+                    {...register("contactPhone2")}
+                    className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 focus:ring"
+                  />
+                ) as JSX.Element
+              }
             </div>
           </div>
         </div>
