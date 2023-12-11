@@ -11,6 +11,7 @@ import { KAZAKHSTAN_CITIES } from "../utils/const_data";
 import RegisterPropertyButtons from "../buttons_box";
 import InputMask from "react-input-mask";
 
+// @ts-ignore
 export default memo(function GeneralInfoForm({
   onGoBack,
   onNextStep,
