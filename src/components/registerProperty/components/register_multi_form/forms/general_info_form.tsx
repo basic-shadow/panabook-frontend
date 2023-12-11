@@ -145,6 +145,7 @@ export default memo(function GeneralInfoForm({
               >
                 Номер телефона
               </label>
+              {/* @ts-ignore */}
               <InputMask
                 mask="+7(999)999-99-99"
                 {...register("contactPhone1")}
@@ -169,6 +170,7 @@ export default memo(function GeneralInfoForm({
               >
                 Номер телефона
               </label>
+              {/* @ts-ignore */}
               <InputMask
                 mask="+7(999)999-99-99"
                 {...register("contactPhone2")}
