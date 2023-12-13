@@ -11,7 +11,7 @@ const config = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://hotel.panabooking.kz/api/:path*", // proxy to external API
+        destination: "http://hotel.panabooking.kz/api/:path*", // proxy to external API
       },
     ];
   },
@@ -19,6 +19,7 @@ const config = {
   images: {
     domains: ["kazbooking-images.object.pscloud.io"],
   },
+  output: "standalone",
   env: {
     NEXT_PHOTO_BASE_URL: "https://kazbooking-images.object.pscloud.io/",
   },

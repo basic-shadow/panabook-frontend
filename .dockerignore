@@ -1,6 +1,5 @@
 node_modules
-dist
 .dockerignore
-Dockerfile
+Dockerfile*
 nginx.conf
 .vscode
