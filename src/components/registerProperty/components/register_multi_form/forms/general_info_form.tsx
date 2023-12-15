@@ -1,5 +1,3 @@
-"use client";
-
 import { generalInfoSchema } from "@/components/registerProperty/types/validations";
 import { type IGeneralInfo } from "@/components/registerProperty/types/register_property_types";
 import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
@@ -39,7 +37,7 @@ export default memo(function GeneralInfoForm({
   function onSubmit() {
     if (isValid) {
       const contactPhone2 = getValues().contactPhone2;
-      useRegisterPropertyStore.setState((state) => ({
+      useRegisterPropertyStore.setState(() => ({
         ...getValues(),
         contactPhone1: "+" + getValues().contactPhone1.replace(/[^\d]/g, ""),
         contactPhone2:
@@ -167,7 +165,7 @@ export default memo(function GeneralInfoForm({
                   htmlFor="contactPhone2"
                   className="mb-2 inline-flex text-sm text-gray-800"
                 >
-                  Номер телефона
+                  Дополнительный номер телефона
                 </label>
                 <PhoneInputMask name="contactPhone2" />
               </div>

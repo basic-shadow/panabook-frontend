@@ -29,11 +29,13 @@ const AdminPage: NextPage = () => {
 
   return (
     <Container authHeader loading={objectsLoading}>
-      <AdminSection
-        objects={objects}
-        objectsLoading={objectsLoading}
-        fetchNextPage={fetchNextPage}
-      />
+      {objects && (
+        <AdminSection
+          objects={objects}
+          objectsLoading={objectsLoading}
+          fetchNextPage={fetchNextPage}
+        />
+      )}
     </Container>
   );
 };

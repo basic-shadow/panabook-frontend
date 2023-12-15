@@ -37,7 +37,6 @@ const mapStatusToColor = (status: string) => {
 
 export default function HomeHeader() {
   const [openProfile, setOpenProfile] = useState(false);
-
   // QUERY
   const { object, isLoading: objectsLoading } = useGetUserSelectedObject();
   // USER QUERY
@@ -48,10 +47,8 @@ export default function HomeHeader() {
   const router = useRouter();
   // TELEGRAM
   const openTelegramChat = () => {
-    window.open("https://t.me/+77072537787", "_blank");
+    window.open("https://t.me/+77072057787", "_blank");
   };
-
-  console.log("object =", object);
 
   return (
     <header className="bg-white text-black shadow-md">
@@ -100,7 +97,7 @@ export default function HomeHeader() {
             >
               <FaTelegram size={24} color="#229ED9" />
               <p className={"text-xs text-gray-500 max-[350px]:hidden"}>
-                +7 707 253 7787
+                +7 707 205 77 87
               </p>
             </button>
           </Tooltip>

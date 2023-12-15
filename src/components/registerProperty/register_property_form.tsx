@@ -1,15 +1,13 @@
-"use client";
-
 // import useUrlParams from "@/shared/hooks/useUrlParams";
 import React, { useCallback, useState } from "react";
 import RegisterMultiForm from "./components/register_multi_form/register_multi_form";
 import PropertyCategoryForm from "./components/property_category_form/property_category_form";
 
-const mapStepToUrlLocation = {
-  0: "?",
-  1: "?general-info",
-  2: "?location",
-};
+// const mapStepToUrlLocation = {
+//   0: "?",
+//   1: "?general-info",
+//   2: "?location",
+// };
 
 export default function RegisterPropertyForm() {
   // const { onChangeSearchParams } = useUrlParams();

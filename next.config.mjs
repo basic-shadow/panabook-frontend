@@ -11,7 +11,7 @@ const config = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://hotel.panabooking.kz/api/:path*", // proxy to external API
+        destination: "https://hotel.panabooking.kz/api/:path*", // proxy to external API
       },
     ];
   },

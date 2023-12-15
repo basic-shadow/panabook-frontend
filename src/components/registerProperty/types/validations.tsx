@@ -11,7 +11,10 @@ export const generalInfoSchema = yup.object().shape({
     .required("Обязательное поле"),
   contactPhone2: yup.string().notRequired(),
   propertyAddress: yup.string().required("Обязательное поле"),
-  propertyCity: yup.number().required("Обязательное поле"),
+  propertyCity: yup
+    .number()
+    .positive("Обязательное поле")
+    .required("Обязательное поле"),
   propertyPostCode: yup.string().required("Обязательное поле"),
 });
 

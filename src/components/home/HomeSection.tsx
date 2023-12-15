@@ -14,10 +14,7 @@ const activeBlockClass =
 
 export default function HomeSection() {
   const [bookingTabs, setBookingTabs] = useState(0);
-
-  const onSelectTab = (tab: number) => {
-    setBookingTabs(tab);
-  };
+  const onSelectTab = (tab: number) => setBookingTabs(tab);
 
   return (
     <MainDashboard>

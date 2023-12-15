@@ -16,7 +16,7 @@ export function useUploadObject(onSuccess: (data: void) => void) {
     onSuccess,
   });
 
-  return { mutateAsync: mutateAsync, isLoading, error, isSuccess };
+  return { mutateAsync, isLoading, error, isSuccess };
 }
 
 export function useUploadPhoto(onSuccess: (data: UploadPhotoResponse) => void) {

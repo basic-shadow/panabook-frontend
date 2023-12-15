@@ -1,4 +1,3 @@
-"use client";
 import AppButton from "@/shared/UI/AppButton/AppButton";
 import Image from "next/image";
 import React from "react";
@@ -23,10 +22,10 @@ export default function PropertyCategoryForm({
   };
 
   return (
-    <div className="max-w-7xl bg-white py-6 px-6">
+    <div className="max-w-7xl bg-white px-6 py-6">
       <h2 className="text-2xl font-bold">{PROPERTY_CATEGORIES_HEADER_TEXT}</h2>
       <div className="mt-6 flex flex-wrap justify-center gap-6 rounded-md">
-        {PROPERTY_CATEGORIES.map((category, i) => (
+        {PROPERTY_CATEGORIES.map((category) => (
           <div
             key={category.label}
             className={
@@ -47,7 +46,7 @@ export default function PropertyCategoryForm({
               width="200"
               loading="lazy"
               height="120"
-              className="h-full w-1/2 rounded-tl-sm rounded-bl-sm object-cover"
+              className="h-full w-1/2 rounded-bl-sm rounded-tl-sm object-cover"
             />
             <div className="p-4">
               <h3 className="font-semibold">{category.label}</h3>

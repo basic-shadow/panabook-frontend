@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import ReactInputMask from "react-input-mask";

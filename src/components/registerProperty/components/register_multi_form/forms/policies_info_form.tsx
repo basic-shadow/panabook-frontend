@@ -82,7 +82,10 @@ export default function PoliciesInfoForm({
   // ROUTER
   const router = useRouter();
 
-  const onSuccess = () => router.push(routeEndpoints.success);
+  const onSuccess = () => {
+    console.log("SUCCESSFULLY CREATED PROPERTY");
+    router.push(routeEndpoints.home);
+  };
 
   // SUBMIT HOOK
   const { mutateAsync, isLoading, error } = useUploadObject(onSuccess);
@@ -117,9 +120,10 @@ export default function PoliciesInfoForm({
 
   useEffect(() => {
     if (error) {
-      console.log("error =", error);
       notifyError(
-        error.message ?? "Проверьте пожалуйста, все ли поля заполнены правильно"
+        // @ts-ignore
+        error.response?.data?.message ??
+          "Проверьте пожалуйста, все ли поля заполнены правильно"
       );
     }
   }, [error]);
