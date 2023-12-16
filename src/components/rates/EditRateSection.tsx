@@ -69,7 +69,6 @@ export default function EditRateSection({
     } else {
       notifyInfo("Подождите, идёт загрузка...");
     }
-    console.log(data);
   }
 
   return (

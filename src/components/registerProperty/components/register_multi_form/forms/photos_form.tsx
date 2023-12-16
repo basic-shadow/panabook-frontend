@@ -4,22 +4,31 @@ import { type UploadPhotoResponse } from "@/server/register_property/upload_phot
 import { AppButton } from "@/shared/UI";
 import SpinnerLoader from "@/shared/UI/SpinnerLoader/SpinnerLoader";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdAddAPhoto } from "react-icons/md";
 import { IoIosRemoveCircle } from "react-icons/io";
 import RegisterPropertyButtons from "../buttons_box";
 import { useDragAndDrop } from "@/shared/hooks/dragAndDrop";
 import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
+import { type ISubmitBtnState } from "../register_multi_form";
 
 export default function PhotosForm({
   onGoBack,
   onNextStep,
+  submitBtnState,
+  setSubmitBtnState,
 }: {
   onGoBack: () => void;
   onNextStep: () => void;
+  submitBtnState: ISubmitBtnState;
+  setSubmitBtnState: (val: ISubmitBtnState) => void;
 }) {
   const { notifyInfo } = useNotifications();
   const { propertyPhotos } = useRegisterPropertyStore();
+  const setValidFormPage = useRegisterPropertyStore(
+    (state) => state.setValidFormPage
+  );
+
   const [imageList, setImageList] =
     useState<UploadPhotoResponse[]>(propertyPhotos);
 
@@ -41,12 +50,34 @@ export default function PhotosForm({
 
   function onSubmit() {
     if (imageList.length > 0) {
-      useRegisterPropertyStore.setState((_) => ({
+      useRegisterPropertyStore.setState(() => ({
         propertyPhotos: imageList,
       }));
-      onNextStep();
+
+      setSubmitBtnState({ changesMade: false, saveModalOpened: false });
+      setValidFormPage("photosInfo", true);
     }
   }
+
+  const changesMade = imageList.length !== propertyPhotos.length;
+
+  useEffect(() => {
+    setSubmitBtnState({ changesMade, saveModalOpened: false });
+
+    return () =>
+      setSubmitBtnState({ saveModalOpened: false, changesMade: false });
+  }, [imageList, propertyPhotos]);
+
+  const onNextPage = () => {
+    if (!submitBtnState.changesMade && !submitBtnState.saveModalOpened) {
+      onNextStep();
+    } else if (submitBtnState.changesMade && submitBtnState.saveModalOpened) {
+      onSubmit();
+    } else {
+      onSubmit();
+      onNextStep();
+    }
+  };
 
   return (
     <div className="bg-white py-4 sm:py-6 lg:py-8">
@@ -144,7 +175,15 @@ export default function PhotosForm({
       </div>
 
       {/* BUTTONS */}
-      <RegisterPropertyButtons onGoBack={onGoBack} onNextStep={onSubmit} />
+      <RegisterPropertyButtons
+        onGoBack={onGoBack}
+        submitText={
+          submitBtnState.changesMade && submitBtnState.saveModalOpened
+            ? "Сохранить"
+            : "Продолжить"
+        }
+        onNextStep={onNextPage}
+      />
     </div>
   );
 }

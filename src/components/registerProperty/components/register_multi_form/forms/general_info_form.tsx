@@ -1,24 +1,31 @@
 import { generalInfoSchema } from "@/components/registerProperty/types/validations";
-import { type IGeneralInfo } from "@/components/registerProperty/types/register_property_types";
+import type { IGeneralInfo } from "@/components/registerProperty/types/register_property_types";
 import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 import AppDropdown from "@/shared/UI/AppDropdown/AppDropdown";
-import React, { memo } from "react";
+import { memo, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { KAZAKHSTAN_CITIES } from "../utils/const_data";
 import RegisterPropertyButtons from "../buttons_box";
 import { PhoneInputMask } from "@/shared/UI/Input/PhoneInputMask";
+import { type ISubmitBtnState } from "../register_multi_form";
 
-// @ts-ignore
 export default memo(function GeneralInfoForm({
   onGoBack,
   onNextStep,
+  submitBtnState,
+  setSubmitBtnState,
 }: {
   onGoBack: () => void;
   onNextStep: () => void;
+  submitBtnState: ISubmitBtnState;
+  setSubmitBtnState: (val: ISubmitBtnState) => void;
 }) {
   // MULTIFORM INIT STATE
   const state = useRegisterPropertyStore();
+  const setValidFormPage = useRegisterPropertyStore(
+    (state) => state.setValidFormPage
+  );
 
   const methods = useForm<IGeneralInfo>({
     resolver: yupResolver(generalInfoSchema),
@@ -31,13 +38,14 @@ export default memo(function GeneralInfoForm({
     handleSubmit,
     watch,
     getValues,
-    formState: { isValid, errors },
+    reset,
+    formState: { isValid, errors, isDirty },
   } = methods;
 
   function onSubmit() {
     if (isValid) {
       const contactPhone2 = getValues().contactPhone2;
-      useRegisterPropertyStore.setState(() => ({
+      const newData = {
         ...getValues(),
         contactPhone1: "+" + getValues().contactPhone1.replace(/[^\d]/g, ""),
         contactPhone2:
@@ -46,10 +54,32 @@ export default memo(function GeneralInfoForm({
               ? "+" + contactPhone2.replace(/[^\d]/g, "")
               : ""
             : "",
-      }));
-      onNextStep();
+      };
+      useRegisterPropertyStore.setState(() => newData);
+      reset(newData);
+      setSubmitBtnState({ changesMade: false, saveModalOpened: false });
+      setValidFormPage("generalInfo", true);
     }
   }
+
+  useEffect(() => {
+    setSubmitBtnState({ changesMade: isDirty, saveModalOpened: false });
+
+    return () =>
+      setSubmitBtnState({ changesMade: false, saveModalOpened: false });
+  }, [isDirty]);
+
+  const onNextPage = (e: any) => {
+    e.preventDefault();
+    if (!submitBtnState.changesMade && !submitBtnState.saveModalOpened) {
+      onNextStep();
+    } else if (submitBtnState.changesMade && submitBtnState.saveModalOpened) {
+      handleSubmit(onSubmit)();
+    } else {
+      handleSubmit(onSubmit)();
+      onNextStep();
+    }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -211,7 +241,7 @@ export default memo(function GeneralInfoForm({
                 selectedValue={{
                   label:
                     watch().propertyCity >= 0
-                      ? KAZAKHSTAN_CITIES[watch().propertyCity]!.label
+                      ? KAZAKHSTAN_CITIES[watch().propertyCity]?.label ?? ""
                       : "",
                   value: watch().propertyCity,
                 }}
@@ -254,7 +284,12 @@ export default memo(function GeneralInfoForm({
         {/* BUTTONS */}
         <RegisterPropertyButtons
           onGoBack={onGoBack}
-          onNextStep={handleSubmit(onSubmit)}
+          submitText={
+            submitBtnState.saveModalOpened && submitBtnState.changesMade
+              ? "Сохранить"
+              : "Продолжить"
+          }
+          onNextStep={onNextPage}
         />
       </form>
     </FormProvider>

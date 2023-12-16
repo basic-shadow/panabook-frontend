@@ -82,7 +82,6 @@ export default function AdminSection({
     }));
   }, [objects]);
 
-  console.log("objects = ", objects);
   const columns = useMemo<ColumnDef<ObjectsTableData>[]>(
     () => [
       {

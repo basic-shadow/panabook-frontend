@@ -83,7 +83,6 @@ export default function PoliciesInfoForm({
   const router = useRouter();
 
   const onSuccess = () => {
-    console.log("SUCCESSFULLY CREATED PROPERTY");
     router.push(routeEndpoints.home);
   };
 
@@ -99,7 +98,6 @@ export default function PoliciesInfoForm({
     return normalizeTimeSlotsDropdown(items);
   });
   // check-in-from: 0, check-in-to: 1, check-out-from: 2, check-out-to: 3
-
   const selectTime = (
     selectedTime: string,
     timeSlot: number,
@@ -120,11 +118,7 @@ export default function PoliciesInfoForm({
 
   useEffect(() => {
     if (error) {
-      notifyError(
-        // @ts-ignore
-        error.response?.data?.message ??
-          "Проверьте пожалуйста, все ли поля заполнены правильно"
-      );
+      notifyError("Проверьте пожалуйста, все ли поля заполнены правильно");
     }
   }, [error]);
 

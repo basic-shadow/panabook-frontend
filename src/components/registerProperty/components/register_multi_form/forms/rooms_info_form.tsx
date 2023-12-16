@@ -1,5 +1,5 @@
 import AppButton from "@/shared/UI/AppButton/AppButton";
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { TbSofa } from "react-icons/tb";
 import { BsPlusCircle, BsPlusLg } from "react-icons/bs";
 import AppDropdown from "@/shared/UI/AppDropdown/AppDropdown";
@@ -19,6 +19,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { roomsInfoSchema } from "@/components/registerProperty/types/validations";
 import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 import RegisterPropertyButtons from "../buttons_box";
+import { type ISubmitBtnState } from "../register_multi_form";
 
 const NO_ROOM_TEXT =
   "Номера не добавлены. Добавьте номера и заполните информацию о кроватях, количестве гостей и цене.";
@@ -26,13 +27,21 @@ const NO_ROOM_TEXT =
 export default memo(function RoomsInfoFrom({
   onGoBack,
   onNextStep,
+  submitBtnState,
+  setSubmitBtnState,
 }: {
   onGoBack: () => void;
   onNextStep: () => void;
+  submitBtnState: ISubmitBtnState;
+  setSubmitBtnState: (val: ISubmitBtnState) => void;
 }) {
   // MULTIFORM STATE
   const propertyRooms = useRegisterPropertyStore(
     (state) => state.propertyRooms
+  );
+
+  const setValidFormPage = useRegisterPropertyStore(
+    (state) => state.setValidFormPage
   );
 
   const [rooms, setRooms] =
@@ -40,6 +49,7 @@ export default memo(function RoomsInfoFrom({
   const [addingRoom, setAddingRoom] = useState(false);
   const [editingIndex, setEditingIndex] = useState(-1);
 
+  // FOR SINGLE ROOM CREATION/EDITING ONLY
   const {
     register,
     setValue,
@@ -60,9 +70,9 @@ export default memo(function RoomsInfoFrom({
 
   const getRoomNames = useMemo(() => {
     return ROOM_NAMES.slice(
-      ROOM_TYPES[getValues().roomType - 1]!.namespaceOffset,
-      ROOM_TYPES[getValues().roomType - 1]!.namespaceLength +
-        ROOM_TYPES[getValues().roomType - 1]!.namespaceOffset
+      ROOM_TYPES[getValues().roomType - 1]?.namespaceOffset,
+      ROOM_TYPES[getValues().roomType - 1]?.namespaceLength ??
+        0 + (ROOM_TYPES[getValues().roomType - 1]?.namespaceOffset ?? 0)
     );
   }, [getValues().roomType]);
 
@@ -107,7 +117,6 @@ export default memo(function RoomsInfoFrom({
       setAddingRoom(false);
       reset();
     }
-    console.log("errors =", errors);
   }
 
   function onEditRoom(index: number) {
@@ -136,8 +145,31 @@ export default memo(function RoomsInfoFrom({
   function onSubmit() {
     if (rooms.length === 0) return;
     useRegisterPropertyStore.setState({ propertyRooms: rooms });
-    onNextStep();
+    setValidFormPage("roomsInfo", true);
   }
+
+  const onSubmitBtnClick = (e: any) => {
+    e.preventDefault();
+
+    if (addingRoom) {
+      handleSubmit(onSaveRoom)();
+    } else if (!submitBtnState.changesMade && !submitBtnState.saveModalOpened) {
+      onNextStep();
+    } else if (submitBtnState.changesMade && submitBtnState.saveModalOpened) {
+      onSubmit();
+    } else {
+      onSubmit();
+      onNextStep();
+    }
+  };
+
+  useEffect(() => {
+    const changesMade = propertyRooms.length !== rooms.length;
+    setSubmitBtnState({ changesMade, saveModalOpened: false });
+
+    return () =>
+      setSubmitBtnState({ changesMade: false, saveModalOpened: false });
+  }, [rooms, propertyRooms]);
 
   return (
     <div>
@@ -477,9 +509,14 @@ export default memo(function RoomsInfoFrom({
       )}
       <RegisterPropertyButtons
         onGoBack={addingRoom ? cancelSaveRoom : onGoBack}
-        onNextStep={addingRoom ? handleSubmit(onSaveRoom) : onSubmit}
+        onNextStep={onSubmitBtnClick}
         cancelText={addingRoom ? "Отменить" : "Назад"}
-        submitText={addingRoom ? "Сохранить" : "Продолжить"}
+        submitText={
+          addingRoom ||
+          (submitBtnState.changesMade && submitBtnState.saveModalOpened)
+            ? "Сохранить"
+            : "Продолжить"
+        }
       />
     </div>
   );

@@ -9,13 +9,15 @@ export default function RegisterPropertyButtons({
   isLoading = false,
 }: {
   onGoBack: () => void;
-  onNextStep: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onNextStep?:
+    | ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+    | (() => void);
   cancelText?: string;
   submitText?: string;
   isLoading?: boolean;
 }) {
   return (
-    <div className="mt-4 flex items-center justify-between bg-white py-6 px-6">
+    <div className="mt-4 flex items-center justify-between bg-white px-6 py-6">
       <button
         className="inline-flex items-center gap-x-1 rounded-lg px-6 py-2
           text-sm text-gray-800 shadow outline-none hover:bg-gray-100"

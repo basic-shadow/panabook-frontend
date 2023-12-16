@@ -1,5 +1,5 @@
 import { useGetUser } from "@/components/admin/api/usersQuery";
-import React from "react";
+import React, { useState } from "react";
 import {
   FacilitiesInfoForm,
   GeneralInfoForm,
@@ -27,6 +27,11 @@ const mapStepToText = {
   6: "Определите некоторые из основных правил",
 };
 
+export interface ISubmitBtnState {
+  saveModalOpened: boolean;
+  changesMade: boolean;
+}
+
 export default function RegisterMultiForm({
   currentStep,
   onGoBack,
@@ -34,6 +39,11 @@ export default function RegisterMultiForm({
   goOnStep,
 }: IRegisterMultiForm) {
   const { user } = useGetUser();
+
+  const [submitBtnState, setSubmitBtnState] = useState<ISubmitBtnState>({
+    saveModalOpened: false,
+    changesMade: false,
+  });
 
   return (
     <div>
@@ -52,23 +62,53 @@ export default function RegisterMultiForm({
       </div>
       <div className="mx-auto flex w-full max-w-7xl flex-col flex-wrap px-5 py-4">
         {/* STEP TOP BAR */}
-        <StepFormHeader currentStep={currentStep} goOnStep={goOnStep} />
+        <StepFormHeader
+          currentStep={currentStep}
+          goOnStep={goOnStep}
+          submitBtnState={submitBtnState}
+          setSubmitBtnState={setSubmitBtnState}
+        />
         {/* FORM BODY */}
         <div>
           {currentStep === 1 && (
-            <GeneralInfoForm onGoBack={onGoBack} onNextStep={onNextStep} />
+            <GeneralInfoForm
+              onGoBack={onGoBack}
+              onNextStep={onNextStep}
+              submitBtnState={submitBtnState}
+              setSubmitBtnState={setSubmitBtnState}
+            />
           )}
           {currentStep === 2 && (
-            <RoomsInfoForm onGoBack={onGoBack} onNextStep={onNextStep} />
+            <RoomsInfoForm
+              onGoBack={onGoBack}
+              onNextStep={onNextStep}
+              submitBtnState={submitBtnState}
+              setSubmitBtnState={setSubmitBtnState}
+            />
           )}
           {currentStep === 3 && (
-            <ServicesInfoForm onGoBack={onGoBack} onNextStep={onNextStep} />
+            <ServicesInfoForm
+              onGoBack={onGoBack}
+              onNextStep={onNextStep}
+              submitBtnState={submitBtnState}
+              setSubmitBtnState={setSubmitBtnState}
+            />
           )}
           {currentStep === 4 && (
-            <FacilitiesInfoForm onGoBack={onGoBack} onNextStep={onNextStep} />
+            <FacilitiesInfoForm
+              onGoBack={onGoBack}
+              onNextStep={onNextStep}
+              submitBtnState={submitBtnState}
+              setSubmitBtnState={setSubmitBtnState}
+            />
           )}
           {currentStep === 5 && (
-            <PhotosForm onGoBack={onGoBack} onNextStep={onNextStep} />
+            <PhotosForm
+              onGoBack={onGoBack}
+              onNextStep={onNextStep}
+              submitBtnState={submitBtnState}
+              setSubmitBtnState={setSubmitBtnState}
+            />
           )}
           {currentStep === 6 && (
             <PoliciesInfoForm onGoBack={onGoBack} onNextStep={onNextStep} />

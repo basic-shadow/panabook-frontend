@@ -6,46 +6,6 @@ interface IAccordion {
   id: string;
 }
 
-function FaqComponent() {
-  return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="bg-white">
-        <div className="container mx-auto flex flex-col justify-center px-4 py-8 md:p-8">
-          <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
-          <p className="mb-8 mt-4 text-gray-600">
-            React Interview Questions And Answers
-          </p>
-          <div className="space-y-4">
-            <details className="w-full rounded-lg ring-1 ring-purple-600">
-              <summary className="px-4 py-6">What is React?</summary>
-              <p className="-mt-4 ml-4 px-4 py-6 pt-0 text-gray-600">
-                React is a front-end JavaScript library developed by Facebook in
-                2011.
-              </p>
-            </details>
-            <details className="w-full rounded-lg ring-1 ring-purple-600">
-              <summary className="px-4 py-6">
-                What is Props and how to use it give some example?
-              </summary>
-              <p className="-mt-4 ml-4 px-4 py-6 pt-0 text-gray-600">
-                Props is the shorthand for Properties in React.
-              </p>
-            </details>
-            <details className="w-full rounded-lg ring-1 ring-purple-600">
-              <summary className="px-4 py-6">
-                How to install tailwind css in react js ?
-              </summary>
-              <p className="-mt-4 ml-4 px-4 py-6 pt-0 text-gray-600">
-                What are synthetic events in React?
-              </p>
-            </details>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Accordion({ headers, content, id }: IAccordion) {
   const [activeIndex, setActiveIndex] = useState(-1);
 
@@ -99,17 +59,6 @@ export default function Accordion({ headers, content, id }: IAccordion) {
             }
           >
             {content[index]}
-            {/* <div className="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-              <p className="mb-2 text-gray-500 dark:text-gray-400">
-                Flowbite is an open-source library of interactive components
-                built on top of Tailwind CSS including buttons, dropdowns,
-                modals, navbars, and more.
-              </p>
-              <p className="text-gray-500 dark:text-gray-400">
-                Check out this guide to learn how to and start developing
-                websites even faster with components on top of Tailwind CSS.
-              </p>
-            </div> */}
           </div>
         </React.Fragment>
       ))}

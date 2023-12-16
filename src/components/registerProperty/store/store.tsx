@@ -2,29 +2,36 @@ import { create } from "zustand";
 import { registerPropertyInitState } from "../types/register_property_init_state";
 import { type IRegisterProperty } from "../types/register_property_types";
 
-type formPageEnums =
+type FormPageEnums =
   | "generalInfo"
   | "roomsInfo"
-  | "policiesInfo"
   | "photosInfo"
   | "servicesInfo"
   | "facilitiesInfo";
 
 type ValidFormPages = {
-  [pages in formPageEnums]: boolean;
+  [pages in FormPageEnums]: boolean;
 };
 
-// const initValidFormPages: ValidFormPages = {
-//   generalInfo: false,
-//   roomsInfo: false,
-//   policiesInfo: false,
-//   photosInfo: false,
-//   servicesInfo: false,
-//   facilitiesInfo: false,
-// };
+const initValidFormPages: ValidFormPages = {
+  generalInfo: false,
+  roomsInfo: false,
+  photosInfo: false,
+  servicesInfo: false,
+  facilitiesInfo: false,
+};
 
-export const useRegisterPropertyStore = create<IRegisterProperty>((set) => ({
-  // & ValidFormPages
+type RegisterPropertyMethods = {
+  setValidFormPage: (page: FormPageEnums, val: boolean) => void;
+};
+
+export const useRegisterPropertyStore = create<
+  IRegisterProperty & ValidFormPages & RegisterPropertyMethods
+>((set) => ({
   ...registerPropertyInitState,
-  // ...initValidFormPages,
+  ...initValidFormPages,
+  setValidFormPage: (page: FormPageEnums, val: boolean) =>
+    set(() => ({
+      [page]: val,
+    })),
 }));

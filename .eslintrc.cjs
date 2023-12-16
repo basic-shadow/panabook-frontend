@@ -18,6 +18,7 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   rules: {
+    "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {

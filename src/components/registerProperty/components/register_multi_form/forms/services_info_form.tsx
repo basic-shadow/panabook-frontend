@@ -1,22 +1,28 @@
 import { useRegisterPropertyStore } from "@/components/registerProperty/store/store";
 import AppDropdown from "@/shared/UI/AppDropdown/AppDropdown";
 import Checkbox from "@/shared/UI/Checkbox/Checkbox";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { IoAddCircleOutline } from "react-icons/io5";
 import RegisterPropertyButtons from "../buttons_box";
 import { LANGUAGES, PROPERTY_SERVICES } from "../utils/const_data";
+import { type ISubmitBtnState } from "../register_multi_form";
 
 export default function ServicesInfoForm({
   onGoBack,
   onNextStep,
+  submitBtnState,
+  setSubmitBtnState,
 }: {
   onGoBack: () => void;
   onNextStep: () => void;
+  submitBtnState: ISubmitBtnState;
+  setSubmitBtnState: (val: ISubmitBtnState) => void;
 }) {
   // MULTIFORM STATE
-  const { propertyLanguages, propertyServices } = useRegisterPropertyStore(
-    (state) => state
+  const { propertyLanguages, propertyServices } = useRegisterPropertyStore();
+  const setValidFormPage = useRegisterPropertyStore(
+    (state) => state.setValidFormPage
   );
 
   const [selectedLangs, setSelectedLangs] =
@@ -50,9 +56,31 @@ export default function ServicesInfoForm({
         propertyLanguages: selectedLangs,
         propertyServices: services,
       });
-      onNextStep();
+      setValidFormPage("servicesInfo", true);
     }
   }
+
+  const changesMade =
+    selectedLangs.length !== propertyLanguages.length ||
+    services.length !== propertyServices.length;
+
+  useEffect(() => {
+    setSubmitBtnState({ changesMade, saveModalOpened: false });
+
+    return () =>
+      setSubmitBtnState({ changesMade: false, saveModalOpened: false });
+  }, [selectedLangs, propertyLanguages, propertyServices, services]);
+
+  const onNextPage = (e: any) => {
+    if (!submitBtnState.changesMade && !submitBtnState.saveModalOpened) {
+      onNextStep();
+    } else if (submitBtnState.changesMade && submitBtnState.saveModalOpened) {
+      onSubmit(e);
+    } else {
+      onSubmit(e);
+      onNextStep();
+    }
+  };
 
   return (
     <form>
@@ -148,7 +176,15 @@ export default function ServicesInfoForm({
       </div>
 
       {/* BUTTONS */}
-      <RegisterPropertyButtons onGoBack={onGoBack} onNextStep={onSubmit} />
+      <RegisterPropertyButtons
+        onGoBack={onGoBack}
+        submitText={
+          submitBtnState.changesMade && submitBtnState.saveModalOpened
+            ? "Сохранить"
+            : "Продолжить"
+        }
+        onNextStep={onNextPage}
+      />
     </form>
   );
 }

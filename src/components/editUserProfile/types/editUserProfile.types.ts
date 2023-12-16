@@ -22,7 +22,6 @@ export const profileSchema = yup.object().shape({
     .string()
     .when("newPassword", (newPassword: any, schema: any) => {
       if (newPassword && newPassword[0].length > 0) {
-        console.log("newPassword =", newPassword);
         return schema
           .oneOf([yup.ref("newPassword")], "Пароли не совпадают")
           .required(requiredField);

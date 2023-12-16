@@ -32,7 +32,6 @@ export default function EditPriceModal({
     };
 
   const closeDates = useCallback(() => {
-    console.log("closing");
     setOpenDate({ dateFrom: false, dateTo: false });
   }, []);
 

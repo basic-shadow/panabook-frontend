@@ -28,7 +28,7 @@ export const registerTimeInfoInitState: IRegisterTimeInfo = {
 
 export const registerPropertyInitState: IRegisterProperty = {
   propertyCategory: -1,
-  propertyLanguages: [],
+  propertyLanguages: [1],
   propertyRooms: [],
   propertyPhotos: [],
   propertyServices: [],

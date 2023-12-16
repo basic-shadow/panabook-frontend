@@ -13,7 +13,7 @@ export const generalInfoSchema = yup.object().shape({
   propertyAddress: yup.string().required("Обязательное поле"),
   propertyCity: yup
     .number()
-    .positive("Обязательное поле")
+    .min(0, "Обязательное поле")
     .required("Обязательное поле"),
   propertyPostCode: yup.string().required("Обязательное поле"),
 });

@@ -24,6 +24,7 @@ export default function RoomFacilitiesForm({
   room,
   index,
   onSaveData,
+  setChangesMade,
 }: {
   room: IPropertyRoomWithFacilities;
   index: number;
@@ -31,6 +32,7 @@ export default function RoomFacilitiesForm({
     data: Partial<IPropertyRoomWithFacilities>,
     index: number
   ) => void;
+  setChangesMade: (val: boolean) => void;
 }) {
   const roomFacilities = useRegisterPropertyStore(
     (state) => state.propertyRooms[index]?.roomFacilities
@@ -43,7 +45,7 @@ export default function RoomFacilitiesForm({
     control,
     setValue,
     getValues,
-    formState: { isValid, errors },
+    formState: { errors },
   } = useForm<IFacilitiesInfo>({
     resolver: yupResolver(facilitiesInfoSchema),
     defaultValues: { extraBeds: false },
@@ -63,6 +65,9 @@ export default function RoomFacilitiesForm({
     );
     const bedType = unSelectedBedType?.value || 1;
     append({ bedType: bedType, quantity: 1 });
+    setChangesMade(true);
+
+    console.log("edited");
   };
 
   useEffect(() => {
@@ -189,13 +194,14 @@ export default function RoomFacilitiesForm({
                   <Checkbox
                     id={"room" + index}
                     checked={facilities.includes(facility.value)}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setFacilities((fac) =>
                         !e.target.checked
                           ? fac.filter((q) => q !== facility.value)
                           : [...fac, facility.value]
-                      )
-                    }
+                      );
+                      setChangesMade(true);
+                    }}
                     text={facility.label}
                   />
                 </div>
