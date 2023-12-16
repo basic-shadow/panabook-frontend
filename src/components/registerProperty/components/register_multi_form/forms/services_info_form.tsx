@@ -56,7 +56,6 @@ export default function ServicesInfoForm({
         propertyLanguages: selectedLangs,
         propertyServices: services,
       });
-      setValidFormPage("servicesInfo", true);
     }
   }
 
@@ -72,6 +71,7 @@ export default function ServicesInfoForm({
   }, [selectedLangs, propertyLanguages, propertyServices, services]);
 
   const onNextPage = (e: any) => {
+    setValidFormPage("servicesInfo", true);
     if (!submitBtnState.changesMade && !submitBtnState.saveModalOpened) {
       onNextStep();
     } else if (submitBtnState.changesMade && submitBtnState.saveModalOpened) {

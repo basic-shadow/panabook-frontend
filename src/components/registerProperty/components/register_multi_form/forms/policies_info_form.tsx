@@ -82,12 +82,10 @@ export default function PoliciesInfoForm({
   // ROUTER
   const router = useRouter();
 
-  const onSuccess = () => {
-    router.push(routeEndpoints.home);
-  };
+  const onSuccess = () => router.push(routeEndpoints.home);
 
   // SUBMIT HOOK
-  const { mutateAsync, isLoading, error } = useUploadObject(onSuccess);
+  const { mutateAsync, isLoading, error } = useUploadObject();
 
   const items = useRegisterPropertyStore();
   const [registerDate, setRegisterDate] = useState<string[]>(
@@ -144,6 +142,7 @@ export default function PoliciesInfoForm({
         ...items,
         ...policyInfo,
       });
+      onSuccess();
 
       notifySuccess(
         "Ваше объявление успешно создано! Перенаправляем вас на страницу успеха"

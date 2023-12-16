@@ -4,6 +4,7 @@ import RegisterPropertyButtons from "../buttons_box";
 import RoomFacilitiesForm from "./widgets/room_facilities_form";
 import { useEffect, useState } from "react";
 import { type ISubmitBtnState } from "../register_multi_form";
+import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
 export default function RoomFacilityForm({
   onGoBack,
@@ -16,6 +17,7 @@ export default function RoomFacilityForm({
   submitBtnState: ISubmitBtnState;
   setSubmitBtnState: (val: ISubmitBtnState) => void;
 }) {
+  const { notifyInfo } = useNotifications();
   // MULTIFORM STATE
   const propertyRooms = useRegisterPropertyStore(
     (state) => state.propertyRooms
@@ -59,7 +61,6 @@ export default function RoomFacilityForm({
         return changedRoom ? changedRoom : room;
       }),
     });
-    setValidFormPage("facilitiesInfo", true);
 
     setChangedRooms(undefined);
     setSubmitBtnState({ changesMade: false, saveModalOpened: false });
@@ -76,6 +77,14 @@ export default function RoomFacilityForm({
   }, [changedRooms]);
 
   const onNextPage = () => {
+    if (!changedRooms) return;
+    const changedRoomsArr = Object.values(changedRooms).flat();
+    if (changedRoomsArr.some((room) => room.roomFacilities?.length === 0)) {
+      notifyInfo("Пожалуйста, заполните хотя бы 1 удобство в номере");
+      return;
+    }
+
+    setValidFormPage("facilitiesInfo", true);
     if (!submitBtnState.changesMade && !submitBtnState.saveModalOpened) {
       onNextStep();
     } else if (submitBtnState.changesMade && submitBtnState.saveModalOpened) {

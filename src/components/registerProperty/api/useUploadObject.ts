@@ -7,14 +7,12 @@ import { type IRegisterProperty } from "../types/register_property_types";
 import { type AxiosError } from "axios";
 import { useNotifications } from "@/shared/UI/AppToaster/AppToaster";
 
-export function useUploadObject(onSuccess: (data: void) => void) {
+export function useUploadObject() {
   const { mutateAsync, isLoading, isSuccess, error } = useMutation<
     void,
     AxiosError,
     IRegisterProperty
-  >(queryKeys.registerProperty, registerProperty, {
-    onSuccess,
-  });
+  >(queryKeys.registerProperty, registerProperty);
 
   return { mutateAsync, isLoading, error, isSuccess };
 }

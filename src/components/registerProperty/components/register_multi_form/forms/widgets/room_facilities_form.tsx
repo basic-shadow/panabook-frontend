@@ -66,8 +66,6 @@ export default function RoomFacilitiesForm({
     const bedType = unSelectedBedType?.value || 1;
     append({ bedType: bedType, quantity: 1 });
     setChangesMade(true);
-
-    console.log("edited");
   };
 
   useEffect(() => {
