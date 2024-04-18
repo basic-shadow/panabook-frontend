@@ -5,7 +5,7 @@ services:
     container_name: panabook-frontend
     build:
       context: .
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     dns:
       - 4.4.4.4
       - 8.8.8.8
