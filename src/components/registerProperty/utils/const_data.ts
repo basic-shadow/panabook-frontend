@@ -1,5 +1,5 @@
 import apartments from "@/assets/images/property_category/apartments.jpeg";
-import boutique_hotel from "@/assets/images/property_category/boutique_hotel.jpeg";
+import boutique_hotel from "@/assets/images/property_category/boutique_hotel.jpg";
 import guest_house from "@/assets/images/property_category/guest_house.jpeg";
 import hostel from "@/assets/images/property_category/hostel.jpg";
 import hotel from "@/assets/images/property_category/hotel.jpeg";
